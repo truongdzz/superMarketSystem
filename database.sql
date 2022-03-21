@@ -12,12 +12,13 @@ CREATE TABLE `user` (
   	`point` int(11) DEFAULT NULL,
 	`name` varchar(100) DEFAULT NULL,
 	`username` varchar(250) DEFAULT NULL,
-	`password` varchar(250) DEFAULT NULL
+	`password` varchar(250) DEFAULT NULL,
+	`role` varchar(20) DEFAULT NULL
 );
 
-INSERT INTO `user` VALUES
-(1, '0772026629', 100, 'Nguyễn Văn A', 'adeptrai123', '123456')
-;
+-- INSERT INTO `user` VALUES
+-- (1, '0772026629', 100, 'Nguyễn Văn A', 'adeptrai123', '123456')
+-- ;
 
 CREATE TABLE `category` (
   `id` int(11) NOT NULL PRIMARY KEY,
@@ -64,9 +65,9 @@ CREATE TABLE `goods` (
     FOREIGN KEY (position) REFERENCES shelf(position)
 );
 
-INSERT INTO `goods` (`id`, `name`, `description`, `buyPrice`, `sellPrice`, `discount`, `amount`, `category`, `position`) VALUES
- (1, 'Rau muốn', 'Rau củ xanh tươi nhập khẩu từ nước ngoài (Lào)', 30000, 40000, 0.1, 100, 1, 1),
- (2, 'Áo thun MENDE', 'Local brand nổi tiếng ở Việt Nam', 200000, 250000, 0.1, 50, 2, 2);
+-- INSERT INTO `goods` (`id`, `name`, `description`, `buyPrice`, `sellPrice`, `discount`, `amount`, `category`, `position`) VALUES
+--  (1, 'Rau muốn', 'Rau củ xanh tươi nhập khẩu từ nước ngoài (Lào)', 30000, 40000, 0.1, 100, 1, 1),
+--  (2, 'Áo thun MENDE', 'Local brand nổi tiếng ở Việt Nam', 200000, 250000, 0.1, 50, 2, 2);
 
 
 
@@ -85,17 +86,17 @@ INSERT INTO `shift` (`number`, `startTime`, `endTime`) VALUES
 
 CREATE TABLE `staff` (
 	`id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    `phone` varchar(11) DEFAULT NULL,
-	`type` varchar(50) DEFAULT NULL,
+    	`phone` varchar(11) DEFAULT NULL,
+	`role` varchar(50) DEFAULT NULL,
 	`salaryBase` int(25) DEFAULT NULL,
-    `name` varchar(55) DEFAULT NULL,
-    `username` varchar(250) NOT NULL,
-    `password` varchar(250) NOT NULL
+    	`name` varchar(55) DEFAULT NULL,
+    	`username` varchar(250) NOT NULL,
+    	`password` varchar(250) NOT NULL
 );
 
-INSERT INTO `staff` (`id`, `phone`, `type`, `salaryBase`, `name`, `username`, `password`) VALUES 
-(1, '0584822138', 'admin', 10000000, 'John', 'john123', '123456')
-;
+-- INSERT INTO `staff` (`id`, `phone`, `type`, `salaryBase`, `name`, `username`, `password`) VALUES 
+-- (1, '0584822138', 'admin', 10000000, 'John', 'john123', '123456')
+-- ;
 
 CREATE TABLE `schedule`(
     `staff` int(11) NOT NULL,
@@ -107,8 +108,8 @@ CREATE TABLE `schedule`(
     FOREIGN KEY (shift) REFERENCES shift(number)
 );
 
-INSERT INTO `schedule` VALUES
-(1, 'Monday', 1);
+-- INSERT INTO `schedule` VALUES
+-- (1, 'Monday', 1);
 
 CREATE TABLE chat(
     `id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -135,8 +136,8 @@ CREATE TABLE `order` (
     FOREIGN KEY (staffid) REFERENCES staff(id)
 );
 
-INSERT INTO `order` (`id`, `userid`, `date`, `type`, `price`, `status`, `staffid`) VALUES 
-(1, 1, current_timestamp(), 'online', 100000, 'waiting', 1);
+-- INSERT INTO `order` (`id`, `userid`, `date`, `type`, `price`, `status`, `staffid`) VALUES 
+-- (1, 1, current_timestamp(), 'online', 100000, 'waiting', 1);
 
 CREATE TABLE `goodsInOrder`(
 	`goodID` int(11) NOT NULL,
