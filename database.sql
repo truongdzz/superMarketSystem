@@ -13,7 +13,8 @@ CREATE TABLE `user` (
 	`name` varchar(100) DEFAULT NULL,
 	`username` varchar(250) DEFAULT NULL,
 	`password` varchar(250) DEFAULT NULL,
-	`role` varchar(20) DEFAULT NULL
+	`role` varchar(20) DEFAULT NULL,
+	`refreshToken` text DEFAULT NULL
 );
 
 -- INSERT INTO `user` VALUES
@@ -91,7 +92,8 @@ CREATE TABLE `staff` (
 	`salaryBase` int(25) DEFAULT NULL,
     	`name` varchar(55) DEFAULT NULL,
     	`username` varchar(250) NOT NULL,
-    	`password` varchar(250) NOT NULL
+    	`password` varchar(250) NOT NULL,
+	`refreshToken` text DEFAULT NULL
 );
 
 -- INSERT INTO `staff` (`id`, `phone`, `type`, `salaryBase`, `name`, `username`, `password`) VALUES 
