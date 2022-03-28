@@ -58,13 +58,13 @@ const handleNewStaff = async (req, res) => {
         //hash the password
         const hashedPwd = await bcrypt.hash(password, 10);
         //create new user
-        const newStaff = new Staff(
+        const newStaff = 
             {
+                name: username,
                 username: username,
                 password: hashedPwd,
                 role: role
             }
-        );
 
         //write to db
         Staff.createStaff(newStaff, (err, data)=>{
