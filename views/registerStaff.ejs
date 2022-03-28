@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="/truong/staffLogin.css">
+</head>
+<body>
+    <div class="loginForm">
+        <form action="/register/staff" method="POST">
+            <div class="formHeader">
+                <h1>Register</h1>
+            </div>
+            <label for="user">Username or phone number:</label>
+            <input name="username" id="user" type="text" placeholder="Username"required>
+            <label for="">Password:</label>
+            <input name="password" id="password" type="password" placeholder="Password" required>
+            <label for="">Role</label>
+            <select name="role" id="">
+                <option value="admin">Admin</option>
+                <option value="cashier">Cashier</option>
+                <option value="staff">Staff</option>
+            </select>
+            <!-- <label for="password2">Enter password again:</label>
+            <input name="password2" type="password" id="password2" placeholder="Password again"> -->
+            <button type="submit" class="btn">Register</button>
+        </form>
+    </div>
+</body>
+</html>

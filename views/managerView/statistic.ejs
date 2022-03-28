@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="/truong/adminpanel.css">
+  <link rel="stylesheet" href="/truong/statistic.css">
+  <script src="/truong/echarts.js"></script>
+</head>
+
+<body>
+  <div class="container">
+
+    <!-- navigation -->
+    <div class="navigation">
+      <ul>
+        <li>
+          <a href="">
+            <span class="icon">
+              <ion-icon name="logo-apple"></ion-icon>
+            </span>
+            <span class="title">Brand name</span>
+          </a>
+        </li>
+        <li class="">
+          <a href="/admin">
+            <span class="icon">
+              <ion-icon name="home-outline"></ion-icon>
+            </span>
+            <span class="title">Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a href="">
+            <span class="icon">
+              <ion-icon name="person-outline"></ion-icon>
+            </span>
+            <span class="title">HR Management</span>
+          </a>
+        </li>
+        <li class="active">
+          <a href="/admin/statistic">
+            <span class="icon">
+              <ion-icon name="trending-up-outline"></ion-icon>
+            </span>
+            <span class="title">Statistic</span>
+          </a>
+        </li>
+        <li>
+          <a href="">
+            <span class="icon">
+              <ion-icon name="chatbubble-outline"></ion-icon>
+            </span>
+            <span class="title">Message</span>
+          </a>
+        </li>
+        <li>
+          <a href="">
+            <span class="icon">
+              <ion-icon name="settings-outline"></ion-icon>
+            </span>
+            <span class="title">Settings</span>
+          </a>
+        </li>
+        <li>
+          <a href="">
+            <span class="icon">
+              <ion-icon name="lock-closed-outline"></ion-icon>
+            </span>
+            <span class="title">Password</span>
+          </a>
+        </li>
+        <li>
+          <a href="/logout/staff">
+            <span class="icon">
+              <ion-icon name="log-out-outline"></ion-icon>
+            </span>
+            <span class="title">Sign out</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- main -->
+    <div class="main">
+      <!-- topbar -->
+      <div class="topbar">
+        <div class="toggle">
+          <ion-icon name="menu-outline"></ion-icon>
+        </div>
+        <!-- search -->
+        <div class="search">
+          <label>
+            <input type="text" placeholder="Search here">
+            <ion-icon name="search-outline"></ion-icon>
+          </label>
+        </div>
+        <!-- user image -->
+        <div class="user">
+          <img src="/truong/img/user.jpg" alt="User">
+
+        </div>
+      </div>
+
+      <div class="mainCard">
+        <div class="cardHeader">
+          <h1>Business Statistic</h1>
+          <div>
+            <span>From:</span>
+            <input type="date" id="fromdate">
+          </div>
+          <div>
+            <span>To:</span>
+            <input type="date" id="todate">
+          </div>
+          <div>
+            <span>Step:</span>
+            <select name="" id="step">
+              <option value="1">1 hour</option>
+              <option value="6">6 hours</option>
+              <option value="24" selected>24 hours</option>
+              <option value="168">1 week</option>
+              <option value="720">30 days</option>
+            </select>
+          </div>
+        </div>
+        <div class="chartCard" style="height: 500px; width: 100%;">
+          <div class="mainChart">
+            <div id="business" style="width: 100%; height: 100%;"></div>
+          </div>
+          <div class="sideChart">
+            <div id="leadProduct" style="width: 100%; height: 49%;"></div>
+            <div id="leadCategory" style="width: 100%; height: 49%;"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+
+  <script>
+    //menu toggle
+    let toggle = document.querySelector('.toggle');
+    let main = document.querySelector('.main');
+    let navigation = document.querySelector('.navigation');
+
+    toggle.onclick = function () {
+      navigation.classList.toggle('active');
+      main.classList.toggle('active');
+    }
+
+    //add hovered class for selected list item
+    let list = document.querySelectorAll('.navigation li');
+    function hoveredLink() {
+      this.classList.add('hovered');
+    }
+    function unhoveredLink() {
+      this.classList.remove('hovered')
+    }
+    list.forEach((item) => {
+      item.addEventListener('mouseover', hoveredLink);
+      item.addEventListener('mouseleave', unhoveredLink);
+    });
+
+
+  </script>
+
+  <script>
+    const from = document.getElementById("fromdate");
+    const to = document.getElementById("todate");
+    const step = document.getElementById("step");
+    from.addEventListener("change", update);
+    to.addEventListener("change", update);
+    step.addEventListener("change", update);
+
+    let data1;
+
+
+    var chartDom1 = document.getElementById('business');
+    var myChart1 = echarts.init(chartDom1);
+
+    window.onresize = function () {
+      myChart1.resize();
+    };
+
+    var option1;
+
+    option1 = {
+      title: {
+        text: 'Buy and Sales'
+      },
+      tooltip: {
+        trigger: 'axis'
+      },
+      legend: {
+        data: ['Buy', 'Sell']
+      },
+      toolbox: {
+        show: true,
+        feature: {
+          dataView: { show: true, readOnly: false },
+          magicType: { show: true, type: ['line', 'bar'] },
+          restore: { show: true },
+          saveAsImage: { show: true }
+        }
+      },
+      calculable: true,
+      xAxis: [
+        {
+          type: 'category',
+          // prettier-ignore
+          data: ["one", "two", "three"],
+        }
+      ],
+      yAxis: [
+        {
+          type: 'value'
+        }
+      ],
+      series: [
+        {
+          name: 'Buy',
+          type: 'bar',
+          data: [1, 2, 3],
+          markPoint: {
+            data: [
+              { type: 'max', name: 'Max' },
+              { type: 'min', name: 'Min' }
+            ]
+          },
+          markLine: {
+            data: [{ type: 'average', name: 'Avg' }]
+          }
+        },
+        {
+          name: 'Sell',
+          type: 'bar',
+          data: [2, 3, 4],
+          markPoint: {
+            data: [
+              { type: 'max', name: 'Max' },
+              { type: 'min', name: 'Min' }
+            ]
+          },
+          markLine: {
+            data: [{ type: 'average', name: 'Avg' }]
+          }
+        }
+      ]
+    };
+
+    option1.color = [
+      '#999',
+      '#287bff'
+    ]
+
+    option1 && myChart1.setOption(option1);
+
+    const xhttp1 = new XMLHttpRequest();
+    xhttp1.onload = function () {
+      console.log(this.responseText);
+      if (this.responseText) {
+        data1 = JSON.parse(this.responseText);
+        option1.xAxis[0].data = data1.data;
+        option1.series[0].data = data1.buyValue;
+        option1.series[1].data = data1.sellValue;
+        myChart1.setOption(option1);
+      }
+    }
+
+    function update() {
+      if (from.value && to.value) {
+        const fromdate = new Date(from.value).getTime();
+        const todate = new Date(to.value).getTime();
+        const url1 = "/admin/businessStatistic?from=" + fromdate + "&to=" + todate + "&step=" + (step.value * 60 * 60 * 1000);
+        xhttp1.open("GET", url1);
+        xhttp1.send();
+        const url2 = "/admin/leadProduct?from=" + fromdate + "&to=" + todate;
+        xhttp2.open("GET", url2);
+        xhttp2.send();
+        const url3 = "/admin/leadCategory?from=" + fromdate + "&to=" + todate;
+        xhttp3.open("GET", url3);
+        xhttp3.send();
+      }
+    }
+    
+
+  </script>
+
+  <script>
+
+    var chartDom2 = document.getElementById('leadProduct');
+    var myChart2 = echarts.init(chartDom2);
+
+    window.onresize = function () {
+      myChart2.resize();
+    };
+
+    var option2;
+
+    option2 = {
+      color: [
+        '#1758c2'
+      ],
+      title: {
+        text: 'Lead Products'
+      },
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          type: 'shadow'
+        }
+      },
+      legend: {},
+      grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+      },
+      xAxis: {
+        type: 'value',
+        boundaryGap: [0, 0.01],
+        axisLabel: { interval: 0, rotate: 30 }
+      },
+      yAxis: {
+        type: 'category',
+        data: ['1', '2', '3', '4', '5', '6']
+      },
+      series: [
+        {
+          type: 'bar',
+          data: [19325, 23438, 31000, 121594, 134141, 681807]
+        }
+      ]
+    };
+
+    option2 && myChart2.setOption(option2);
+
+    const xhttp2 = new XMLHttpRequest();
+    xhttp2.onload = function () {
+      console.log(this.responseText);
+      if (this.responseText) {
+        const data2 = JSON.parse(this.responseText);
+        option2.yAxis.data = data2.data;
+        option2.series[0].data = data2.value;
+        myChart2.setOption(option2);
+      }
+    }
+
+    
+
+  </script>
+
+  <script>
+
+
+    var chartDom = document.getElementById('leadCategory');
+    var myChart = echarts.init(chartDom);
+    window.onresize = function () {
+      myChart.resize();
+    };
+    var option;
+
+    option = {
+      color: [
+        '#37A2DA',
+        '#32C5E9',
+        '#67E0E3',
+        '#9FE6B8',
+        '#FFDB5C',
+        '#ff9f7f',
+        '#fb7293',
+        '#E062AE',
+        '#E690D1',
+        '#e7bcf3',
+        '#9d96f5',
+        '#8378EA',
+        '#96BFFF'
+      ],
+      title: {
+        text: 'Lead Category',
+        left: 'center'
+      },
+      tooltip: {
+        trigger: 'item',
+        formatter: '{a} <br/>{b} : {c} ({d}%)'
+      },
+
+      series: [
+        {
+          type: 'pie',
+          radius: '65%',
+          center: ['50%', '50%'],
+          selectedMode: 'single',
+          data: [
+            { value: 1548, name: 'CityE' },
+            { value: 735, name: 'CityC' },
+            { value: 510, name: 'CityD' },
+            { value: 434, name: 'CityB' },
+            { value: 335, name: 'CityA' }
+          ],
+          emphasis: {
+            itemStyle: {
+              shadowBlur: 10,
+              shadowOffsetX: 0,
+              shadowColor: 'rgba(0, 0, 0, 0.5)'
+            }
+          }
+        }
+      ]
+    };
+
+    option && myChart.setOption(option);
+
+    const xhttp3 = new XMLHttpRequest();
+    xhttp3.onload = function () {
+      console.log(this.responseText);
+      if (this.responseText) {
+        const data3 = JSON.parse(this.responseText);
+        option.series[0].data = data3;
+        myChart.setOption(option);
+      }
+    }
+
+  </script>
+</body>
+
+</html>

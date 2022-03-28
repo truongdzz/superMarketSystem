@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cashier</title>
+    <link rel="stylesheet" href="/truong/adminpanel.css">
+    <link rel="stylesheet" href="/truong/cashier.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <!-- navigation -->
+        <div class="navigation">
+            <ul>
+                <li>
+                    <a href="">
+                        <span class="icon">
+                            <ion-icon name="logo-apple"></ion-icon>
+                        </span>
+                        <span class="title">Brand name</span>
+                    </a>
+                </li>
+                <li class="active">
+                    <a href="/cashier">
+                        <span class="icon">
+                            <ion-icon name="home-outline"></ion-icon>
+                        </span>
+                        <span class="title">Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <span class="icon">
+                            <ion-icon name="chatbubble-outline"></ion-icon>
+                        </span>
+                        <span class="title">Message</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <span class="icon">
+                            <ion-icon name="settings-outline"></ion-icon>
+                        </span>
+                        <span class="title">Settings</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <span class="icon">
+                            <ion-icon name="newspaper-outline"></ion-icon>
+                        </span>
+                        <span class="title">Infomation</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/logout/staff">
+                        <span class="icon">
+                            <ion-icon name="log-out-outline"></ion-icon>
+                        </span>
+                        <span class="title">Sign out</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- main -->
+        <div class="main">
+            <!-- topbar -->
+            <div class="topbar">
+                <div class="toggle">
+                    <ion-icon name="menu-outline"></ion-icon>
+                </div>
+                <!-- search -->
+                <div class="search">
+                    <label>
+                        <input type="text" placeholder="Search here">
+                        <ion-icon name="search-outline"></ion-icon>
+                    </label>
+                </div>
+                <!-- user image -->
+                <div class="user">
+                    <img src="/truong/img/user.jpg" alt="User">
+
+                </div>
+            </div>
+
+            <div class="mainCard">
+                <div class="cardHeader">
+                    <h1>New Bill</h1>
+                    <div class="searchBar">
+                        <input type="text" id="searchBar" placeholder="Search product">
+                        <ion-icon class="kinhlup" name="search-outline"></ion-icon>
+                        <ion-icon id="remove" name="close-outline"></ion-icon>
+                        <div class="result hide">
+                            <table class="container">
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="cardContent">
+                    <div class="bill">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <td>Image</td>
+                                    <td>Product name</td>
+                                    <td>Amount</td>
+                                </tr>
+                            </thead>
+                            <tbody id="billBody">
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="info">
+                        <div class="customer">
+                            <ion-icon name="person-circle-outline"></ion-icon>
+                            <div class="userInfo">
+                                <h2>User Info</h2>
+                                <div>
+                                    <input type="text" id="phone" placeholder="Customer phone">
+                                    <ion-icon name="call-outline"></ion-icon>
+                                </div>
+
+                                <p>Username: </p>
+                                
+                                <input type="text" id="username" onchange="setUser()">
+
+                                <p>Point:</p>
+                                <p id="point">0</p>
+                                <div>
+                                    <input type="checkbox" id="use">
+                                    <label for="use">Use</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="checkout">
+                            <p>Price:</p>
+                            <p id="price">0 Đ</p>
+                            <p>Discount:</p>
+                            <p id="discount">0 Đ</p>
+                            <p>Discount by Point:</p>
+                            <p id="pointDiscount">0 Đ</p>
+                            <p>Total Price:</p>
+                            <p id="total">0 Đ</p>
+                        </div>
+                        <div class="print">
+                            <button id="checkout" onclick="checkout()">Print</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+
+    <script>
+        //menu toggle
+        let toggle = document.querySelector('.toggle');
+        let main = document.querySelector('.main');
+        let navigation = document.querySelector('.navigation');
+
+        toggle.onclick = function () {
+            navigation.classList.toggle('active');
+            main.classList.toggle('active');
+        }
+
+        //add hovered class for selected list item
+        let list = document.querySelectorAll('.navigation li');
+        function hoveredLink() {
+            this.classList.add('hovered');
+        }
+        function unhoveredLink() {
+            this.classList.remove('hovered')
+        }
+        list.forEach((item) => {
+            item.addEventListener('mouseover', hoveredLink);
+            item.addEventListener('mouseleave', unhoveredLink);
+        });
+
+
+
+        let userInfo = null;
+        let allProduct;
+        let foundProduct;
+        let addedProduct = [];
+
+        const xhttp1 = new XMLHttpRequest();
+        xhttp1.onload = function () {
+            allProduct = JSON.parse(this.responseText);
+        }
+        const url1 = "/cashier/getAllProduct";
+        xhttp1.open("GET", url1, true);
+        xhttp1.send();
+
+        const xhttp2 = new XMLHttpRequest();
+        xhttp2.onload = function () {
+            const username = document.getElementById("username");
+            const point = document.getElementById("point");
+            if (this.responseText != "") {
+                userInfo = JSON.parse(this.responseText);
+                username.value = userInfo.name;
+                point.innerText = userInfo.point;
+                evaluate();
+            } else {
+                username.value = "Not exist";
+                point.innerText = "0";
+            }
+        }
+        const phone = document.getElementById("phone");
+        phone.addEventListener("change", () => {
+            const url2 = "/cashier/getUserInfo?phone=" + phone.value;
+            xhttp2.open("GET", url2);
+            xhttp2.send();
+        })
+
+        const usePointDiscount = document.getElementById("use");
+        usePointDiscount.addEventListener("change", evaluate);
+
+        const searchBar = document.getElementById("searchBar");
+        searchBar.addEventListener("keyup", find);
+
+
+        const result = document.getElementsByClassName("result")[0];
+        const container = document.getElementsByClassName("container")[1];
+        const billBody = document.getElementById("billBody");
+
+        const removeSearchBar = document.getElementById("remove");
+        removeSearchBar.addEventListener("click", () => {
+            searchBar.value = "";
+            result.classList.add("hide");
+        })
+
+        function find() {
+            if (!searchBar.value) {
+                result.classList.add("hide");
+                return;
+            }
+            foundProduct = allProduct.filter(product => {
+                const a = product.name.indexOf(searchBar.value);
+                const b = String(product.id).indexOf(searchBar.value);
+                if (a !== -1 || b !== -1) return true;
+                else return false;
+            })
+            if (!foundProduct.length) {
+                container.innerHTML = `No result`;
+                return;
+            }
+            console.log(foundProduct);
+            container.innerHTML = "";
+            for (let index = 0; index < foundProduct.length; index++) {
+                const product = foundProduct[index];
+                container.innerHTML += `<tr><td><img src=\"/truong/img/user.jpg\" alt=\"\"></td><td>${product.name}</td><td>${product.amount}</td><td><button id=\"${product.id}\" class=\"choice\">Select</button></td></tr>`;
+            }
+            result.classList.remove("hide");
+            const choices = document.getElementsByClassName("choice");
+            for (let index = 0; index < choices.length; index++) {
+                const choice = choices[index];
+                choice.addEventListener("click", function (evt) {
+                    console.log(evt.srcElement.id);
+                    if (!addedProduct.find(product => product.id === Number(evt.srcElement.id))) {
+                        const newProduct = foundProduct.find(product => product.id === Number(evt.srcElement.id));
+                        const otherProduct = JSON.parse(JSON.stringify(newProduct));
+                        otherProduct.amount = 1;
+                        addedProduct = [...addedProduct, otherProduct];
+                        reloadBill();
+                    }
+                })
+            }
+        }
+
+        function plus(id) {
+            addedProduct.map(product => {
+                if (product.id === Number(id)) {
+                    product.amount += 1;
+                    return product;
+                } else {
+                    return product;
+                }
+            })
+            reloadBill();
+        }
+
+        function minus(id) {
+            addedProduct.map(product => {
+                if (product.id === Number(id)) {
+                    if (product.amount !== 0) {
+                        product.amount -= 1;
+                        return product;
+                    }
+                } else {
+                    return product;
+                }
+            })
+            reloadBill();
+        }
+
+        function remove(id) {
+            addedProduct = addedProduct.filter(product => {
+                if (product.id === Number(id)) {
+                    return false;
+                } else return true;
+            })
+            reloadBill();
+        }
+
+        function reloadBill() {
+            billBody.innerHTML = "";
+            for (let index = 0; index < addedProduct.length; index++) {
+                const product = addedProduct[index];
+                billBody.innerHTML += `<tr>
+                                    <td>
+                                        <img src="/truong/img/user.jpg" alt="">
+                                    </td>
+                                    <td>
+                                        ${product.name}
+                                    </td>
+                                    <td>
+                                        <div>
+                                            <ion-icon onclick="minus(${product.id})"  name="remove-outline"></ion-icon>
+                                            <input type="number" value="${product.amount}" min="0">
+                                            <ion-icon onclick="plus(${product.id})"  name="add-outline"></ion-icon>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <ion-icon onclick="remove(${product.id})"  name="close-circle-outline"></ion-icon>
+                                    </td>
+                                </tr>`;
+            }
+            evaluate();
+        }
+
+        function evaluate() {
+            const price = document.getElementById("price");
+            const discount = document.getElementById("discount");
+            const pointDiscount = document.getElementById("pointDiscount");
+            const total = document.getElementById("total");
+            let priceValue = 0;
+            let discountValue = 0;
+            let pointDiscountValue;
+            if (usePointDiscount.checked) {
+                pointDiscountValue = userInfo.point * 100;
+            } else {
+                pointDiscountValue = 0;
+            }
+            let totalValue = 0;
+            for (let index = 0; index < addedProduct.length; index++) {
+                const product = addedProduct[index];
+                priceValue += product.sellPrice * product.amount;
+                discountValue += product.sellPrice * product.discount;
+                totalValue += priceValue - discountValue
+            }
+            if (usePointDiscount.checked) {
+                totalValue -= pointDiscountValue;
+            }
+            price.innerText = priceValue + " Đ";
+            discount.innerText = discountValue + " Đ";
+            pointDiscount.innerText = pointDiscountValue + " Đ";
+            total.innerText = totalValue + " Đ";
+        }
+
+        const xhttp3 = new XMLHttpRequest();
+        xhttp3.onload = function () {
+            if (this.responseText) {
+                const result = JSON.parse(this.responseText);
+                alert(result.message);
+            }
+        }
+
+        function checkout() {
+            const tongtien = document.getElementById("total");
+            if (tongtien.innerText === "0 Đ") {
+                alert("Nothing in the bill to checkout!")
+            } else {
+                const url3 = "/cashier/checkout";
+                const data = "data=" + JSON.stringify(addedProduct) + "&userInfo=" + JSON.stringify(userInfo);
+                xhttp3.open("POST", url3);
+                xhttp3.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                xhttp3.send(data);
+            }
+        }
+    
+        function setUser(){
+            const username = document.getElementById("username");
+            userInfo = {
+                name: username.value,
+                username: phone.value,
+                phone: phone.value,
+                password: phone.value,
+                role: "user",
+                newUser: true
+            };
+        }
+    </script>
+
+</body>
+
+</html>

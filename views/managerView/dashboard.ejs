@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="truong/adminpanel.css">
+</head>
+<body>
+  <div class="container">
+
+    <!-- navigation -->
+    <div class="navigation">
+      <ul>
+        <li>
+          <a href="">
+            <span class="icon"><ion-icon name="logo-apple"></ion-icon></span>
+            <span class="title">Brand name</span>
+          </a>
+        </li>
+        <li class="active">
+          <a href="/admin">
+            <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
+            <span class="title">Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a href="">
+            <span class="icon"><ion-icon name="person-outline"></ion-icon></span>
+            <span class="title">HR Management</span>
+          </a>
+        </li>
+        <li>
+          <a href="/admin/statistic">
+            <span class="icon">
+              <ion-icon name="trending-up-outline"></ion-icon>
+            </span>
+            <span class="title">Statistic</span>
+          </a>
+        </li>
+        <li>
+          <a href="">
+            <span class="icon"><ion-icon name="chatbubble-outline"></ion-icon></span>
+            <span class="title">Message</span>
+          </a>
+        </li>
+        <li>
+          <a href="">
+            <span class="icon"><ion-icon name="settings-outline"></ion-icon></span>
+            <span class="title">Settings</span>
+          </a>
+        </li>
+        <li>
+          <a href="">
+            <span class="icon"><ion-icon name="lock-closed-outline"></ion-icon></span>
+            <span class="title">Password</span>
+          </a>
+        </li>
+        <li>
+          <a href="/logout/staff">
+            <span class="icon"><ion-icon name="log-out-outline"></ion-icon></span>
+            <span class="title">Sign out</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- main -->
+    <div class="main">
+      <!-- topbar -->
+      <div class="topbar">
+        <div class="toggle">
+          <ion-icon name="menu-outline"></ion-icon>
+        </div>
+        <!-- search -->
+        <div class="search">
+          <label>
+            <input type="text" placeholder="Search here">
+            <ion-icon name="search-outline"></ion-icon>
+          </label>
+        </div>
+        <!-- user image -->
+        <div class="user">
+          <img src="truong/img/user.jpg" alt="User">
+          
+        </div>
+      </div>
+      <!-- card -->
+      <div class="cardBox">
+
+        <div class="card">
+          <div>
+            <div class="number"><%= data.totalSales %> Đ</div>
+            <div class="cardName">Total Sales</div>
+          </div>
+          <div class="iconBox">
+            <ion-icon name="cart-outline"></ion-icon>
+            <small>Last 24h</small>
+          </div>
+        </div>
+
+        <div class="card">
+          <div>
+            <div class="number"><%= data.totalExpenses%> Đ</div>
+            <div class="cardName">Total Expenses</div>
+          </div>
+          <div class="iconBox">
+            <ion-icon name="bar-chart-outline"></ion-icon>
+            <small>Last 24h</small>
+          </div>
+        </div>
+
+        <div class="card">
+          <div>
+            <div class="number"><%= data.totalIncomes %> Đ</div>
+            <div class="cardName">Total Incomes</div>
+          </div>
+          <div class="iconBox">
+            <ion-icon name="cash-outline"></ion-icon>
+            <small>Last 24h</small>
+          </div>
+        </div>
+
+        <div class="card">
+          <div>
+            <div class="number"><%= data.newOrders %></div>
+            <div class="cardName">New orders</div>
+          </div>
+          <div class="iconBox">
+            <ion-icon name="newspaper-outline"></ion-icon>
+            <small>Last 24h</small>
+          </div>
+        </div>
+      </div>
+
+      <!-- detail -->
+      <div class="details">
+        <!-- order list -->
+        <div class="recentOrders">
+          <div class="cardHeader">
+            <h2>Recent Orders</h2>
+            <a href="" class="btn">View All</a>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <td>ID</td>
+                <td>Price</td>
+                <td>Type</td>
+                <td>Status</td>
+              </tr>
+            </thead>
+            <tbody>
+              <% data.ordersInfo.forEach(function(order){ %>
+                <tr>
+                  <td>
+                    <%= order.id %>
+                  </td>
+                  <td>
+                    <%= order.price %>
+                  </td>
+                  <td>
+                    <%= order.type %>
+                  </td>
+                  <td>
+                    <span class="status <%= order.status %>"><%= order.status %></span>
+                  </td>
+                </tr>
+              <%}) %>
+              <tr>
+                <td>Star refrigerator</td>
+                <td>$1200</td>
+                <td>Paid</td>
+                <td><span class="status delivered">Delivered</span></td>
+              </tr>
+              <tr>
+                <td>Star refrigerator</td>
+                <td>$1200</td>
+                <td>Paid</td>
+                <td><span class="status inprogress">In progress</span></td>
+              </tr>
+              <tr>
+                <td>Star refrigerator</td>
+                <td>$1200</td>
+                <td>Paid</td>
+                <td><span class="status delivered">Delivered</span></td>
+              </tr>
+              <tr>
+                <td>Star refrigerator</td>
+                <td>$1200</td>
+                <td>Paid</td>
+                <td><span class="status return">Return</span></td>
+              </tr>
+              <tr>
+                <td>Star refrigerator</td>
+                <td>$1200</td>
+                <td>Paid</td>
+                <td><span class="status delivered">Delivered</span></td>
+              </tr>
+              <tr>
+                <td>Star refrigerator</td>
+                <td>$1200</td>
+                <td>Paid</td>
+                <td><span class="status pending">Pending</span></td>
+              </tr>
+              <tr>
+                <td>Star refrigerator</td>
+                <td>$1200</td>
+                <td>Paid</td>
+                <td><span class="status delivered">Delivered</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- salesAnalytic -->
+        <div class="salesAnalytic">
+          <div class="cardHeader">
+            <h2>Sales Analytic</h2>
+          </div>
+          <!-- <table>
+            <tr>
+              <td width="60px"><div class="imgBox"><img src="truong/img/img1.jpg" alt=""></div></td>
+              <td><h4>David<br><span>Italy</span></h4></td>
+            </tr>
+            <tr>
+              <td width="60px"><div class="imgBox"><img src="truong/img/img2.jpg" alt=""></div></td>
+              <td><h4>Mohamed<br><span>Sala</span></h4></td>
+            </tr>
+            <tr>
+              <td width="60px"><div class="imgBox"><img src="truong/img/img3.jpg" alt=""></div></td>
+              <td><h4>Lionel<br><span>Messi</span></h4></td>
+            </tr>
+            <tr>
+              <td width="60px"><div class="imgBox"><img src="truong/img/img4.jpg" alt=""></div></td>
+              <td><h4>David<br><span>Degea</span></h4></td>
+            </tr>
+            <tr>
+              <td width="60px"><div class="imgBox"><img src="truong/img/img5.jpg" alt=""></div></td>
+              <td><h4>Killian<br><span>Mbappe</span></h4></td>
+            </tr>
+            <tr>
+              <td width="60px"><div class="imgBox"><img src="truong/img/img6.jpg" alt=""></div></td>
+              <td><h4>Xavi<br><span>Iniesta</span></h4></td>
+            </tr>
+            <tr>
+              <td width="60px"><div class="imgBox"><img src="truong/img/img7.jpg" alt=""></div></td>
+              <td><h4>David<br><span>Italy</span></h4></td>
+            </tr>
+            
+          </table> -->
+          <table>
+            <tr>
+              <td>
+                <div>
+                  <ion-icon name="cart"></ion-icon>
+                  <div>
+                    <p>Online orders</p>
+                    <small>Last 24h</small>
+                  </div>
+                </div>
+              </td>
+              <td id="onlinePercent"><span id="onl"></span><%= data.analytic.onlinePercent %>%</td>
+              <td><%= data.analytic.online24 %></td>
+            </tr>
+            <tr>
+              <td>
+                <div>
+                  <ion-icon name="bag-handle"></ion-icon>
+                  <div>
+                    <p>Offline orders</p>
+                    <small>Last 24h</small>
+                  </div>
+                </div>
+              </td>
+              <td class="" id="offlinePercent"><span id="off"></span><%= data.analytic.offlinePercent %>%</td>
+              <td><%= data.analytic.offline24 %></td>
+            </tr>
+            <tr>
+              <td>
+                <div>
+                  <ion-icon name="people"></ion-icon>
+                  <div>
+                    <p>New customers</p>
+                    <small>Last 24h</small>
+                  </div>
+                </div>
+              </td>
+              <td id="userPercent"><span id="user"></span><%= data.analytic.userPercent %>%</td>
+              <td><%= data.analytic.user24 %></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  
+  <script>
+    
+
+    //menu toggle
+    let toggle = document.querySelector('.toggle');
+    let main = document.querySelector('.main');
+    let navigation = document.querySelector('.navigation');
+
+    toggle.onclick = function(){
+      navigation.classList.toggle('active');
+      main.classList.toggle('active');
+    }
+
+    //add hovered class for selected list item
+    let list = document.querySelectorAll('.navigation li');
+    function hoveredLink(){
+      this.classList.add('hovered');
+    }
+    function unhoveredLink(){
+      this.classList.remove('hovered')
+    }
+    list.forEach((item)=>{
+      item.addEventListener('mouseover', hoveredLink);
+      item.addEventListener('mouseleave', unhoveredLink);
+    });
+
+    const onlinePercent = document.getElementById("onlinePercent");
+    const onlineSpan = document.getElementById("onl");
+    const onlPercent = Number(onlinePercent.innerText.replace("%", ""));
+    if(onlPercent >= 0){
+      onlineSpan.innerText = "+";
+    }
+    if(onlPercent >= 0 && onlPercent < 20){
+      onlinePercent.classList.add("ok");
+    } else if(onlPercent >= 20){
+      onlinePercent.classList.add("good");
+    } else {
+      onlinePercent.classList.add("bad")
+    }
+
+    const offLinePercent = document.getElementById("offlinePercent");
+    const offlineSpan = document.getElementById("off");
+    const offPercent = Number(offlinePercent.innerText.replace("%", ""));
+    if (offPercent >= 0) {
+      offlineSpan.innerText = "+";
+    }
+    if(offPercent >=0 && offPercent < 20){
+      offlinePercent.classList.add("ok");
+    } else if(offPercent >= 20 ){
+      offlinePercent.classList.add("good");
+    } else{
+      offlinePercent.classList.add("bad");
+    }
+
+    const userPercent = document.getElementById("userPercent");
+    const userSpan = document.getElementById("user");
+    const percent = Number(userPercent.innerText.replace("%", ""));
+    if(percent >= 0){
+      userSpan.innerText = "+";
+    }
+    if(percent > 0 && percent < 20){
+      userPercent.classList.add("ok");
+    } else if(percent >= 20){
+      userPercent.classList.add("good");
+    } else {
+      userPercent.classList.add("bad");
+    }
+  </script>
+</body>
+</html>

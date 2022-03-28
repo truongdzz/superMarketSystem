@@ -1,0 +1,268 @@
+:root
+{
+    --blue: #287bff;
+    --white: #fff;
+    --grey: #f5f5f5;
+    --black1: #222;
+    --black2: #999;
+    --cardBackground: #F7F7F7;
+}
+
+body{
+    position: relative;
+}
+
+.main{
+    padding: 20px;
+    position: relative;
+}
+
+.main .mainCard{
+    margin-top: 60px;
+    position: relative;
+    width: 100%;
+    padding: 20px;
+    background: #F7F7F7;
+    border-radius: 20px;
+    box-shadow: 0px 0px 25px rgba(0,0,0,0.5);
+}
+
+.main .mainCard .cardHeader{
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--black2);
+    position: relative;
+}
+
+.main .mainCard .cardHeader .searchBar{
+    position: relative;
+    width: 50%;
+}
+
+.main .mainCard .cardHeader .searchBar .result{
+    position: absolute;
+    left: 0px;
+    top: 40px;
+    width: 100%;
+    background-color: var(--white);
+    padding: 10px;
+    border: 1px solid var(--black2);
+    border-radius: 10px;
+    z-index: 1;
+}
+
+.main .mainCard .cardHeader .searchBar .result table tr:hover td{
+    border-bottom: 1px solid var(--black2);
+}
+
+.main .mainCard .cardHeader .searchBar .result table tr td img{
+    width: 40px;
+}
+
+.main .mainCard .cardHeader .searchBar .result table tr td button{
+    width: 100%;
+    height: 30px;
+    padding: 5px 0px;
+    background-color: var(--blue);
+    outline: none;
+    border: none;
+    cursor: pointer;
+    color: var(--white);
+}
+
+.main .mainCard .cardHeader .searchBar .result.hide{
+    display: none;
+}
+
+.main .mainCard .cardHeader .searchBar input{
+    width: 100%;
+    height: 35px;
+    border-radius: 20px;
+    border: 1px solid var(--black1);
+    padding-left: 35px;
+    font-size: 15px;
+    line-height: 35px;
+}
+
+.main .mainCard .cardHeader .searchBar .kinhlup{
+    position: absolute;
+    left: 10px;
+    top: 8px;
+    font-size: 20px;
+    font-weight: 400;
+}
+
+#remove{
+    position: absolute;
+    right: 10px;
+    top: 8px;
+    font-size: 20px;
+    font-weight: 400;
+    cursor: pointer;
+}
+
+.main .mainCard .cardContent{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.main .mainCard .cardContent .bill{
+    width: 48%;
+    height: 400px;
+    overflow-y: scroll;
+    background-color: var(--white);
+    border: 2px solid var(--black2);
+    padding: 10px;
+}
+
+.main .mainCard .cardContent .bill table{
+    width: 100%;
+}
+
+.main .mainCard .cardContent .bill table thead tr td{
+    padding-bottom: 20px;
+    text-align: left;
+    font-weight: 500;
+    font-size: 20px;
+}
+
+.main .mainCard .cardContent .bill table tbody tr{
+    box-shadow: 0px 1px 1px var(--black2);
+    
+}
+
+.main .mainCard .cardContent .bill table tbody tr td img{
+    width: 50px;
+}
+
+.main .mainCard .cardContent .bill table tbody tr td:nth-child(3) div{
+    display: flex;
+    align-items: center;
+}
+
+.main .mainCard .cardContent .bill table tbody tr td:nth-child(3) div input{
+    width: 50px;
+    height: 22px;
+    font-size: 18px;
+    line-height: 22px;
+    border: none;
+    text-align: center;
+}
+
+
+.main .mainCard .cardContent .bill table tbody tr td:nth-child(3) div ion-icon{
+    font-size: 20px !important;
+    border: 1px solid var(--black2);
+    cursor: pointer;
+}
+
+.main .mainCard .cardContent .bill table tbody tr td:nth-child(4) ion-icon{
+    cursor: pointer;
+    color: red;
+    font-size: 27px;
+}
+
+.main .mainCard .cardContent .info{
+    width: 48%;
+}
+
+.main .mainCard .cardContent .info .customer{
+    display: flex;
+    
+}
+
+.main .mainCard .cardContent .info .customer ion-icon:first-child{
+    font-size: 200px;
+    color: var(--black2);
+}
+
+.main .mainCard .cardContent .info .customer .userInfo{
+    display: grid;
+    grid-column-gap: 20px;
+    grid-row-gap: 20px;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+#username{
+    border-radius: 10px;
+    border: 1px solid var(--black2);
+    padding: 0px 10px;
+}
+
+.main .mainCard .cardContent .info .customer .userInfo h2{
+    grid-column-start: 1;
+    grid-column-end: 4;
+}
+
+.main .mainCard .cardContent .info .customer .userInfo div{
+    position: relative;
+    grid-column-start: 1;
+    grid-column-end: 4;
+}
+
+.main .mainCard .cardContent .info .customer .userInfo div:nth-child(7){
+    grid-column-start: 3;
+    grid-column-end: 4;
+    display: flex;
+}
+
+.main .mainCard .cardContent .info .customer .userInfo div:nth-child(7) input{
+    height: 16px;
+}
+
+#username{
+    grid-column-start: 2;
+    grid-column-end: 4;
+}
+
+.main .mainCard .cardContent .info .customer .userInfo div:nth-child(2) input{
+    width: 100%;
+    height: 30px;
+    font-size: 15px;
+    border: 1px solid var(--black1);
+    border-radius: 20px;
+    padding-left: 30px;
+}
+
+.main .mainCard .cardContent .info .customer .userInfo div ion-icon{
+    position: absolute;
+    left: 10px;
+    top: 8px;
+}
+
+.main .mainCard .cardContent .info  .checkout{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-top: 20px;
+    background-color: var(--white);
+    border: 1px solid var(--black2);
+    padding: 20px;
+}
+
+.main .mainCard .cardContent .info .checkout p{
+    font-size: 20px;
+}
+
+.main .mainCard .cardContent .info .checkout p:nth-child(2),
+.main .mainCard .cardContent .info .checkout p:nth-child(4),
+.main .mainCard .cardContent .info .checkout p:nth-child(6),
+.main .mainCard .cardContent .info .checkout p:nth-child(8){
+    justify-self: end;
+    color: var(--blue);
+    grid-column-start: 2;
+    grid-column-end: 4;
+}
+
+.main .mainCard .cardContent .info .print{
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.main .mainCard .cardContent .info .print button{
+    width: 100%;
+    height: 30px;
+    font-weight: 600;
+}
