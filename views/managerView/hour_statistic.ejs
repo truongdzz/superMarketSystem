@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin panel</title>
+    <link rel="stylesheet" href="/nguyen/hour_statistic.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <!-- navigation -->
+        <div class="navigation">
+            <ul>
+                <li>
+                    <a href="">
+                        <span class="icon"><ion-icon name="logo-apple"></ion-icon></span>
+                        <span class="title">Brand name</span>
+                    </a>
+                </li>
+                <li class="active">
+                    <a href="">
+                        <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
+                        <span class="title">Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <span class="icon"><ion-icon name="person-outline"></ion-icon></span>
+                        <span class="title">Customer</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <span class="icon"><ion-icon name="chatbubble-outline"></ion-icon></span>
+                        <span class="title">Message</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <span class="icon"><ion-icon name="help-outline"></ion-icon></span>
+                        <span class="title">Help</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <span class="icon"><ion-icon name="settings-outline"></ion-icon></span>
+                        <span class="title">Settings</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <span class="icon"><ion-icon name="lock-closed-outline"></ion-icon></span>
+                        <span class="title">Password</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <span class="icon"><ion-icon name="log-out-outline"></ion-icon></span>
+                        <span class="title">Sign out</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- main -->
+        <div class="main">
+            <!-- topbar -->
+            <div class="topbar">
+                <div class="toggle">
+                    <ion-icon name="menu-outline"></ion-icon>
+                </div>
+                <!-- search -->
+                <div class="search">
+                    <label>
+                        <input type="text" placeholder="Search here">
+                        <ion-icon name="search-outline"></ion-icon>
+                    </label>
+                </div>
+                <!-- user image -->
+                <div class="user">
+                    <img src="../../public/truong/img/user.jpg" alt="User">
+
+                </div>
+            </div>
+            <!-- card -->
+            <div class="cardBox">
+                <a href="#gotoviewstaff" class="card">
+                    <span class="tooltiptext">Click to go to staff manager</span>
+                    <div>
+                        <div class="number">5,248</div>
+                        <div class="cardName">Staffs</div>
+                    </div>
+                    <div class="iconBox">
+                        <ion-icon name="person-outline"></ion-icon>
+                    </div>
+                </a>
+                <a href="#gotostatistic" class="card">
+                    <span class="tooltiptext">Click to go to Hour Statistics</span>
+                    <div>
+                        <div class="number">40,000</div>
+                        <div class="cardName">Total working hour</div>
+                    </div>
+                    <div class="iconBox">
+                        <ion-icon name="time-outline"></ion-icon>
+                    </div>
+                </a>
+                <!-- <div class="card">
+          <div>
+            <div class="number">280</div>
+            <div class="cardName">Comments</div>
+          </div>
+          <div class="iconBox"><ion-icon name="chatbubbles-outline"></ion-icon></div>
+        </div>
+
+        <div class="card">
+          <div>
+            <div class="number">$4,562</div>
+            <div class="cardName">Earnings</div>
+          </div>
+          <div class="iconBox"><ion-icon name="cash-outline"></ion-icon></div>
+        </div> -->
+            </div>
+
+
+            <div class="graphBox">
+                <div class="box">
+                    <canvas id="myChart" width="1000" height="400"></canvas>
+                </div>
+                <div class="box">
+                    <h2>Statistics</h2>
+
+                    <p>Total working hour this month: 50,000 hrs</p>
+                    <p>&rarr; Increase: 5%</p>
+                    <p>Total Absences: 15</p>
+                    <p>&rarr; Increase: 35%</p>
+                </div>
+            </div>
+
+            <!-- detail -->
+
+        </div>
+    </div>
+
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+    <script src="/nguyen/my_chart.js"></script>
+    <script>
+        //menu toggle
+        let toggle = document.querySelector('.toggle');
+        let main = document.querySelector('.main');
+        let navigation = document.querySelector('.navigation');
+
+        toggle.onclick = function() {
+            navigation.classList.toggle('active');
+            main.classList.toggle('active');
+        }
+
+        //add hovered class for selected list item
+        let list = document.querySelectorAll('.navigation li');
+
+        function hoveredLink() {
+            this.classList.add('hovered');
+        }
+
+        function unhoveredLink() {
+            this.classList.remove('hovered')
+        }
+        list.forEach((item) => {
+            item.addEventListener('mouseover', hoveredLink);
+            item.addEventListener('mouseleave', unhoveredLink);
+        });
+    </script>
+</body>
+
+</html>

@@ -4,10 +4,14 @@ const Product = require('../models/productsModel');
 const User = require('../models/userModel');
 const ImportOrder = require('../models/importOdersModel');
 const Category = require('../models/categoryModel');
+const StaffInfo = require('../models/staffModel')
+const ShiftInfo = require('../models/shiftModel')
 
-const loadDashboard = async (req, res) => {
+
+var moment = require('moment')
+const loadDashboard = async(req, res) => {
     try {
-        let Data = function () {
+        let Data = function() {
             this.totalSales = 0;
             this.totalExpenses = 0;
             this.totalIncomes = 0;
@@ -60,8 +64,67 @@ const loadDashboard = async (req, res) => {
 const loadStatisticPage = (req, res) => {
     res.render('managerView/statistic.ejs');
 }
+const getShiftManager = async(req, res) => {
+    try {
+        let Data = function() {
+            this.shiftinfo = null;
+        };
+        data = new Data;
 
-const getBuyAndSaleDataByTime = async (req, res) => {
+        result = []
+        const shiftinfo = await ShiftInfo.pullData();
+        data.shiftinfo = shiftinfo;
+        // for (let index = 0; index < staffinfo.length; index++) {
+        //     data.id = staffinfo[index].id;
+        //     data.staffname = staffinfo[index].name;
+        //     data.position = staffinfo[index].role;
+        //     result = [...result, data];
+        // }
+
+        // res.send(JSON.stringify(data));
+
+
+        res.render('managerView/shift_manager.ejs', { data: data, moment: moment });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+
+
+}
+const getHourStatistic = (req, res) => {
+    res.render('managerView/hour_statistic.ejs');
+}
+const getStaffManager = async(req, res) => {
+    try {
+        let Data = function() {
+            this.staffinfo = null;
+            this.recentstaff = null;
+        };
+        data = new Data;
+
+        result = []
+        const staffinfo = await StaffInfo.pullData();
+        const recentstaff = await StaffInfo.recentStaff();
+        data.staffinfo = staffinfo;
+        data.recentstaff = recentstaff;
+        // for (let index = 0; index < staffinfo.length; index++) {
+        //     data.id = staffinfo[index].id;
+        //     data.staffname = staffinfo[index].name;
+        //     data.position = staffinfo[index].role;
+        //     result = [...result, data];
+        // }
+
+        // res.send(JSON.stringify(data));
+
+
+        res.render('managerView/staff_manager', { data: data });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+
+}
+
+const getBuyAndSaleDataByTime = async(req, res) => {
     const { from, to, step } = req.query;
     if (Number(from) >= Number(to)) return res.sendStatus(304);
     let data = [];
@@ -95,14 +158,14 @@ const getBuyAndSaleDataByTime = async (req, res) => {
             buyValue = [...buyValue, valueBuy];
 
             let valueSell = 0;
-            const sellOrderList = await Order.getAllOrdersByTime(index, index+Number(step));
+            const sellOrderList = await Order.getAllOrdersByTime(index, index + Number(step));
             for (let index = 0; index < sellOrderList.length; index++) {
                 const order = sellOrderList[index];
                 const listProductInOrder = await GoodsInOrder.getGoodsInOrder(order);
                 for (let index = 0; index < listProductInOrder.length; index++) {
                     const productInOrder = listProductInOrder[index];
                     const product = await Product.getProductById(productInOrder.goodID);
-                    
+
                     valueSell += productInOrder.amount * product[0].sellPrice;
                 }
             }
@@ -120,8 +183,8 @@ const getBuyAndSaleDataByTime = async (req, res) => {
 
 }
 
-const getLeadProduct = async (req, res) => {
-    const {from, to} = req.query;
+const getLeadProduct = async(req, res) => {
+    const { from, to } = req.query;
     const fromDate = new Date(Number(from)).getTime();
     const toDate = new Date(Number(to)).getTime();
 
@@ -136,7 +199,7 @@ const getLeadProduct = async (req, res) => {
                 const good = goodsInOrder[index1];
                 const product = await Product.getProductById(good.goodID);
                 const match = data.indexOf(product[0].id);
-                if(match === -1){
+                if (match === -1) {
                     data = [...data, product[0].id];
                     value = [...value, ((product[0].sellPrice - product[0].buyPrice) * good.amount)];
                 } else {
@@ -148,15 +211,15 @@ const getLeadProduct = async (req, res) => {
             data: data,
             value: value
         };
-        
+
         res.send(JSON.stringify(result));
     } catch (error) {
-        if(error) res.status(500).json({message: error.message});
+        if (error) res.status(500).json({ message: error.message });
     }
 }
 
-const getLeadCategory = async (req, res)=>{
-    const {from, to} = req.query;
+const getLeadCategory = async(req, res) => {
+    const { from, to } = req.query;
     const fromDate = new Date(Number(from)).getTime();
     const toDate = new Date(Number(to)).getTime();
     try {
@@ -173,7 +236,7 @@ const getLeadCategory = async (req, res)=>{
                 const money = (product[0].sellPrice - product[0].buyPrice) * good.amount;
                 const category = await Category.getCategoryById(product[0].category);
                 const match = name.indexOf(category[0].name);
-                if(match === -1){
+                if (match === -1) {
                     name = [...name, category[0].name];
                     value = [...value, money];
                 } else {
@@ -183,12 +246,12 @@ const getLeadCategory = async (req, res)=>{
         }
         for (let index = 0; index < name.length; index++) {
             const ten = name[index];
-            data = [...data, {name: ten, value: value[index]}];
+            data = [...data, { name: ten, value: value[index] }];
         }
-        
+
         res.send(JSON.stringify(data));
     } catch (error) {
-        if(error) res.status(500).json({message: error.message});
+        if (error) res.status(500).json({ message: error.message });
     }
 }
 
@@ -197,5 +260,8 @@ module.exports = {
     loadStatisticPage,
     getBuyAndSaleDataByTime,
     getLeadProduct,
-    getLeadCategory
+    getLeadCategory,
+    getStaffManager,
+    getShiftManager,
+    getHourStatistic
 }
