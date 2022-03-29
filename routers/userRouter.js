@@ -3,8 +3,8 @@ const router = express.Router();
 
 const userController=require('../controllers/userController');
 
+router.get('/category-*/',userController.buyCategory)
 router.get('/',userController.buying);
-
 
 
 module.exports = router;

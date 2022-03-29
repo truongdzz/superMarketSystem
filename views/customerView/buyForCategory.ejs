@@ -38,7 +38,7 @@
                                 <h3 class="category__heading">Danh mục</h3>
             
                                 <ul class="category-list">
-                                    <li class="category-item category-item--active">
+                                    <li class="category-item ">
                                         <a href="/" class="category-item__link">Tất cả</a>
                                     </li>
                                     <% categories.forEach(function(categoryitem){%>
@@ -201,18 +201,51 @@
         <script>
 
             // change color of ative link
-                // let categorylist=document.querySelectorAll('.category-list .category-item a');
-                // // console.log(categorylist);
+                let categorylist=document.querySelectorAll('.category-list .category-item a');
+                let currentative=document.querySelector('.category-list .category-item--active');
+
+                // console.log(window.location.href);
+                // console.log(categorylist);
+
+
+
+
+                window.onload=function(){
+                        if(currentative){
+                            currentative.classList.remove('category-item--active'); // remove old active
+                        }
+                        for (let i = 0; i < categorylist.length; i++) {
+                            // console.log([categorylist[i].href]);
+                            tempURL=tachURL(categorylist[i].href);
+                            tagertURL=tachURL(window.location.href);
+                            if(tempURL==tagertURL){
+                                categorylist[i].parentNode.classList.add('category-item--active');
+                            }
+                            
+                        }
+
+                };
+                
                 // for (let i = 0; i < categorylist.length; i++) {
-                //     categorylist[i].onclick=function(e){
+                //     categorylist[i].onload =function(e){
                 //         let currentative=document.querySelector('.category-list .category-item--active');
-                //         currentative.classList.remove('category-item--active'); // remove old active
+                //         if(currentative){
+                //             currentative.classList.remove('category-item--active'); // remove old active
+                //         }
                 //         let newcategoryactive = e.target.parentNode;
                 //         // console.log([newcategoryactive]);
                 //         newcategoryactive.classList.add('category-item--active'); // add active 
                 //     }
                     
                 // }   
+
+
+
+                function tachURL(path){
+                    path=''+path;
+                    let num=path.lastIndexOf('/category-');
+                    return path.slice(num);
+                }
         </script>
 
     </body>
