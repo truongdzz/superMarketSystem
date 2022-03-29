@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin panel</title>
+    <link rel="stylesheet" href="/nguyen/shift_manager.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <!-- navigation -->
+        <div class="navigation">
+            <ul>
+                <li>
+                    <a href="">
+                        <span class="icon">
+                            <ion-icon name="logo-apple"></ion-icon>
+                        </span>
+                        <span class="title">Brand name</span>
+                    </a>
+                </li>
+                <li class="">
+                    <a href="/admin">
+                        <span class="icon">
+                            <ion-icon name="home-outline"></ion-icon>
+                        </span>
+                        <span class="title">Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/admin/staffmanager">
+                        <span class="icon">
+                            <ion-icon name="person-outline"></ion-icon>
+                        </span>
+                        <span class="title">HR Management</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/admin/statistic">
+                        <span class="icon">
+                            <ion-icon name="trending-up-outline"></ion-icon>
+                        </span>
+                        <span class="title">Statistic</span>
+                    </a>
+                </li>
+                <li class="active">
+                    <a href="/admin/shiftmanager">
+                        <span class="icon">
+                            <ion-icon name="checkmark-done-outline"></ion-icon>
+                        </span>
+                        <span class="title">Shift Manager</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/admin/hourstatistic">
+                        <span class="icon">
+                            <ion-icon name="time-outline"></ion-icon>
+                        </span>
+                        <span class="title">Hour Statistic</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <span class="icon">
+                            <ion-icon name="chatbubble-outline"></ion-icon>
+                        </span>
+                        <span class="title">Message</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <span class="icon">
+                            <ion-icon name="settings-outline"></ion-icon>
+                        </span>
+                        <span class="title">Settings</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <span class="icon">
+                            <ion-icon name="lock-closed-outline"></ion-icon>
+                        </span>
+                        <span class="title">Password</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/logout/staff">
+                        <span class="icon">
+                            <ion-icon name="log-out-outline"></ion-icon>
+                        </span>
+                        <span class="title">Sign out</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- main -->
+        <div class="main">
+            <!-- topbar -->
+            <div class="topbar">
+                <div class="toggle">
+                    <ion-icon name="menu-outline"></ion-icon>
+                </div>
+                <!-- search -->
+                <div class="search">
+                    <label>
+                        <input type="text" placeholder="Search here">
+                        <ion-icon name="search-outline"></ion-icon>
+                    </label>
+                </div>
+                <!-- user image -->
+                <div class="user">
+                    <img src="../../public/truong/img/user.jpg" alt="User">
+
+                </div>
+            </div>
+            <!-- card -->
+            <div class="cardBox">
+                <a href="#gotoviewstaff" class="card">
+                    <span class="tooltiptext">Click to go to staff manager</span>
+                    <div>
+                        <div class="number">5,248</div>
+                        <div class="cardName">Staffs</div>
+                    </div>
+                    <div class="iconBox">
+                        <ion-icon name="person-outline"></ion-icon>
+                    </div>
+                </a>
+                <a href="#gotostatistic" class="card">
+                    <span class="tooltiptext">Click to go to Hour Statistics</span>
+                    <div>
+                        <div class="number">40,000</div>
+                        <div class="cardName">Total working hour</div>
+                    </div>
+                    <div class="iconBox">
+                        <ion-icon name="time-outline"></ion-icon>
+                    </div>
+                </a>
+                <!-- <div class="card">
+          <div>
+            <div class="number">280</div>
+            <div class="cardName">Comments</div>
+          </div>
+          <div class="iconBox"><ion-icon name="chatbubbles-outline"></ion-icon></div>
+        </div>
+
+        <div class="card">
+          <div>
+            <div class="number">$4,562</div>
+            <div class="cardName">Earnings</div>
+          </div>
+          <div class="iconBox"><ion-icon name="cash-outline"></ion-icon></div>
+        </div> -->
+            </div>
+
+            <!-- detail -->
+            <div class="details">
+                <!-- order list -->
+                <div class="recentOrders">
+                    <div class="cardHeader">
+                        <h2>Shift</h2>
+                        <div class="search">
+                            <label>
+                                <input type="text" placeholder="Search name or phonenumber">
+                                <ion-icon name="search-outline"></ion-icon>
+                            </label>
+                        </div>
+                        <a href="" class="btn">View All</a>
+                    </div>
+                    <table>
+
+                        <thead>
+                            <tr>
+                                <td>Shift</td>
+                                <td>Name</td>
+                                <td>Phone Number</td>
+                                <td>Status</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% data.shiftinfo.forEach((shift)=> { %>
+                                <tr>
+                                    <td>
+                                        <%= shift.number%>
+                                    </td>
+                                    <td>
+                                        <%= shift.name %>
+                                    </td>
+                                    <td>
+                                        <%= shift.phonenum %>
+                                    </td>
+                                    <td>
+                                        <% if(shift.status=="checked" ){ %>
+                                            <span class="status delivered">Checked</span>
+                                            <% } else if(shift.status=="inshift" ) { %>
+                                                <span class="status inprogress">In shift</span>
+                                                <% } else if(shift.status=="pending" ){%>
+                                                    <span class="status pending">Pending</span>
+                                                    <% } else if(shift.status=="absent" ){%>
+                                                        <span class="status return">Absent</span>
+                                                        <% } %>
+
+                                    </td>
+                                </tr>
+                                <%}) %>
+
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- New customer -->
+                <div class="recentCustomers">
+                    <div class="cardHeader">
+                        <h2>Shift Details</h2>
+                    </div>
+                    <h3>Shift Date:
+                        <%= moment().format('Do MMMM, YYYY'); %>
+                    </h3>
+                    <p>Shift 1: 7:00 - 9:00</p>
+                    <p>Shift 1: 7:00 - 9:00</p>
+                    <p>Shift 1: 7:00 - 9:00</p>
+                    <p>Shift 1: 7:00 - 9:00</p>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+    <script>
+        //menu toggle
+        let toggle = document.querySelector('.toggle');
+        let main = document.querySelector('.main');
+        let navigation = document.querySelector('.navigation');
+
+        toggle.onclick = function () {
+            navigation.classList.toggle('active');
+            main.classList.toggle('active');
+        }
+
+        //add hovered class for selected list item
+        let list = document.querySelectorAll('.navigation li');
+
+        function hoveredLink() {
+            this.classList.add('hovered');
+        }
+
+        function unhoveredLink() {
+            this.classList.remove('hovered')
+        }
+        list.forEach((item) => {
+            item.addEventListener('mouseover', hoveredLink);
+            item.addEventListener('mouseleave', unhoveredLink);
+        });
+    </script>
+</body>
+
+</html>

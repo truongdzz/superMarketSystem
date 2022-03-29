@@ -56,4 +56,15 @@ Staff.clearRefreshToken = (staff, result) => {
     })
 }
 
+Staff.recentStaff = () => {
+    const promise = new Promise((resolve, reject) => {
+        const sql = "SELECT * FROM staff ORDER BY id DESC LIMIT 10";
+        db.query(sql, (err, data) => {
+            if (err) reject(err);
+            resolve(data);
+        })
+    })
+    return promise;
+}
+
 module.exports = Staff;

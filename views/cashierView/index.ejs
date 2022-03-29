@@ -127,7 +127,7 @@
                                     <ion-icon name="call-outline"></ion-icon>
                                 </div>
 
-                                <p>Username: </p>
+                                <p>Name: </p>
                                 
                                 <input type="text" id="username" onchange="setUser()">
 
@@ -201,7 +201,7 @@
         const url1 = "/cashier/getAllProduct";
         xhttp1.open("GET", url1, true);
         xhttp1.send();
-
+    
         const xhttp2 = new XMLHttpRequest();
         xhttp2.onload = function () {
             const username = document.getElementById("username");
@@ -372,7 +372,7 @@
         xhttp3.onload = function () {
             if (this.responseText) {
                 const result = JSON.parse(this.responseText);
-                alert(result.message);
+                console.log(result);
             }
         }
 

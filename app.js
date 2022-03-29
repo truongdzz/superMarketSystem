@@ -49,9 +49,9 @@ app.use('/admin', adminRouter);
 const cashierRouter = require('./routers/cashierRouter');
 app.use('/cashier', cashierRouter);
 
-// //userRouter
-// const userRouter = require('./routers/userRouter');
-// app.use('/user', userRouter);
+//userRouter
+const userRouter = require('./routers/userRouter');
+app.use('/', userRouter);
 
 app.get('/',(req, res)=>{
     res.render('customerView/index.ejs');

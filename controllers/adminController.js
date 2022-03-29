@@ -4,6 +4,9 @@ const Product = require('../models/productsModel');
 const User = require('../models/userModel');
 const ImportOrder = require('../models/importOdersModel');
 const Category = require('../models/categoryModel');
+const StaffInfo= require('../models/staffModel');
+const ShiftInfo = require('../models/shiftModel');
+const moment = require('moment');
 
 const loadDashboard = async (req, res) => {
     try {
@@ -64,6 +67,8 @@ const loadStatisticPage = (req, res) => {
 const getBuyAndSaleDataByTime = async (req, res) => {
     const { from, to, step } = req.query;
     if (Number(from) >= Number(to)) return res.sendStatus(304);
+
+    //truc thoi gian trong do thi
     let data = [];
     for (let index = Number(from); index < Number(to); index += Number(step)) {
         data = [...data, String(index)];
@@ -78,7 +83,7 @@ const getBuyAndSaleDataByTime = async (req, res) => {
 
 
     try {
-        let buyValue = [];
+        let buyValue = []; 
         let sellValue = [];
         for (let index = Number(from); index < Number(to); index += Number(step)) {
             let valueBuy = 0;
@@ -192,10 +197,72 @@ const getLeadCategory = async (req, res)=>{
     }
 }
 
+const getShiftManager = async(req, res) => {
+    try {
+        let Data = function() {
+            this.shiftinfo = null;
+        };
+        data = new Data;
+
+        result = []
+        const shiftinfo = await ShiftInfo.pullData();
+        data.shiftinfo = shiftinfo;
+        // for (let index = 0; index < staffinfo.length; index++) {
+        //     data.id = staffinfo[index].id;
+        //     data.staffname = staffinfo[index].name;
+        //     data.position = staffinfo[index].role;
+        //     result = [...result, data];
+        // }
+
+        // res.send(JSON.stringify(data));
+
+
+        res.render('managerView/shift_manager.ejs', { data: data, moment: moment });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+
+
+}
+const getHourStatistic = (req, res) => {
+    res.render('managerView/hour_statistic.ejs');
+}
+const getStaffManager = async(req, res) => {
+    try {
+        let Data = function() {
+            this.staffinfo = null;
+            this.recentstaff = null;
+        };
+        data = new Data;
+
+        result = []
+        const staffinfo = await StaffInfo.pullData();
+        const recentstaff = await StaffInfo.recentStaff();
+        data.staffinfo = staffinfo;
+        data.recentstaff = recentstaff;
+        // for (let index = 0; index < staffinfo.length; index++) {
+        //     data.id = staffinfo[index].id;
+        //     data.staffname = staffinfo[index].name;
+        //     data.position = staffinfo[index].role;
+        //     result = [...result, data];
+        // }
+
+        // res.send(JSON.stringify(data));
+
+
+        res.render('managerView/staff_manager', { data: data });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+
+}
 module.exports = {
     loadDashboard,
     loadStatisticPage,
     getBuyAndSaleDataByTime,
     getLeadProduct,
-    getLeadCategory
+    getLeadCategory,
+    getShiftManager,
+    getHourStatistic,
+    getStaffManager
 }

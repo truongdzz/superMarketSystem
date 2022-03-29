@@ -15,4 +15,16 @@ Category.getCategoryById = (id)=>{
     return promise;
 }
 
+Category.getAllCategory=function(){
+    const promise= new Promise((resolve,reject)=>{
+        const sql = "SELECT * FROM category";
+        db.query(sql,(err,data)=>{
+            if (err) reject(err)
+            else resolve(data)
+        })
+    })
+    return promise;
+}
+
+
 module.exports = Category;

@@ -37,13 +37,9 @@ const checkout = async (req, res) => {
         if (userInfo.newUser) {
             insertedUserId = await handleNewUser(userInfo.name, userInfo.username, userInfo.phone, userInfo.password);
         }
-
-        console.log(insertedUserId);
-        console.log("staffid: ");
-        console.log(req.staffid);
         //create new order
         const order = {
-            userid: insertedUserId,
+            userid: insertedUserId.insertId,
             type: "offline",
             staffid: req.staffid,
             status: "delivered"
@@ -73,6 +69,7 @@ const checkout = async (req, res) => {
 
         res.json({ message: "checkout success" });
     } catch (error) {
+        console.log(error.message);
         res.json({message: error.message});
     }
 

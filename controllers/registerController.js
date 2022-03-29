@@ -42,7 +42,6 @@ const handleNewUser = async (req, res) => {
 }
 
 
-
 const handleNewStaff = async (req, res) => {
     const { username, password, role } = req.body;
     if (!username || !password || !role) {
