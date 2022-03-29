@@ -10,7 +10,7 @@ const buying=async (req,res)=>{
             categories:categorylist
         });
     } catch (error) {
-        
+        console.log(error.message);
     }
 
 }
