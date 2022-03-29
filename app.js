@@ -52,10 +52,8 @@ app.use('/cashier', cashierRouter);
 // //userRouter
 // const userRouter = require('./routers/userRouter');
 // app.use('/user', userRouter);
-
-app.get('/',(req, res)=>{
-    res.render('customerView/index.ejs');
-})
+const userRouter=require('./routers/userRouter');
+app.use('/',userRouter);
 
  
 //create server
