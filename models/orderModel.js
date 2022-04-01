@@ -26,7 +26,7 @@ Order.pullDataByTime = (passHour) => {
 
 Order.createNewOrder = (order) => {
     const promise = new Promise((resolve, reject) => {
-        const sql = "INSERT INTO `order` (userid, type, staffid, status) VALUES (?, ?, ?, ?)";
+        const sql = "INSERT INTO `order` (userid, type, staffid, status, price) VALUES (?, ?, ?, ?, ?)";
         db.query(sql, Object.values(order), (err, data) => {
             if (err) reject(err);
             else resolve(data);

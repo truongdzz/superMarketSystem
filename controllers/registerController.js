@@ -34,8 +34,19 @@ const handleNewUser = async (req, res) => {
         
         //write to database
         const data =  User.createUser(newUser);
-
-        res.status(201).json({ message: `New user ${username} created` })
+        if (req.query.xml) {
+            res.status(201).json(
+                { 
+                    message: `New user ${username} created`,
+                    insertedId: data.insertId 
+                }
+            );
+        } else{
+            res.redirect('/login/user',{
+                message: "Register successfully!"
+            });
+        }
+        
     } catch (error) {
         res.status(500).json({ message: error.message });
     }

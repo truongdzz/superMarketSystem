@@ -56,7 +56,11 @@ const handleLoginStaff = async (req, res)=> {
             res.cookie('jwt', refreshToken, { httpOnly: true, maxAges: 24*60*60*1000});
             //res.json({accessToken});
             res.cookie('accessToken', accessToken, { httpOnly: true, maxAges: 15*60*1000});
-            res.json({message: 'login success'});
+            if (foundStaff.role === "cashier") {
+                res.redirect('/cashier');
+            } else if(foundStaff.role === "admin"){
+                res.redirect("/admin");
+            } else res.redirect('/staff');
         }
 
     } catch (error) {
@@ -108,7 +112,7 @@ const handleLoginUser = async (req, res)=>{
             // send token to client
             res.cookie('jwt', refreshToken, { httpOnly: true, maxAges: 24*60*60*1000});
             res.cookie('accessToken', accessToken, { httpOnly: true, maxAges: 15*60*1000});
-            res.json({message: 'login success'});
+            res.redirect('/');
         }
 
     } catch (error) {

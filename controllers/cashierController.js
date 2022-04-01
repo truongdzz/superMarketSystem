@@ -31,18 +31,17 @@ const getUserInfo = async (req, res) => {
 const checkout = async (req, res) => {
     const addedProduct = JSON.parse(req.body.data);
     const userInfo = JSON.parse(req.body.userInfo);
+    const price = Number(req.price);
     //create new user if yes
     let insertedUserId;
     try {
-        if (userInfo.newUser) {
-            insertedUserId = await handleNewUser(userInfo.name, userInfo.username, userInfo.phone, userInfo.password);
-        }
         //create new order
         const order = {
-            userid: insertedUserId.insertId,
+            userid: userInfo.id,
             type: "offline",
             staffid: req.staffid,
-            status: "delivered"
+            status: "delivered",
+            price: price
         }
 
         let insertedOrderId;
@@ -67,7 +66,7 @@ const checkout = async (req, res) => {
             })
         }
 
-        res.json({ message: "checkout success" });
+        res.status(200).json({ message: "checkout success" });
     } catch (error) {
         console.log(error.message);
         res.json({message: error.message});

@@ -110,7 +110,7 @@ body{
 
 .main .mainCard .cardContent .bill{
     width: 48%;
-    height: 400px;
+    height: 440px;
     overflow-y: scroll;
     background-color: var(--white);
     border: 2px solid var(--black2);
@@ -189,6 +189,8 @@ body{
     border-radius: 10px;
     border: 1px solid var(--black2);
     padding: 0px 10px;
+    grid-column-start: 2;
+    grid-column-end: 4;
 }
 
 .main .mainCard .cardContent .info .customer .userInfo h2{
@@ -202,6 +204,15 @@ body{
     grid-column-end: 4;
 }
 
+.main .mainCard .cardContent .info .customer .userInfo input{
+    width: 100%;
+    height: 30px;
+    font-size: 15px;
+    border: 1px solid var(--black1);
+    border-radius: 40px !important;
+    padding-left: 30px;
+}
+
 .main .mainCard .cardContent .info .customer .userInfo div:nth-child(7){
     grid-column-start: 3;
     grid-column-end: 4;
@@ -212,10 +223,24 @@ body{
     height: 16px;
 }
 
-#username{
-    grid-column-start: 2;
+.main .mainCard .cardContent .info .customer .userInfo div:nth-child(8){
+    grid-column-start: 1;
     grid-column-end: 4;
+    display: flex;
+    justify-content: center;
 }
+
+.main .mainCard .cardContent .info .customer .userInfo div:nth-child(8) button{
+    width: 100%;
+    height: 30px;
+    background-color: #3deb34;
+    border: 1px solid var(--black2);
+    border-radius: 10px;
+    color: white;
+    font-size: 20px;
+    font-weight: 500;
+}
+
 
 .main .mainCard .cardContent .info .customer .userInfo div:nth-child(2) input{
     width: 100%;
@@ -265,4 +290,9 @@ body{
     width: 100%;
     height: 30px;
     font-weight: 600;
+    background-color: #3deb34;
+    border: none;
+    border-radius: 10px;
+    color: var(--white);
+    font-size: 20px;
 }
