@@ -1080,6 +1080,34 @@ i.home-product-item__like-icon-fill{
     display: none;
 }
 
+.home-product-item__buy-btn{
+    font-size: 1.4rem;
+    padding: 10px 7px;
+    background-color: #69c61a;
+    border-radius: 5px;
+    background-origin: content-box;
+    margin: 15px auto;
+    width: 65%;
+    text-align: center;
+
+}
+
+.home-product-item__buy-btn:hover{
+    cursor: pointer;
+    background-color: #295405;
+}
+
+.home-product-item__buy-btn-title{
+    color: var(--white-color);
+
+}
+
+.home-product-item__buy-btn-icon{
+    color: var(--white-color);
+    display: inline-block;
+    margin-left: 5px;
+}
+
 .home-product-item__rating{
     font-size: 1rem;
     transform: scale(0.8);

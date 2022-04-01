@@ -34,21 +34,7 @@
                 <div class="grid">
                     <div class="grid__row app__content">
                         <div class="grid__column-2">
-                            <nav class="category">
-                                <h3 class="category__heading">Danh mục</h3>
-            
-                                <ul class="category-list">
-                                    <li class="category-item ">
-                                        <a href="/" class="category-item__link">Tất cả</a>
-                                    </li>
-                                    <% categories.forEach(function(categoryitem){%>
-
-                                        <li class="category-item">
-                                            <a href="/category-<%=categoryitem.id%>" class="category-item__link"><%=categoryitem.name%></a>
-                                        </li>
-                                    <%}); %> 
-                                </ul>
-                            </nav>
+                            <%-include('../partials/menu.ejs')  %> 
                         </div>
                         
                         <div class="grid__column-10">
@@ -95,15 +81,15 @@
                                     <% data.forEach(function(dataItem){%>
                                         <%if(dataItem.amount>0){%>
                                             <div class="grid__column-2-4">
-                                                <a class="home-product-item" href="#">
+                                                <div class="home-product-item" href="#">
                                                     <div class="home-product-item__img" style="background-image: url('<%=dataItem.good_img%>');"></div>
                                                     <h4 class="home-product-item__name"><%= dataItem.name %> </h4>
                                                     <div class="home-product-item__price">
                                                         <% if(dataItem.discount>0){%>
-                                                            <span class="home-product-item__price-old"><%=dataItem.sellPrice%>VND</span>
-                                                            <span class="home-product-item__price-current"><%=dataItem.sellPrice*(1-dataItem.discount*0.01)%>VND</span>
+                                                            <span class="home-product-item__price-old"><%=dataItem.sellPrice%> VND</span>
+                                                            <span class="home-product-item__price-current"><%=dataItem.sellPrice*(1-dataItem.discount*0.01)%> VND</span>
                                                         <%}else{%>
-                                                            <span class="home-product-item__price-current"><%=dataItem.sellPrice%>VND</span>
+                                                            <span class="home-product-item__price-current"><%=dataItem.sellPrice%> VND</span>
                                                         <%} %> 
 
                                                     </div>
@@ -122,6 +108,13 @@
                                                             <i class="fa-solid fa-star"></i>
                                                         </div>
                                                         <span class="home-product-item__sold">88 Đã bán</span>
+                                                    </div>
+
+                                                    <div class="home-product-item__buy-btn">
+                                                        <span class="home-product-item__buy-btn-title">Thêm vào giỏ</span>
+                                                        <span class="home-product-item__buy-btn-icon">
+                                                            <i class="fa-solid fa-cart-plus"></i>
+                                                        </span>
                                                     </div>
         
                                                     <div class="home-product-item__origin">
@@ -145,7 +138,7 @@
                                                     <%} %> 
 
 
-                                                </a>
+                                                </div>
                                             </div>
                                         <%}%>
 
