@@ -8,16 +8,16 @@ const verifyJWT = (req, res, next) => {
     //     return res.status(401).render('others/401.ejs');
     // }
     // const token = authHeader.split(' ')[1];
-    
+
     const cookies = req.cookies;
-    if(!cookies?.accessToken) res.status(401).render('others/401.ejs');
+    if (!cookies.accessToken) res.status(401).render('others/401.ejs');
 
     const token = cookies.accessToken;
 
     jwt.verify(
         token,
         process.env.ACCESS_TOKEN_SECRET,
-        (err, decoded)=>{
+        (err, decoded) => {
             if (err) {
                 return res.status(403).render('others/outOfTime.ejs');
             }

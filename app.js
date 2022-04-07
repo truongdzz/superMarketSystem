@@ -2,20 +2,20 @@ const express = require('express');
 const path = require('path');
 const app = express();
 const cookieParser = require('cookie-parser');
-const PORT = process.env.PORT || 3500; 
+const PORT = process.env.PORT || 3500;
 
 //middleware
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.urlencoded({extended: false}));
+app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cookieParser());
 
 //connect database
 const database = require('./models/configDB');
-database.connect(function(err){
+database.connect(function(err) {
     if (err) throw err;
     console.log('Connected to database!');
-}) 
+})
 
 //view engine
 app.set('view engine', 'ejs');
@@ -49,16 +49,19 @@ app.use('/admin', adminRouter);
 const cashierRouter = require('./routers/cashierRouter');
 app.use('/cashier', cashierRouter);
 
+const wareRouter = require('./routers/wareRouter');
+app.use('/ware', wareRouter);
+
 // //userRouter
 // const userRouter = require('./routers/userRouter');
 // app.use('/user', userRouter);
 
-app.get('/',(req, res)=>{
+app.get('/', (req, res) => {
     res.render('customerView/index.ejs');
 })
 
- 
+
 //create server
-app.listen(PORT, ()=>{
+app.listen(PORT, () => {
     console.log(`Server is listening to port ${PORT}`);
 })

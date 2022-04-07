@@ -1,13 +1,13 @@
 const usersDB = require('../models/userModel');
 const staffDB = require('../models/staffModel');
 
-const handleUserLogout = async (req, res) => {
+const handleUserLogout = async(req, res) => {
     //delete the refresh token on client and db
 
     //get the cookies
     const cookies = req.cookies;
     //check if there is a freshtoken in the cookie
-    if (!cookies?.jwt) return res.status(204).json({ message: 'No content' });
+    if (!cookies.jwt) return res.status(204).json({ message: 'No content' });
     //if yes, find the person has that cookie and clear it
     //get the cookie
     const refreshToken = cookies.jwt;
@@ -37,13 +37,13 @@ const handleUserLogout = async (req, res) => {
     }
 }
 
-const handleStaffLogout = async (req, res) => {
+const handleStaffLogout = async(req, res) => {
     //delete the refresh token on client and db
 
     //get the cookies
     const cookies = req.cookies;
     //check if there is a freshtoken in the cookie
-    if (!cookies?.jwt) return res.status(204).json({ message: 'No content' });
+    if (!cookies.jwt) return res.status(204).json({ message: 'No content' });
     //if yes, find the person has that cookie and clear it
     //get the cookie
     const refreshToken = cookies.jwt;
