@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="/truong/staffLogin.css">
 </head>
 <body>
+    <div class="hide" id="message"><%=message%></div>
     <div class="loginForm">
         <form action="/login/staff" method="POST">
             <div class="formHeader">
@@ -16,7 +17,7 @@
             <label for="user">Username or phone number:</label>
             <input name="username" id="user" type="text" placeholder="Username">
             <label for="">Password:</label>
-            <input name="password" id=password" type="password" placeholder="Password">
+            <input name="password" id="password" type="password" placeholder="Password">
             <div class="inline">
                 <input id="remember" type="checkbox">
                 <label for="remember">Remember me</label>
@@ -25,5 +26,10 @@
             <a href="#">Forgot password?</a>
         </form>
     </div>
+
+    <script type="text/javascript">
+        const message = document.getElementById('message');
+        if(message.innerText) alert(message.innerText);
+    </script>
 </body>
 </html>

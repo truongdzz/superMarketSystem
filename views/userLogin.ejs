@@ -8,16 +8,7 @@
     <link rel="stylesheet" href="/truong/staffLogin.css">
 </head>
 <body>
-        <div class="message" id="message">
-        <% if (message) { %>
-            
-                <h4>
-                    <%= message %>
-                </h4>
-                <button onclick="close()">Close</button>
-            
-        <% } %>
-        </div>
+        <div class="hide" id="message"><%=message%></div>
         <div class="loginForm">
         
         
@@ -32,16 +23,15 @@
             <div class="inline">
                 <input id="remember" type="checkbox">
                 <label for="remember">Remember me</label>
+                <a href="#">Forgot password?</a>
             </div>
             <button type="submit" class="btn">Login</button>
-            <a href="#">Forgot password?</a>
+            
         </form>
     </div>
     <script type="text/javascript">
-        function close(){
-            const div = document.getElementById("message");
-            div.classList.add("hide");
-        }
+        const message = document.getElementById('message');
+        if(message.innerText) alert(message.innerText);
     </script>
 </body>
 </html>

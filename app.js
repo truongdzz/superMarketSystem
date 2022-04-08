@@ -49,6 +49,10 @@ app.use('/admin', adminRouter);
 const cashierRouter = require('./routers/cashierRouter');
 app.use('/cashier', cashierRouter);
 
+//warehouse router
+const wareRouter = require('./routers/wareRouter');
+app.use('/ware', wareRouter);
+
 //userRouter
 const userRouter = require('./routers/userRouter');
 app.use('/', userRouter);

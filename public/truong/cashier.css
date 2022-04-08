@@ -295,4 +295,5 @@ body{
     border-radius: 10px;
     color: var(--white);
     font-size: 20px;
+    cursor: pointer;
 }

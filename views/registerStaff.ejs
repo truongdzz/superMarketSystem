@@ -8,11 +8,16 @@
     <link rel="stylesheet" href="/truong/staffLogin.css">
 </head>
 <body>
+    <div class="hide" id="message"><%=message%></div>
     <div class="loginForm">
         <form action="/register/staff" method="POST">
             <div class="formHeader">
                 <h1>Register</h1>
             </div>
+            <label for="name">Full name</label>
+            <input name="name" id="name" type="text" placeholder="Full name" required>
+            <label for="phone">Phone number</label>
+            <input name="phone" id="phone" type="text" placeholder="Phone number" required>
             <label for="user">Username or phone number:</label>
             <input name="username" id="user" type="text" placeholder="Username"required>
             <label for="">Password:</label>
@@ -21,12 +26,16 @@
             <select name="role" id="">
                 <option value="admin">Admin</option>
                 <option value="cashier">Cashier</option>
-                <option value="staff">Staff</option>
+                <option value="Ware">Ware</option>
             </select>
             <!-- <label for="password2">Enter password again:</label>
             <input name="password2" type="password" id="password2" placeholder="Password again"> -->
             <button type="submit" class="btn">Register</button>
         </form>
     </div>
+    <script type="text/javascript">
+        const message = document.getElementById('message');
+        if(message.innerText !== "") alert(message.innerText);
+    </script>
 </body>
 </html>

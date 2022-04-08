@@ -19,7 +19,7 @@ Staff.getStaffByUsername = (username)=>{
 }
 
 Staff.createStaff = (newStaff, result)=>{
-    const sql = "INSERT INTO staff (name,username, password, role) VALUES (?, ?, ?, ?)";
+    const sql = "INSERT INTO staff (name, phone, username, password, role) VALUES (?, ?, ?, ?, ?)";
     db.query(sql, Object.values(newStaff), (err, data)=>{
         if(err){
             result(err, null);

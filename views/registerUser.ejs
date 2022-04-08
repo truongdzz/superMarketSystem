@@ -8,21 +8,36 @@
     <link rel="stylesheet" href="/truong/staffLogin.css">
 </head>
 <body>
+    <div class="hide" id="message"><%=message%></div>
     <div class="loginForm">
         <form action="/register/user" method="POST">
             <div class="formHeader">
                 <h1>Register</h1>
             </div>
             <label for="">Name</label>
-            <input type="text" name="name">
+            <input type="text" name="name" placeholder="Full name">
             <label for="">Phone</label>
-            <input type="text" name="phone">
-            <label for="user">Username or phone number:</label>
+            <input type="text" name="phone" placeholder="Phone number">
+            <label for="user">Username:</label>
             <input name="username" id="user" type="text" placeholder="Username">
             <label for="">Password:</label>
-            <input name="password" id=password" type="password" placeholder="Password">
+            <input name="password" id="password" type="password" placeholder="Password">
             <button type="submit" class="btn">Sign up</button>
+
+            <!-- <label for="user">Username or phone number:</label>
+            <input name="username" id="user" type="text" placeholder="Username">
+            <label for="">Password:</label>
+            <input name="password" id="password" type="password" placeholder="Password">
+            <div class="inline">
+                <input id="remember" type="checkbox">
+                <label for="remember">Remember me</label>
+            </div>
+            <button type="submit" class="btn">Login</button> -->
         </form>
     </div>
+    <script type="text/javascript">
+        const message = document.getElementById('message');
+        if(message.innerText) alert(message.innerText);
+    </script>
 </body>
 </html>

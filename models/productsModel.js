@@ -42,4 +42,30 @@ Product.upadteAmount = (product, result)=>{
     })
 }
 
+Product.updateproduct = (productid, tensp, amount, position, price) => {
+    const sql = "UPDATE goods SET name = ? , amount = ? , position = ? , sellPrice = ? WHERE id = ? ";
+    db.query(sql, [tensp, amount, position, price, productid], (err, data) => {})
+
+}
+
+Product.addproduct = (img, name, amount, position, price) => {
+    const sql = "INSERT INTO `goods` (`name`, `sellPrice`, `amount`,  `position`, `good_img`) VALUES (? , ? , ? , ?, ?); ";
+    db.query(sql, [name, price, amount, position, img], (err, data) => {})
+
+}
+
+Product.importproduct = (imid, imamount, staff_id) => {
+    const sql = "INSERT INTO `importOrder` (`good`, `amount`, `time`, `staff`) VALUES (? , ? , current_timestamp(), ? );";
+    db.query(sql, [imid, imamount, staff_id], (err, data) => {})
+
+
+}
+
+Product.deleteproduct = (pid) => {
+    const sql = "DELETE FROM goods WHERE id = ?  ";
+    db.query(sql, [pid], (err, data) => {})
+
+
+}
+
 module.exports = Product;

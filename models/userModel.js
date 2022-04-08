@@ -10,7 +10,7 @@ let User = function (user) {
 
 User.createUser = function (newUser) {
     const promise = new Promise((resolve, reject) => {
-        const sql = `INSERT INTO user (name, username, phone, password, role) VALUES (?, ?, ?, ?, ?)`;
+        const sql = `INSERT INTO user (name, username, phone, password, role, point) VALUES (?, ?, ?, ?, ?, 0)`;
         db.query(sql, Object.values(newUser), (err, data) => {
             if (err) {
                 reject(err);

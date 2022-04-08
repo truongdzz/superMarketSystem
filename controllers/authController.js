@@ -9,7 +9,10 @@ const handleLoginStaff = async (req, res)=> {
     const {username, password} = req.body;
     //check not null
     if (!username || !password) {
-        return res.status(400).json({ message: 'Username and password are required.' });
+        //return res.status(400).json({ message: 'Username and password are required.' });
+        return res.status(400).render('staffLogin', {
+            message: "Username and password are requireed"
+        })
     }
 
     try {
@@ -18,13 +21,19 @@ const handleLoginStaff = async (req, res)=> {
         const foundStaff = staffData.find(staff => staff.username === username);
 
         if(!foundStaff){
-            return res.status(401).json({message: `Username ${username} does not exist.`});
+            //return res.status(401).json({message: `Username ${username} does not exist.`});
+            return res.status(401).render('staffLogin',{
+                message: `Username ${username} does not exist.`
+            })
         }
 
         //compare password
         const match = await bcrypt.compare(password, foundStaff.password);
         if(!match){
-            res.status(401).json({ message: 'Wrong password!' });
+            //res.status(401).json({ message: 'Wrong password!' });
+            res.status(401).render('staffLogin',{
+                message: 'Wrong password.'
+            })
         } else{
             // create jwt
             const accessToken = jwt.sign(
@@ -60,7 +69,7 @@ const handleLoginStaff = async (req, res)=> {
                 res.redirect('/cashier');
             } else if(foundStaff.role === "admin"){
                 res.redirect("/admin");
-            } else res.redirect('/staff');
+            } else res.redirect('/ware');
         }
 
     } catch (error) {
@@ -72,17 +81,30 @@ const handleLoginUser = async (req, res)=>{
     //get username and password
     const {username, password} = req.body;
     if(!username || !password){
-        return res.status(400).json({ message: 'Username and password are required.' });
+        //return res.status(400).json({ message: 'Username and password are required.' });
+        return res.status(400).render('userLogin', {
+            message: "Username and password are required."
+        })
     }
     try {
         //lookup the databbase
         const userData = await UsersDB.pullData();
-        const foundUser = userData.find(person => person.username === username);
-        if(!foundUser) return res.status(401).json({message: `Username ${username} does not exist.`});
+        const foundUser = userData.find(person => {
+            if(person.username === username || person.phone === username) return true;
+            else return false;
+        });
+        if(!foundUser) 
+            //return res.status(401).json({message: `Username ${username} does not exist.`});
+            return res.status(401).render('userLogin', {
+                message: `Username or phone number does not exist.`
+            })
         //validate password
         const match = await bcrypt.compare(password, foundUser.password);
         if(!match){
-            return res.status(401).json({ message: 'Wrong password!' });
+            //return res.status(401).json({ message: 'Wrong password!' });
+            return res.status(401).render('userLogin', {
+                message: 'Wrong password.'
+            })
         } else{
             //create jwt
             const accessToken = jwt.sign(
@@ -121,11 +143,15 @@ const handleLoginUser = async (req, res)=>{
 }
 
 const loadUserLoginPage = (req, res)=>{
-    res.render('userLogin.ejs');
+    res.render('userLogin.ejs',{
+        message: ""
+    });
 }
 
 const loadStaffLoginPage = (req, res)=>{
-    res.render('staffLogin.ejs');
+    res.render('staffLogin.ejs', {
+        message: ""
+    });
 }
 
 module.exports = {
