@@ -24,6 +24,17 @@ Product.getProductById = (id) => {
     return promise;
 }
 
+Product.getProductByCateGory = (cat) => {
+    const promise = new Promise((resolve, reject) => {
+        const sql = "SELECT * FROM goods WHERE category = ?";
+        db.query(sql, cat, (err, data) => {
+            if (err) reject(err);
+            else resolve(data);
+        })
+    })
+    return promise;
+}
+
 Product.getAllProduct = () => {
     const promise = new Promise((resolve, reject) => {
         const sql = "SELECT * FROM goods";
@@ -55,9 +66,12 @@ Product.addproduct = (img, name, amount, position, price) => {
 
 }
 
-Product.importproduct = (imid, imamount, staff_id) => {
+Product.importproduct = (imid, imamount, imamount1, staff_id) => {
     const sql = "INSERT INTO `importOrder` (`good`, `amount`, `time`, `staff`) VALUES (? , ? , current_timestamp(), ? );";
     db.query(sql, [imid, imamount, staff_id], (err, data) => {})
+    const sql1 = "UPDATE goods SET amount = ? WHERE id = ? ";
+    db.query(sql1, [imamount1, imid], (err, data) => {})
+
 
 
 }
