@@ -42,7 +42,9 @@ const handleUserRefreshToken = async (req, res) => {
                 );
 
                 res.cookie('accessToken', accessToken, { httpOnly: true, maxAges: 15*60*1000});
+
                 res.redirect('/');
+                
             }
         )
     } catch (error) {
@@ -89,7 +91,12 @@ const handleStaffRefreshToken = async (req, res) => {
                 );
                 
                 res.cookie('accessToken', accessToken, {httpOnly:true, maxAges: 15*60*1000});
-                res.redirect('/admin');
+                
+                if(foundStaff.role === "admin"){
+                    res.redirect('/admin');    
+                } else if(foundStaff.role === "cashier"){
+                    res.redirect('/cashier');
+                } else res.redirect('/ware');
             }
         )
     } catch (error) {

@@ -63,8 +63,10 @@ const handleLoginStaff = async (req, res)=> {
 
             //send token to client
             res.cookie('jwt', refreshToken, { httpOnly: true, maxAges: 24*60*60*1000});
-            //res.json({accessToken});
+            
             res.cookie('accessToken', accessToken, { httpOnly: true, maxAges: 15*60*1000});
+            
+            
             if (foundStaff.role === "cashier") {
                 res.redirect('/cashier');
             } else if(foundStaff.role === "admin"){

@@ -50,9 +50,8 @@ const loadDashboard = async (req, res) => {
             userPercent: 100 * (user24h.length - ((user48h.length - user24h.length) || 0)) / ((user48h.length - user24h.length) || 1)
         }
 
+        console.log(analytic);
         data.analytic = analytic;
-
-
 
         return res.render('managerView/dashboard.ejs', { data: data });
     } catch (error) {
@@ -256,6 +255,13 @@ const getStaffManager = async(req, res) => {
     }
 
 }
+
+
+const loadDetailOrder = (req, res) => {
+    res.render('managerView/loadDetailOrder')
+}
+
+
 module.exports = {
     loadDashboard,
     loadStatisticPage,
