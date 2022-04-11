@@ -28,38 +28,23 @@
                         <span class="title">Dashboard</span>
                     </a>
                 </li>
-                <li>
-                    <a href="">
-                        <span class="icon"><ion-icon name="person-outline"></ion-icon></span>
-                        <span class="title">Customer</span>
-                    </a>
-                </li>
+                
                 <li>
                     <a href="">
                         <span class="icon"><ion-icon name="chatbubble-outline"></ion-icon></span>
                         <span class="title">Message</span>
                     </a>
                 </li>
-                <li>
-                    <a href="">
-                        <span class="icon"><ion-icon name="help-outline"></ion-icon></span>
-                        <span class="title">Help</span>
-                    </a>
-                </li>
+                
                 <li>
                     <a href="">
                         <span class="icon"><ion-icon name="settings-outline"></ion-icon></span>
                         <span class="title">Settings</span>
                     </a>
                 </li>
+                
                 <li>
-                    <a href="">
-                        <span class="icon"><ion-icon name="lock-closed-outline"></ion-icon></span>
-                        <span class="title">Password</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="">
+                    <a href="/logout/staff">
                         <span class="icon"><ion-icon name="log-out-outline"></ion-icon></span>
                         <span class="title">Sign out</span>
                     </a>
@@ -81,7 +66,6 @@
                         <ion-icon name="search-outline"></ion-icon>
                         <div class="result hide">
                             <table class="search-container">
-
                             </table>
                         </div>
                     </label>
@@ -105,42 +89,22 @@
                         <br><br>
                     </form>
                 </div>
+                <div>
+                    <a href="/ware">Reset</a>
+                </div>
 
                 <!-- user image -->
                 <div class="user">
-                    <img src="../../public/truong/img/user.jpg" alt="User">
+                    <img src="/truong/img/user.jpg" alt="User">
 
                 </div>
             </div>
-            <br>
-            <br>
-            <br>
-            <!-- <form action="/ware/" method="POST">
-                <label for="cat">Choose a category:</label>
-                <select name="cat" onchange="this.form.submit()" id="selectcat">
-                  <option value="0">Select category</option>
-                  <option value="1">Rau củ</option>
-                  <option value="2">Trái cây</option>
-                  <option value="3">Thực phẩm đóng gói</option>
-                  <option value="4">Thực phẩm tươi</option>
-                  <option value="5">Tạp hóa phẩm</option>
-                  <option value="6">Nước uống</option>
-                  <option value="7">Quần áo nam</option>
-                  <option value="8">Quần áo nữ</option>
-                  <option value="9">Gia dụng</option>
-                  <option value="10">Đặc biệt</option>
-                </select>
-                <br><br>
-            </form> -->
-            <div class="container details">
-
-
-
+            <div class="details">
                 <div class="products-container">
                     <% var i = 0; %>
                         <% data.products.forEach(function(product){ %>
                             <div class="product" id="p-<%=product.id%>">
-                                <img src="<%= product.good_img %>" alt="" class="pimg" height="200px">
+                                <img src="<%= product.good_img %>" alt="" class="pimg">
                                 <div style="display: block; font-size: 0.8rem;">
 
                                     <h2 style="padding-top: 7px;" hidden>
@@ -167,7 +131,7 @@
                             <% i = i +1; %>
                                 <%}) %>
                 </div>
-                <div style="overflow-x: scroll; position:fixed; top: 60px">
+                <div class="control">
                     <div class="recentCustomers">
                         <div class="cardHeader">
                             <h2>Cập nhật sản phẩm </h2>
@@ -178,22 +142,22 @@
                                 <input type="text" id="productid" name="productid" placeholder="Your " value="" hidden>
                                 <label for="tensp">Tên SP </label>
                                 <input type="text" id="tensp" name="tensp" placeholder="Product name " value="">
-                                <br>
+                                
                                 <label for="amount">Số lượng</label>
                                 <input type="number" id="amount" name="amount" placeholder="Product Amount">
-                                <br>
+                                
                                 <label for="position">Vị trí</label>
                                 <input type="number" id="position" name="position" placeholder="Product position">
-                                <br>
+                                
                                 <label for="price">Giá</label>
                                 <input type="number" id="price" name="price" placeholder="Product price">
-                                <br>
+                                
                                 <input type="submit" value="Submit">
                             </form>
                         </div>
                     </div>
 
-                    <div class="recentCustomers" style="bottom: 21%;">
+                    <div class="recentCustomers">
                         <div class="cardHeader">
                             <h2 style="color: green;">Thêm sản phẩm mới </h2>
                         </div>
@@ -203,21 +167,21 @@
                                 <input type="text" id="addimg" name="image" placeholder="Product link.." style="right: 0;">
                                 <label for="addname">Tên SP </label>
                                 <input type="text" id="addname" name="addname" placeholder="Product name">
-                                <br>
+                                
                                 <label for="addamount">Số lượng</label>
                                 <input type="number" id="addamount" name="addamount" placeholder="Product amount">
-                                <br>
+                                
                                 <label for="addpos">Vị trí</label>
                                 <input type="text" id="addpos" name="addpos" placeholder="Product position">
-                                <br>
+                                
                                 <label for="addprice">Giá</label>
                                 <input type="text" id="addprice" name="addprice" placeholder="Product price">
-                                <br>
+                                
                                 <input type="submit" value="Submit">
                             </form>
                         </div>
                     </div>
-                    <div class="recentCustomers nhaphang" style="bottom: 10px;margin-top:5px; height:150px">
+                    <div class="recentCustomers nhaphang">
                         <div class="cardHeader">
                             <h2 style="color: green;">Nhập hàng </h2>
                         </div>
@@ -226,8 +190,8 @@
                             <form action="/ware/importproduct" method="GET">
                                 <input type="number" id="imamount1" name="imamount1" hidden>
                                 <label for="imid">ID SP </label>
-                                <input type="text" id="imid" name="imid" placeholder="Product ID ">
-                                <br>
+                                <input type="text" id="imid" name="imid" placeholder="Product ID" disabled>
+                                
                                 <label for="imamount">Số lượng</label>
                                 <input type="number" id="imamount" name="imamount" placeholder="Product amount">
                                 <input type="submit" value="Submit">
