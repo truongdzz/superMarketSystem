@@ -28,6 +28,24 @@ const getPage = async(req, res) => {
 
 }
 
+const postPage = async(req, res) => {
+    try {
+
+        const { cat } = req.body;
+        let Data = function() {
+            this.products = null;
+        };
+        data = new Data;
+
+        const products = await Product.getProductByCateGory(cat);
+        data.products = products;
+        res.render('wareView/wareStaff.ejs', { data: data });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+
+}
+
 const updateproduct = async(req, res) => {
 
     try {
@@ -55,9 +73,10 @@ const addproduct = async(req, res) => {
 const importproduct = async(req, res) => {
 
     try {
-        const { imid, imamount } = req.query;
-        const staff_id = req.staffid;
-        Product.addproduct(imid, imamount, staff_id);
+        var { imid, imamount, imamount1 } = req.query;
+        var staff_id = req.staffid || 1;
+        imamount1 = Number(imamount) + Number(imamount1);
+        Product.importproduct(imid, imamount, imamount1, staff_id);
         res.redirect('/ware');
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -85,5 +104,6 @@ module.exports = {
     updateproduct,
     addproduct,
     importproduct,
-    deleteproduct
+    deleteproduct,
+    postPage
 }

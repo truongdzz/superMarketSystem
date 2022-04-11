@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,250;0,400;0,500;0,700;1,250;1,400;1,500;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
 * {
     margin: 0px;
     padding: 0px;
@@ -16,13 +16,16 @@
 
 body {
     min-height: 100vh;
-    width: 100%;
-    overflow: unset;
+    overflow-x: hidden;
 }
-
 
 a {
     text-decoration: none;
+}
+
+.container {
+    position: relative;
+    width: 100%;
 }
 
 .navigation {
@@ -36,7 +39,7 @@ a {
 }
 
 .navigation.active {
-    width: 250px;
+    width: 300px;
 }
 
 .navigation ul {
@@ -147,9 +150,9 @@ a {
     transition: 0.5s;
 }
 
-.main.active{
-    left: 250px;
-    width: calc(100% - 250px);
+.main.active {
+    left: 300px;
+    width: calc(100% - 300px);
 }
 
 .topbar {
@@ -268,9 +271,19 @@ a {
     position: relative;
     width: 100%;
     padding: 20px;
+    display: grid;
     grid-template-columns: 2fr 1fr;
     grid-gap: 30px;
     /* margin-top: 10px; */
+}
+
+.details .recentOrders {
+    position: relative;
+    display: grid;
+    min-height: 500px;
+    background: var(--white);
+    padding: 20px;
+    box-shadow: 0px 7px 25px rgba(0, 0, 0, 0.1);
 }
 
 .cardHeader {
@@ -284,26 +297,214 @@ a {
     color: var(--blue);
 }
 
-.main .details{
+.btn {
+    position: relative;
+    padding: 5px 10px;
+    background: var(--blue);
+    text-decoration: none;
+    color: var(--white);
+    border-radius: 6px;
+}
+
+.details table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.details table thead td {
+    font-weight: 600;
+}
+
+.details .recentOrders table tr {
+    color: var(--black1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.details .recentOrders table tr:last-child {
+    border-bottom: none;
+}
+
+.details .recentOrders table tr td {
+    padding: 10px;
+}
+
+.details .recentOrders table tr td:last-child {
+    text-align: right;
+}
+
+.details .recentOrders table tbody tr:hover {
+    background: var(--blue);
+    color: var(--white);
+}
+
+.details .recentOrders table tr td:nth-child(2) {
+    text-align: left;
+}
+
+.details .recentOrders table tr td:nth-child(3) {
+    text-align: center;
+}
+
+.status.delivered {
+    padding: 2px 4px;
+    background: #8de02c;
+    color: var(--white);
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.status.pending {
+    padding: 2px 4px;
+    background: #f9ca3f;
+    color: var(--white);
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.status.return {
+    padding: 2px 4px;
+    background: #f00;
+    color: var(--white);
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.status.inprogress {
+    padding: 2px 4px;
+    background: #1795ce;
+    color: var(--white);
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.recentCustomers {
+    position: fixed;
     display: grid;
-    grid-template-columns: 3fr 1fr;
+    width: 400px;
+    height: 35%;
+    padding: 20px;
+    right: 25px;
+    box-shadow: 0 7px 25px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    background: var(--white);
+}
+
+.recentCustomers img {
+    position: relative;
+    width: 150px;
+    height: 80px;
+    border-radius: 50px;
+    overflow: hidden;
+    margin-left: 5%;
+}
+
+.recentCustomers .form-product {
+    position: relative;
+    align-content: center;
+}
+
+.recentCustomers .form-product label {
+    width: 100px;
+}
+
+.recentCustomers .form-product input[type=text] {
+    width: 70%;
+    padding: 5px 20px;
+    display: flexbox;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-left: 0;
+}
+
+
+/* .recentCustomers .imgBox {
+    position: relative;
+    width: 300px;
+    height: 150px;
+    border-radius: 50px;
+    overflow: hidden;
+}
+
+.recentCustomers .imgBox img {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    height: 100%;
+    object-fit: cover;
+} */
+
+.recentCustomers table tr:hover {
+    background: var(--blue);
+    color: var(--white);
+}
+
+.recentCustomers table td {
+    padding: 12px 10px;
+}
+
+.recentCustomers table td h4 {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.2em;
+}
+
+.recentCustomers table td h4 span {
+    font-size: 14px;
+    color: var(--black2);
+}
+
+.recentCustomers table tr:hover td h4 span {
+    background: var(--blue);
+    color: var(--white);
+}
+
+.tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    left: calc(50% - 60px);
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+}
+
+.card:hover .tooltiptext {
+    visibility: visible;
+}
+
+.main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 3rem 2rem;
+}
+
+.main .title {
+    font-size: 3.5rem;
+    color: #444;
+    margin-bottom: 3rem;
+    text-transform: uppercase;
+    text-align: center;
 }
 
 .main .products-container {
     display: grid;
-    width: 100%;
     grid-template-columns: repeat(4, 1fr);
-    gap: 1rem;
-    margin-top: 50px;
-}
-
-.main .products-container.active{
-    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
 }
 
 .main .products-container .product {
     text-align: center;
-    width: 200px;
+    width: 280px;
     display: grid;
     padding: 0 2rem;
     padding-top: 2rem;
@@ -311,11 +512,10 @@ a {
     box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .1);
     outline: .1rem solid #ccc;
     outline-offset: -5px;
-    cursor: pointer;
 }
 
 .main .products-container .product:hover {
-    outline: .2rem solid #222;
+    outline: .2rem solid var(--blue);
     outline-offset: 0;
 }
 
@@ -445,62 +645,102 @@ a {
     color: #fff;
 }
 
-.main .editspace{
-    position: fixed;
-    top: 70px;
-    right: 20px;
-    display: block;
-    height: 100vh;
-    overflow-y: scroll;
-    width: 24%;
-    display: flex;
-    flex-direction: column;
-    padding-bottom: 50px;
+.formBar {
+    align-items: center;
+    padding-top: 15px;
 }
 
-.recentCustomers {
+.searchBar {
     position: relative;
-    margin-bottom: 20px;
+    width: 50%;
+}
+
+.searchBar .result {
+    position: absolute;
+    left: 0px;
+    top: 40px;
     width: 100%;
-    padding: 20px;
-    box-shadow: 0 7px 25px rgba(0, 0, 0, 0.1);
+    background-color: var(--white);
+    padding: 10px;
+    border: 1px solid var(--black2);
+    border-radius: 10px;
+    z-index: 1;
+}
+
+.searchBar .result table tr td {
+    height: 50px;
+}
+
+.searchBar .result table tr td.res-content {
+    width: 100%;
+    text-align: center;
+}
+
+.searchBar .result table tr:hover td {
+    border-radius: 10px;
+    border-bottom: 1px solid var(--blue);
+    border-top: 1px solid var(--blue);
+    height: 70px;
+    cursor: pointer;
+}
+
+.searchBar .result table tr td img {
+    width: 40px;
+}
+
+.searchBar .result table tr td button {
+    width: 100%;
+    height: 30px;
+    padding: 5px 0px;
+    background-color: var(--blue);
+    outline: none;
+    border: none;
+    cursor: pointer;
+    color: var(--white);
+}
+
+.searchBar .result.hide {
+    display: none;
+}
+
+.searchBar input {
+    width: 100%;
+    height: 35px;
     border-radius: 20px;
-    background: var(--white);
+    border: 1px solid var(--black1);
+    padding-left: 35px;
+    font-size: 15px;
+    line-height: 35px;
 }
 
-.recentCustomers img {
-    position: relative;
-    width: 150px;
-    
-    border-radius: 50px;
-    margin-left: 5%;
+.searchBar .kinhlup {
+    position: absolute;
+    left: 10px;
+    top: 8px;
+    font-size: 20px;
+    font-weight: 400;
 }
 
-.recentCustomers .form-product {
-    position: relative;
-    align-content: center;
+#remove {
+    position: absolute;
+    right: 10px;
+    top: 8px;
+    font-size: 20px;
+    font-weight: 400;
+    cursor: pointer;
 }
 
-.recentCustomers .form-product form{
-    margin-top: 10px;
-    display: grid;
-    grid-template-columns: 1fr 4fr;
-    grid-gap: 5px;
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0;
+    /* <-- Apparently some margin are still there even though it's hidden */
 }
 
-.recentCustomers .form-product label {
-    width: 100px;
-}
-
-.recentCustomers .form-product input {
-    width: 100%;
-    height: 25px;
-    padding: 0px 0px 0px 5px;
-    display: flexbox;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-    margin-left: 0;
+input[type=number] {
+    -moz-appearance: textfield;
+    /* Firefox */
 }
 
 
@@ -514,19 +754,19 @@ a {
 
 @media (max-width:991px) {
     .navigation {
-        left: -250px;
+        left: -300px;
     }
     .navigation.active {
         left: 0px;
-        width: 250px;
+        width: 300px;
     }
     .main {
         width: 100%;
         left: 0px;
     }
     .main.active {
-        width: calc(100% - 250px);
-        left: 250px;
+        width: calc(100% - 300px);
+        left: 300px;
     }
     .cardBox {
         grid-template-columns: repeat(2, 1fr);

@@ -21,7 +21,7 @@ const loadDashboard = async (req, res) => {
         const data = new Data;
         const ordersIn24h = await Order.pullDataByTime(24);
         data.newOrders = ordersIn24h.length;
-        data.ordersInfo = ordersIn24h;
+        data.ordersInfo = ordersIn24h.reverse();
         for (let index = 0; index < ordersIn24h.length; index++) {
             const order = ordersIn24h[index];
             const goodsInOrder = await GoodsInOrder.getGoodsInOrder(order);
@@ -43,14 +43,13 @@ const loadDashboard = async (req, res) => {
 
         const analytic = {
             online24: onlineOrder24h.length,
-            onlinePercent: 100 * (onlineOrder24h.length - ((onlineOrder48h.length - onlineOrder24h.length) || 0)) / ((onlineOrder48h.length - onlineOrder24h.length) || 1),
+            onlinePercent: (100 * (onlineOrder24h.length - ((onlineOrder48h.length - onlineOrder24h.length) || 0)) / ((onlineOrder48h.length - onlineOrder24h.length) || 1)).toFixed(0),
             offline24: offlineOrder24h.length,
-            offlinePercent: 100 * (offlineOrder24h.length - ((offlineOrder48h.length - offlineOrder24h.length) || 0)) / ((offlineOrder48h.length - offlineOrder24h.length) || 1),
+            offlinePercent: (100 * (offlineOrder24h.length - ((offlineOrder48h.length - offlineOrder24h.length) || 0)) / ((offlineOrder48h.length - offlineOrder24h.length) || 1)).toFixed(0),
             user24: user24h.length,
-            userPercent: 100 * (user24h.length - ((user48h.length - user24h.length) || 0)) / ((user48h.length - user24h.length) || 1)
+            userPercent: (100 * (user24h.length - ((user48h.length - user24h.length) || 0)) / ((user48h.length - user24h.length) || 1)).toFixed(0)
         }
 
-        console.log(analytic);
         data.analytic = analytic;
 
         return res.render('managerView/dashboard.ejs', { data: data });
@@ -257,8 +256,49 @@ const getStaffManager = async(req, res) => {
 }
 
 
-const loadDetailOrder = (req, res) => {
-    res.render('managerView/loadDetailOrder')
+const loadDetailOrder = async (req, res)=>{
+    const {id} = req.params;
+    try {
+        //get current order
+        const order = await Order.getOrderById(id);
+
+        //get customer of the order
+        const customer = await User.getUserById(order[0].userid);
+
+        //get all order of that customer
+        const recentOrders = await Order.getOrdersByUserId(order[0].userid);
+
+        //get his ten last order
+        let recentTenOrders= recentOrders.slice(-10);
+        recentTenOrders = recentTenOrders.reverse();
+
+        //get product in current order
+        const productInOrder = await GoodsInOrder.getGoodsInOrder(order[0]);
+        
+        let productList = [];
+        for (var i = 0; i < productInOrder.length; i++) {
+            const item = productInOrder[i];
+            const pro = await Product.getProductById(item.goodID);
+            const product = pro[0];
+            product.amount = item.amount;
+            product.total = product.amount * product.sellPrice * (100-product.discount) / 100;
+            productList.push(product);
+        }
+        console.log(productList);
+
+
+        const data = {
+            userInfo: customer[0],
+            recentOrders: recentTenOrders,
+            billInfo: order[0],
+            products: productList
+        }
+
+        return res.render('managerView/detailOrder', data);    
+    } catch (error){
+        return res.status(500).json({message: error.message})
+    }
+    
 }
 
 
@@ -270,5 +310,6 @@ module.exports = {
     getLeadCategory,
     getShiftManager,
     getHourStatistic,
-    getStaffManager
+    getStaffManager,
+    loadDetailOrder
 }

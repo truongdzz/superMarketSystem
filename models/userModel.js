@@ -72,4 +72,15 @@ User.getUserByTime = (hour) => {
     return promise;
 }
 
+User.getUserById = (id)=>{
+    const promise = new Promise((resolve, reject)=>{
+        const sql = 'SELECT * FROM user WHERE id = ?';
+        db.query(sql, id, (err, data)=>{
+            if(err) reject(err);
+            else resolve(data);
+        })
+    })
+    return promise;
+}
+
 module.exports = User;

@@ -4,13 +4,13 @@ require('dotenv').config();
 const verifyJWT = (req, res, next) => {
     
     const cookies = req.cookies;
-    if(!cookies?.accessToken) res.status(401).render('others/401.ejs');
+    if(!cookies?.jwt) return res.status(401).render('others/401.ejs');
 
-    const token = cookies.accessToken;
+    const token = cookies.jwt;
 
     jwt.verify(
         token,
-        process.env.ACCESS_TOKEN_SECRET,
+        process.env.REFRESH_TOKEN_SECRET,
         (err, decoded)=>{
             if (err) {
                 return res.status(403).render('others/refreshStaff.ejs');

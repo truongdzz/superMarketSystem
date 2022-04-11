@@ -70,4 +70,25 @@ Order.getAllOrdersByTime = (from, to) => {
     return promise;
 }
 
+Order.getOrderById = (id)=>{
+    const promise = new Promise((resolve, reject)=>{
+        const sql = 'SELECT * FROM `order` WHERE id = ?';
+        db.query(sql, id, (err, data)=>{
+            if(err) reject(err);
+            else resolve(data);
+        })
+    })
+    return promise;
+}
+
+Order.getOrdersByUserId = (userId)=>{
+    const promise = new Promise((resolve, reject)=>{
+        const sql = 'SELECT * FROM `order` WHERE userid = ?';
+        db.query(sql, userId, (err, data)=>{
+            if(err) reject(err);
+            else resolve(data);
+        })
+    })
+    return promise;
+}
 module.exports = Order;

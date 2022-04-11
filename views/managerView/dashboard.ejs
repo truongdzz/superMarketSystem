@@ -43,7 +43,7 @@
               <a href="/admin/shiftmanager">
                   <span class="icon">
                       <ion-icon name="checkmark-done-outline"></ion-icon>
-      </span>
+                  </span>
                   <span class="title">Shift Manager</span>
               </a>
           </li>
@@ -163,16 +163,10 @@
             </thead>
             <tbody>
               <% data.ordersInfo.forEach(function(order){ %>
-                <tr>
-                  <td>
-                    <%= order.id %>
-                  </td>
-                  <td>
-                    <%= order.price %>
-                  </td>
-                  <td>
-                    <%= order.type %>
-                  </td>
+                <tr onclick="detailOrder(<%=order.id%>)">
+                  <td><%= order.id %></td>
+                  <td><%= order.price %></td>
+                  <td><%= order.type %></td>
                   <td>
                     <span class="status <%= order.status %>"><%= order.status %></span>
                   </td>
@@ -305,6 +299,12 @@
       userPercent.classList.add("good");
     } else {
       userPercent.classList.add("bad");
+    }
+
+
+
+    function detailOrder(id){
+      location.href = "/admin/detailOrder/" + id;
     }
   </script>
 </body>

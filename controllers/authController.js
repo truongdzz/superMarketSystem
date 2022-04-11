@@ -9,7 +9,6 @@ const handleLoginStaff = async (req, res)=> {
     const {username, password} = req.body;
     //check not null
     if (!username || !password) {
-        //return res.status(400).json({ message: 'Username and password are required.' });
         return res.status(400).render('staffLogin', {
             message: "Username and password are requireed"
         })
@@ -36,25 +35,27 @@ const handleLoginStaff = async (req, res)=> {
             })
         } else{
             // create jwt
-            const accessToken = jwt.sign(
+            // const accessToken = jwt.sign(
+            //     {
+            //         userInfo: {
+            //             username: foundStaff.username,
+            //             userRole: foundStaff.role,
+            //             staffid: foundStaff.id
+            //         }
+            //     },
+            //     process.env.ACCESS_TOKEN_SECRET,
+            //     {expiresIn: '15m'}
+            // );
+            const refreshToken = jwt.sign(
                 {
-                    userInfo: {
+                    userInfo:{
                         username: foundStaff.username,
                         userRole: foundStaff.role,
                         staffid: foundStaff.id
                     }
                 },
-                process.env.ACCESS_TOKEN_SECRET,
-                {expiresIn: '15m'}
-            );
-            const refreshToken = jwt.sign(
-                {
-                    userInfo:{
-                        username: foundStaff.username
-                    }
-                },
                 process.env.REFRESH_TOKEN_SECRET,
-                {expiresIn: '1d'}
+                {expiresIn: '15m'}
             );
             //save the current user with refresh token
             StaffDB.saveRefreshToken(foundStaff, refreshToken, (err, message)=>{
@@ -62,9 +63,9 @@ const handleLoginStaff = async (req, res)=> {
             })
 
             //send token to client
-            res.cookie('jwt', refreshToken, { httpOnly: true, maxAges: 24*60*60*1000});
+            res.cookie('jwt', refreshToken, { httpOnly: true});
             
-            res.cookie('accessToken', accessToken, { httpOnly: true, maxAges: 15*60*1000});
+            // res.cookie('accessToken', accessToken, { httpOnly: true, maxAges: 15*60*1000});
             
             
             if (foundStaff.role === "cashier") {
@@ -109,24 +110,26 @@ const handleLoginUser = async (req, res)=>{
             })
         } else{
             //create jwt
-            const accessToken = jwt.sign(
-                {
-                    userInfo: {
-                        username: foundUser.username,
-                        userRole: foundUser.role
-                    }
-                },
-                process.env.ACCESS_TOKEN_SECRET,
-                {expiresIn: '15m'}
-            );
+            // const accessToken = jwt.sign(
+            //     {
+            //         userInfo: {
+            //             username: foundUser.username,
+            //             userRole: foundUser.role
+            //         }
+            //     },
+            //     process.env.ACCESS_TOKEN_SECRET,
+            //     {expiresIn: '15m'}
+            // );
             const refreshToken = jwt.sign(
                 {
                     userInfo:{
-                        username: foundUser.username
+                        username: foundUser.username,
+                        userRole: foundUser.role,
+                        userid: foundUser.id
                     }
                 },
                 process.env.REFRESH_TOKEN_SECRET,
-                { expiresIn: '1d'}
+                { expiresIn: '15m'}
             );
             // save the refreshtoken to db
             UsersDB.saveRefreshToken(foundUser, refreshToken, (err, message)=>{
@@ -134,8 +137,8 @@ const handleLoginUser = async (req, res)=>{
             })
 
             // send token to client
-            res.cookie('jwt', refreshToken, { httpOnly: true, maxAges: 24*60*60*1000});
-            res.cookie('accessToken', accessToken, { httpOnly: true, maxAges: 15*60*1000});
+            res.cookie('jwt', refreshToken, { httpOnly: true});
+            // res.cookie('accessToken', accessToken, { httpOnly: true, maxAges: 15*60*1000});
             res.redirect('/');
         }
 

@@ -27,7 +27,7 @@ const handleUserLogout = async (req, res) => {
                 if (err) console.log(err);
             });
             res.clearCookie('jwt', { httpOnly: true, maxAges: 24 * 60 * 60 * 1000 });
-            res.clearCookie('accessToken', { httpOnly: true, maxAges: 15*60*1000});
+            // res.clearCookie('accessToken', { httpOnly: true, maxAges: 15*60*1000});
             res.redirect('/login/user');
         }
 
@@ -62,9 +62,7 @@ const handleStaffLogout = async (req, res) => {
             staffDB.clearRefreshToken(foundStaff, (err, message) => {
                 if (err) console.log(err);
             });
-            res.clearCookie('jwt', { httpOnly: true, maxAges: 24 * 60 * 60 * 1000 });
-            // res.clearCookie('accessToken', {httpOnly: true, maxAges : 15 * 60 * 1000})
-            res.clearCookie('accessToken', {httpOnly: true, maxAges : 10 * 1000})
+            res.clearCookie('jwt', { httpOnly: true });
             res.redirect('/login/staff');
         }
 

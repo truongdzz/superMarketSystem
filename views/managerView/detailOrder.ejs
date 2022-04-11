@@ -1,65 +1,311 @@
-<<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Detail Order</title>
-	<link rel="stylesheet" href="/truong/detailOrder.css">
-</head>
-<body>
-	<div class="customerInfo">
-		<div class="table">
-			<div class="row">
-				<div class="cell">Name</div>
-				<div class="cell">Nguyễn Văn A</div>
-			</div>
-			<div class="row">
-				<div class="cell">Phone number</div>
-				<div class="cell">29384792</div>
-			</div>
-			<div class="row">
-				<div class="cell">Point</div>
-				<div class="cell">234</div>
-			</div>
-		</div>
-		<div>
-			<a href="#">Shopping history</a>
-		</div>
-	</div>
-	<div class="billInfo">
-		<div>
-			<div>
-				<p>Date:</p>
-				<p>29/3 - 18:00</p>	
-			</div>
-			<div>
-				<p>Payment:</p>
-				<p>Cash</p>
-			</div>
+    <head>
+        <meta charset="utf-8">
+            <meta content="IE=edge" http-equiv="X-UA-Compatible">
+                <title>
+                    Detail Order
+                </title>
+                <link href="/truong/detailOrder.css" rel="stylesheet">
+                </link>
+            </meta>
+        </meta>
+    </head>
+    <body>
+        <div class="container">
+            <!-- navigation -->
+            <div class="navigation">
+                <ul>
+                    <li>
+                        <a href="">
+                            <span class="icon">
+                                <ion-icon name="logo-apple">
+                                </ion-icon>
+                            </span>
+                            <span class="title">
+                                Brand name
+                            </span>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="/admin">
+                            <span class="icon">
+                                <ion-icon name="home-outline">
+                                </ion-icon>
+                            </span>
+                            <span class="title">
+                                Dashboard
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/admin/staffmanager">
+                            <span class="icon">
+                                <ion-icon name="person-outline">
+                                </ion-icon>
+                            </span>
+                            <span class="title">
+                                HR Management
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/admin/statistic">
+                            <span class="icon">
+                                <ion-icon name="trending-up-outline">
+                                </ion-icon>
+                            </span>
+                            <span class="title">
+                                Statistic
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/admin/shiftmanager">
+                            <span class="icon">
+                                <ion-icon name="checkmark-done-outline">
+                                </ion-icon>
+                            </span>
+                            <span class="title">
+                                Shift Manager
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/admin/hourstatistic">
+                            <span class="icon">
+                                <ion-icon name="time-outline">
+                                </ion-icon>
+                            </span>
+                            <span class="title">
+                                Hour Statistic
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <span class="icon">
+                                <ion-icon name="chatbubble-outline">
+                                </ion-icon>
+                            </span>
+                            <span class="title">
+                                Message
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <span class="icon">
+                                <ion-icon name="settings-outline">
+                                </ion-icon>
+                            </span>
+                            <span class="title">
+                                Settings
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/logout/staff">
+                            <span class="icon">
+                                <ion-icon name="log-out-outline">
+                                </ion-icon>
+                            </span>
+                            <span class="title">
+                                Sign out
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <!-- main -->
+            <div class="main">
+                <!-- topbar -->
+                <div class="topbar">
+                    <div class="toggle">
+                        <ion-icon name="menu-outline">
+                        </ion-icon>
+                    </div>
+                    <!-- search -->
+                    <div class="search">
+                        <label>
+                            <input placeholder="Search here" type="text">
+                                <ion-icon name="search-outline">
+                                </ion-icon>
+                            </input>
+                        </label>
+                    </div>
+                    <!-- user image -->
+                    <div class="user">
+                        <img alt="User" src="truong/img/user.jpg">
+                        </img>
+                    </div>
+                </div>
+                <div class="content">
+                    <div class="customerInfo">
+                    	<h2>Customer Info</h2>
+                        <div class="table">
+                            <div class="row">
+                                <div class="cell">
+                                    Name
+                                </div>
+                                <div class="cell">
+                                    <%= userInfo.name %>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="cell">
+                                    Phone number
+                                </div>
+                                <div class="cell">
+                                    <%= userInfo.phone%>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="cell">
+                                    Point
+                                </div>
+                                <div class="cell">
+                                    <%= userInfo.point %>
+                                </div>
+                            </div>
+                        </div>
+                        <h4>Recent bills</h4>
+                        <div class="table">
 
-		</div>
-		<div class="table">
-			<div class="row">
-				<div class="cell">ID</div>
-				<div class="cell">Product name</div>
-				<div class="cell">Amount</div>
-				<div class="cell">Price</div>
-				<div class="cell">Discount</div>
-				<div class="cell">Total</div>
-			</div>
-			<div class="row">
-				<div class="cell">4</div>
-				<div class="cell">Oranges</div>
-				<div class="cell">2</div>
-				<div class="cell">10000</div>
-				<div class="cell">0%</div>
-				<div class="cell">20000</div>
-			</div>
-		</div>
-		<div>
-			<p>Total:</p>
-			<p>20000 D</p>
-		</div>
-	</div>
-</body>
+                        	<div class="row">
+                        		<div class="cell">Date</div>
+                        		<div class="cell">Price</div>
+                        		<div class="cell">Type</div>
+                        		<div class="cell">Status</div>
+                        	</div>
+                        	<%for (var i = 0; i < recentOrders.length; i++) { %>
+                        		<%const item = recentOrders[i];%>
+                        	<div class="row">
+                        		<div class="cell"><%=item.date.toISOString().replace("T", " ").replace(".000Z","")%></div>
+                        		<div class="cell"><%=item.price%></div>
+                        		<div class="cell"><%=item.type%></div>
+                        		<div class="cell"><%=item.status%></div>
+                        	</div>
+                        	<%}%>
+                        	
+                        </div>
+                    </div>
+                    <div class="billInfo">
+                    	<h2>Bill Info</h2>
+                        <div class="table">
+                            <div class="row">
+                                <div class="cell">Date:</div>
+                                <div class="cell"><%=billInfo.date.toISOString().replace("T", " ").replace(".000Z","")%></div>
+                            </div>
+                            <div class="row">
+                                <div class="cell">Type:</div>
+                                <div class="cell"><%=billInfo.type%></div>
+                            </div>
+                            <div class="row">
+                            	<div class="cell">Total:</div>
+                            	<div class="cell"><%=billInfo.price%></div>
+                            </div>
+                            <div class="row">
+                            	<div class="cell">Point using:</div>
+                            	<div class="cell">0</div>
+                            </div>
+                        </div>
+                        <h4>List products</h4>
+                        <div class="table">
+                            <div class="row">
+                                <div class="cell">ID</div>
+                                <div class="cell">Product name</div>
+                                <div class="cell">Amount</div>
+                                <div class="cell">Price</div>
+                                <div class="cell">Discount</div>
+                                <div class="cell">Total</div>
+                            </div>
+                            <%for (var i = 0; i < products.length; i++) {%>
+                            	<%const item = products[i]%>
+                            <div class="row">
+                                <div class="cell"><%=item.id%></div>
+                                <div class="cell"><%=item.name%></div>
+                                <div class="cell"><%=item.amount%></div>
+                                <div class="cell"><%=item.sellPrice%></div>
+                                <div class="cell"><%=item.discount %>%</div>
+                                <div class="cell"><%=item.total%></div>
+                            </div>
+                            <%}%>
+                        </div>
+                            
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js" type="module">
+        </script>
+        <script nomodule="" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js">
+        </script>
+        <script>
+            //menu toggle
+    let toggle = document.querySelector('.toggle');
+    let main = document.querySelector('.main');
+    let navigation = document.querySelector('.navigation');
+
+    toggle.onclick = function(){
+      navigation.classList.toggle('active');
+      main.classList.toggle('active');
+    }
+
+    //add hovered class for selected list item
+    let list = document.querySelectorAll('.navigation li');
+    function hoveredLink(){
+      this.classList.add('hovered');
+    }
+    function unhoveredLink(){
+      this.classList.remove('hovered')
+    }
+    list.forEach((item)=>{
+      item.addEventListener('mouseover', hoveredLink);
+      item.addEventListener('mouseleave', unhoveredLink);
+    });
+
+    const onlinePercent = document.getElementById("onlinePercent");
+    const onlineSpan = document.getElementById("onl");
+    const onlPercent = Number(onlinePercent.innerText.replace("%", ""));
+    if(onlPercent >= 0){
+      onlineSpan.innerText = "+";
+    }
+    if(onlPercent >= 0 && onlPercent < 20){
+      onlinePercent.classList.add("ok");
+    } else if(onlPercent >= 20){
+      onlinePercent.classList.add("good");
+    } else {
+      onlinePercent.classList.add("bad")
+    }
+
+    const offLinePercent = document.getElementById("offlinePercent");
+    const offlineSpan = document.getElementById("off");
+    const offPercent = Number(offlinePercent.innerText.replace("%", ""));
+    if (offPercent >= 0) {
+      offlineSpan.innerText = "+";
+    }
+    if(offPercent >=0 && offPercent < 20){
+      offlinePercent.classList.add("ok");
+    } else if(offPercent >= 20 ){
+      offlinePercent.classList.add("good");
+    } else{
+      offlinePercent.classList.add("bad");
+    }
+
+    const userPercent = document.getElementById("userPercent");
+    const userSpan = document.getElementById("user");
+    const percent = Number(userPercent.innerText.replace("%", ""));
+    if(percent >= 0){
+      userSpan.innerText = "+";
+    }
+    if(percent > 0 && percent < 20){
+      userPercent.classList.add("ok");
+    } else if(percent >= 20){
+      userPercent.classList.add("good");
+    } else {
+      userPercent.classList.add("bad");
+    }
+        </script>
+    </body>
 </html>

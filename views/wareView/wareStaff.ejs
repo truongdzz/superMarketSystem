@@ -11,7 +11,7 @@
 </head>
 
 <body>
-
+    <div class="container">
 
         <!-- navigation -->
         <div class="navigation">
@@ -30,8 +30,20 @@
                 </li>
                 <li>
                     <a href="">
+                        <span class="icon"><ion-icon name="person-outline"></ion-icon></span>
+                        <span class="title">Customer</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="">
                         <span class="icon"><ion-icon name="chatbubble-outline"></ion-icon></span>
                         <span class="title">Message</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <span class="icon"><ion-icon name="help-outline"></ion-icon></span>
+                        <span class="title">Help</span>
                     </a>
                 </li>
                 <li>
@@ -41,7 +53,13 @@
                     </a>
                 </li>
                 <li>
-                    <a href="/logout/staff">
+                    <a href="">
+                        <span class="icon"><ion-icon name="lock-closed-outline"></ion-icon></span>
+                        <span class="title">Password</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="">
                         <span class="icon"><ion-icon name="log-out-outline"></ion-icon></span>
                         <span class="title">Sign out</span>
                     </a>
@@ -57,27 +75,72 @@
                     <ion-icon name="menu-outline"></ion-icon>
                 </div>
                 <!-- search -->
-                <div class="search">
+                <div class="search searchBar">
                     <label>
-                        <input type="text" placeholder="Search here">
+                        <input type="text" placeholder="Search product name or product id" id="searchBar">
                         <ion-icon name="search-outline"></ion-icon>
+                        <div class="result hide">
+                            <table class="search-container">
+
+                            </table>
+                        </div>
                     </label>
                 </div>
+                <div class="formBar">
+                    <form action="/ware/" method="POST">
+                        <label for="cat">Choose a category:</label>
+                        <select name="cat" onchange="this.form.submit()" id="selectcat">
+                          <option value="0">Select category</option>
+                          <option value="1">Rau củ</option>
+                          <option value="2">Trái cây</option>
+                          <option value="3">Thực phẩm đóng gói</option>
+                          <option value="4">Thực phẩm tươi</option>
+                          <option value="5">Tạp hóa phẩm</option>
+                          <option value="6">Nước uống</option>
+                          <option value="7">Quần áo nam</option>
+                          <option value="8">Quần áo nữ</option>
+                          <option value="9">Gia dụng</option>
+                          <option value="10">Đặc biệt</option>
+                        </select>
+                        <br><br>
+                    </form>
+                </div>
+
                 <!-- user image -->
                 <div class="user">
                     <img src="../../public/truong/img/user.jpg" alt="User">
 
                 </div>
             </div>
+            <br>
+            <br>
+            <br>
+            <!-- <form action="/ware/" method="POST">
+                <label for="cat">Choose a category:</label>
+                <select name="cat" onchange="this.form.submit()" id="selectcat">
+                  <option value="0">Select category</option>
+                  <option value="1">Rau củ</option>
+                  <option value="2">Trái cây</option>
+                  <option value="3">Thực phẩm đóng gói</option>
+                  <option value="4">Thực phẩm tươi</option>
+                  <option value="5">Tạp hóa phẩm</option>
+                  <option value="6">Nước uống</option>
+                  <option value="7">Quần áo nam</option>
+                  <option value="8">Quần áo nữ</option>
+                  <option value="9">Gia dụng</option>
+                  <option value="10">Đặc biệt</option>
+                </select>
+                <br><br>
+            </form> -->
+            <div class="container details">
 
 
-            <div class="details">
 
                 <div class="products-container">
                     <% var i = 0; %>
                         <% data.products.forEach(function(product){ %>
-                            <div class="product" data-name="p-1">
-                                <img src="<%= product.good_img %>" alt="" class="pimg" height="150px">
+                            <div class="product" id="p-<%=product.id%>">
+                                <img src="<%= product.good_img %>" alt="" class="pimg" height="200px">
                                 <div style="display: block; font-size: 0.8rem;">
 
                                     <h2 style="padding-top: 7px;" hidden>
@@ -97,14 +160,14 @@
 
 
                                 <div class="buttons">
-                                    <a href="/ware/deleteproduct/<%=i%>" class="delete">delete</a>
-                                    <a href="#" class="edit" onclick="updateproduct(<%=i%>)">edit</a>
+                                    <a href="/ware/deleteproduct/<%=product.id%>" class="delete">delete</a>
+                                    <a href="#p-<%=i%>" class="edit" onclick="updateproduct(<%=product.id%>)">edit</a>
                                 </div>
                             </div>
-                            <%i = i +1; %>
+                            <% i = i +1; %>
                                 <%}) %>
                 </div>
-                <div class="editspace">
+                <div style="overflow-x: scroll; position:fixed; top: 60px">
                     <div class="recentCustomers">
                         <div class="cardHeader">
                             <h2>Cập nhật sản phẩm </h2>
@@ -115,57 +178,58 @@
                                 <input type="text" id="productid" name="productid" placeholder="Your " value="" hidden>
                                 <label for="tensp">Tên SP </label>
                                 <input type="text" id="tensp" name="tensp" placeholder="Product name " value="">
-                                
+                                <br>
                                 <label for="amount">Số lượng</label>
                                 <input type="number" id="amount" name="amount" placeholder="Product Amount">
-                                
+                                <br>
                                 <label for="position">Vị trí</label>
                                 <input type="number" id="position" name="position" placeholder="Product position">
-                                
+                                <br>
                                 <label for="price">Giá</label>
                                 <input type="number" id="price" name="price" placeholder="Product price">
-                                
+                                <br>
                                 <input type="submit" value="Submit">
                             </form>
                         </div>
                     </div>
 
-                    <div class="recentCustomers">
+                    <div class="recentCustomers" style="bottom: 21%;">
                         <div class="cardHeader">
                             <h2 style="color: green;">Thêm sản phẩm mới </h2>
                         </div>
                         <div class="form-product">
                             <form action="/ware/addproduct" method="GET">
                                 <label for="addimg">Link hình ảnh </label>
-                                <input type="text" id="addimg" name="image" placeholder="Product link..">
+                                <input type="text" id="addimg" name="image" placeholder="Product link.." style="right: 0;">
                                 <label for="addname">Tên SP </label>
                                 <input type="text" id="addname" name="addname" placeholder="Product name">
-                                
+                                <br>
                                 <label for="addamount">Số lượng</label>
-                                <input type="text" id="addamount" name="addamount" placeholder="Product amount">
-                                
+                                <input type="number" id="addamount" name="addamount" placeholder="Product amount">
+                                <br>
                                 <label for="addpos">Vị trí</label>
                                 <input type="text" id="addpos" name="addpos" placeholder="Product position">
-                                
+                                <br>
                                 <label for="addprice">Giá</label>
                                 <input type="text" id="addprice" name="addprice" placeholder="Product price">
-                                
+                                <br>
                                 <input type="submit" value="Submit">
                             </form>
                         </div>
                     </div>
-                    <div class="recentCustomers nhaphang">
+                    <div class="recentCustomers nhaphang" style="bottom: 10px;margin-top:5px; height:150px">
                         <div class="cardHeader">
                             <h2 style="color: green;">Nhập hàng </h2>
                         </div>
                         <!-- <img src="https://upload.wikimedia.org/wikipedia/commons/8/88/Bright_red_tomato_and_cross_section02.jpg" alt=""> -->
                         <div class="form-product">
                             <form action="/ware/importproduct" method="GET">
+                                <input type="number" id="imamount1" name="imamount1" hidden>
                                 <label for="imid">ID SP </label>
                                 <input type="text" id="imid" name="imid" placeholder="Product ID ">
-                                
+                                <br>
                                 <label for="imamount">Số lượng</label>
-                                <input type="number" id="iamount" name="imamount" placeholder="Product amount">
+                                <input type="number" id="imamount" name="imamount" placeholder="Product amount">
                                 <input type="submit" value="Submit">
                             </form>
                         </div>
@@ -175,8 +239,12 @@
             </div>
 
         </div>
+
+
+
+
     </div>
-    
+    </div>
 
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
@@ -186,12 +254,10 @@
         let toggle = document.querySelector('.toggle');
         let main = document.querySelector('.main');
         let navigation = document.querySelector('.navigation');
-        let productContainer = document.querySelector('.products-container');
 
         toggle.onclick = function() {
             navigation.classList.toggle('active');
             main.classList.toggle('active');
-            productContainer.classList.toggle('active');
         }
 
         //add hovered class for selected list item
@@ -208,16 +274,85 @@
             item.addEventListener('mouseover', hoveredLink);
             item.addEventListener('mouseleave', unhoveredLink);
         });
-        var productImg = document.getElementById("product-img");
-        var product = document.getElementsByClassName("product");
+
+
 
         function updateproduct(i) {
-            productImg.src = document.getElementsByClassName("pimg")[i].src;
-            document.getElementById("productid").value = document.getElementsByClassName("pid")[i].innerHTML;
-            document.getElementById("tensp").value = document.getElementsByClassName("pname")[i].innerHTML;
-            document.getElementById("amount").value = document.getElementsByClassName("pamount")[i].innerHTML;
-            document.getElementById("position").value = document.getElementsByClassName("pposition")[i].innerHTML;
-            document.getElementById("price").value = document.getElementsByClassName("pprice")[i].innerHTML;
+            var idname = "p-" + i.toString();
+            var product = document.getElementById(idname);
+
+            document.getElementById("product-img").src = product.getElementsByClassName("pimg")[0].src;
+            document.getElementById("productid").value = product.getElementsByClassName("pid")[0].innerHTML;
+            document.getElementById("tensp").value = product.getElementsByClassName("pname")[0].innerHTML;
+            document.getElementById("amount").value = product.getElementsByClassName("pamount")[0].innerHTML;
+            document.getElementById("imamount1").value = product.getElementsByClassName("pamount")[0].innerHTML;
+            document.getElementById("position").value = product.getElementsByClassName("pposition")[0].innerHTML;
+            document.getElementById("price").value = product.getElementsByClassName("pprice")[0].innerHTML;
+            document.getElementById("imid").value = product.getElementsByClassName("pid")[0].innerHTML;
+        }
+
+
+        let allProduct;
+        let foundProduct;
+
+        const xhttp1 = new XMLHttpRequest();
+        xhttp1.onload = function() {
+            allProduct = JSON.parse(this.responseText);
+        }
+        const url1 = "/cashier/getAllProduct";
+        xhttp1.open("GET", url1, true);
+        xhttp1.send();
+
+
+        const searchBar = document.getElementById("searchBar");
+        searchBar.addEventListener("keyup", find);
+
+
+        const result = document.getElementsByClassName("result")[0];
+        const container = document.getElementsByClassName("search-container")[0];
+
+        const removeSearchBar = document.getElementById("remove");
+        removeSearchBar.addEventListener("click", () => {
+            searchBar.value = "";
+            result.classList.add("hide");
+        })
+
+        function find() {
+            if (!searchBar.value) {
+                result.classList.add("hide");
+                return;
+            }
+            foundProduct = allProduct.filter(product => {
+                const a = product.name.indexOf(searchBar.value);
+                const b = String(product.id).indexOf(searchBar.value);
+                if (a !== -1 || b !== -1) return true;
+                else return false;
+            })
+            if (!foundProduct.length) {
+                container.innerHTML = `No result`;
+                return;
+            }
+            console.log(foundProduct);
+            container.innerHTML = "";
+            for (let index = 0; index < foundProduct.length; index++) {
+                const product = foundProduct[index];
+                container.innerHTML += `<tr onclick="updateproduct(${product.id})"><td><img src="${product.good_img}" alt=\"\"></td><td class="res-content">${product.name}</td></tr>`;
+            }
+            result.classList.remove("hide");
+            const choices = document.getElementsByClassName("choice");
+            for (let index = 0; index < choices.length; index++) {
+                const choice = choices[index];
+                choice.addEventListener("click", function(evt) {
+                    console.log(evt.srcElement.id);
+                    if (!addedProduct.find(product => product.id === Number(evt.srcElement.id))) {
+                        const newProduct = foundProduct.find(product => product.id === Number(evt.srcElement.id));
+                        const otherProduct = JSON.parse(JSON.stringify(newProduct));
+                        otherProduct.amount = 1;
+                        addedProduct = [...addedProduct, otherProduct];
+                        reloadBill();
+                    }
+                })
+            }
         }
     </script>
 
