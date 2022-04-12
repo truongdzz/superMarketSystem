@@ -70,4 +70,18 @@ Order.getAllOrdersByTime = (from, to) => {
     return promise;
 }
 
+
+// get online oder
+Order.getOnlineOrderByUserId= function(UserId){
+    const promise= new Promise((res,rej)=>{
+        const sqltemp= "SELECT goods.name,goods.description,goods.discount,goods.sellPrice,goods.good_img,goodsinorder.amount FROM `order` WHERE userid = ?";
+        const sql="SELECT gs.name,gs.sellPrice,gs.discount,gi.amount,gs.description,gs.good_img FROM `order` o JOIN goodsinorder gi ON o.id = gi.orderID JOIN goods gs ON gi.goodID = gs.id WHERE o.type = 'online' AND o.status = 'inprogress' AND o.userid = ? "
+        db.query(sql,UserId,(err,data)=>{
+            if(err) rej(err);
+            else res(data);
+        })
+    })
+    return promise
+}
+
 module.exports = Order;
