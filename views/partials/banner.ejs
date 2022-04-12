@@ -86,6 +86,8 @@
                     </a>
                 </li>
 
+                <% if(!isLogin){ %> 
+
                 <li class="header__navbar-item header__navbar-item--strong header__navbar-item--separate">
                     <a href="/register/user">
                         Đăng ký
@@ -95,7 +97,8 @@
                     <a href="/login/user">Đăng Nhập</a>
                 </li>
 
-                <!-- <li class="header__navbar-item header__navbar-user">
+                <% }else{ %> 
+                <li class="header__navbar-item header__navbar-user">
                     <img src="https://ps.w.org/cbxuseronline/assets/icon-256x256.png?rev=2284897" alt="" class="header__navbar-user-img">
                     <span class="header__navbar-user-name">Leo PKM</span>
                     <ul class="header__navbar-user-menu">
@@ -109,10 +112,11 @@
                             <a href="">Đơn mua</a>
                         </li>
                         <li class="header__navbar-user-item header__navbar-user-item--separate">
-                            <a href="">Đăng Xuất</a>
+                            <a href="/logout/user">Đăng Xuất</a>
                         </li>
                     </ul>
-                </li> -->
+                </li>
+                <% } %> 
 
             </ul>    
         </nav>
