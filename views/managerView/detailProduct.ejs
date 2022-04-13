@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+            <meta content="IE=edge" http-equiv="X-UA-Compatible">
+                <title>
+                    Product name
+                </title>
+                <link href="/truong/detailProduct.css" rel="stylesheet">
+                    <script src="/truong/echarts.js">
+                    </script>
+                </link>
+            </meta>
+        </meta>
+    </head>
+    <body>
+        <div class="container">
+            <!-- navigation -->
+            <div class="navigation">
+                <ul>
+                    <li>
+                        <a href="">
+                            <span class="icon">
+                                <ion-icon name="logo-apple">
+                                </ion-icon>
+                            </span>
+                            <span class="title">
+                                Brand name
+                            </span>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="/admin">
+                            <span class="icon">
+                                <ion-icon name="home-outline">
+                                </ion-icon>
+                            </span>
+                            <span class="title">
+                                Dashboard
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/admin/staffmanager">
+                            <span class="icon">
+                                <ion-icon name="person-outline">
+                                </ion-icon>
+                            </span>
+                            <span class="title">
+                                HR Management
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/admin/statistic">
+                            <span class="icon">
+                                <ion-icon name="trending-up-outline">
+                                </ion-icon>
+                            </span>
+                            <span class="title">
+                                Statistic
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/admin/shiftmanager">
+                            <span class="icon">
+                                <ion-icon name="checkmark-done-outline">
+                                </ion-icon>
+                            </span>
+                            <span class="title">
+                                Shift Manager
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/admin/hourstatistic">
+                            <span class="icon">
+                                <ion-icon name="time-outline">
+                                </ion-icon>
+                            </span>
+                            <span class="title">
+                                Hour Statistic
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <span class="icon">
+                                <ion-icon name="chatbubble-outline">
+                                </ion-icon>
+                            </span>
+                            <span class="title">
+                                Message
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <span class="icon">
+                                <ion-icon name="settings-outline">
+                                </ion-icon>
+                            </span>
+                            <span class="title">
+                                Settings
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/logout/staff">
+                            <span class="icon">
+                                <ion-icon name="log-out-outline">
+                                </ion-icon>
+                            </span>
+                            <span class="title">
+                                Sign out
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <!-- main -->
+            <div class="main">
+                <!-- topbar -->
+                <div class="topbar">
+                    <div class="toggle">
+                        <ion-icon name="menu-outline">
+                        </ion-icon>
+                    </div>
+                    <!-- search -->
+                    <div class="search">
+                        <label>
+                            <input placeholder="Search here" type="text">
+                                <ion-icon name="search-outline">
+                                </ion-icon>
+                            </input>
+                        </label>
+                    </div>
+                    <!-- user image -->
+                    <div class="user">
+                        <img alt="User" src="truong/img/user.jpg">
+                        </img>
+                    </div>
+                </div>
+                <div class="mainContent">
+                    <div class="analytic">
+                        <div class="card totalPurchase">
+                            <div>
+                                <div class="cardHeader">
+                                    Total Purchase
+                                </div>
+                                <div class="cardNumber">
+                                    123000 Đ
+                                </div>    
+                            </div>
+                            
+                            <ion-icon name="cart-outline">
+                            </ion-icon>
+                        </div>
+                        <div class="card totalSell">
+                            <div>
+                                <div class="cardHeader">
+                                    Total Sell
+                                </div>
+                                <div class="cardNumber">
+                                    123000 Đ
+                                </div>    
+                            </div>
+                            
+                            <ion-icon name="bag-check-outline">
+                            </ion-icon>
+                        </div>
+                        <div class="card totalEarn">
+                            <div>
+                                <div class="cardHeader">
+                                    Total Income
+                                </div>
+                                <div class="cardNumber">
+                                    123000 Đ
+                                </div>    
+                            </div>
+                            
+                            <ion-icon name="cash-outline">
+                            </ion-icon>
+                        </div>
+                    </div>
+                    <div class="chart">
+                        <div class="mainChart card" id="mainChart" style="width: 100%; height: 500px;">
+                        </div>
+                        <div class="subChart">
+                            <div class="categoryChart card">
+                                <div id="categoryChart" style="height: 400px; width: 100%;">
+                                </div>    
+                            </div>
+                            <div class="recentPurchase card">
+                                <div class="cardHeader">
+                                    Recent Purchase
+                                </div>
+                                <div class="table">
+                                    <div class="row">
+                                        <div class="cell">
+                                            Time
+                                        </div>
+                                        <div class="cell">
+                                            Quantity
+                                        </div>
+                                        <div class="cell">
+                                            Price
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="cell">
+                                            14-3-2022 12:00
+                                        </div>
+                                        <div class="cell">
+                                            200
+                                        </div>
+                                        <div class="cell">
+                                            1000000
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="sideBar">
+                    <div class="card settingForm">
+                        <div class="cardHeader">
+                            Update Info
+                        </div>
+                        <div class="form">
+                            <div class="formElement">
+                                <label>
+                                    Sell Price:
+                                </label>
+                                <input name="sellPrice" placeholder="Sell Price (VND)" type="text">
+                                </input>    
+                                <button>Change</button>
+                            </div>
+                            <div class="formElement">
+                                <label>
+                                    Discount:
+                                </label>
+                                <input name="discount" placeholder="(0 - 100)%" type="text">
+                                </input>    
+                                <button>Change</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card relativeProduct">
+                        <div class="cardHeader">
+                            Relative Product
+                        </div>
+                        <div class="pro">
+                            <div class="proImg">
+                                <img src="/truong/img/user.jpg">
+                                </img>
+                            </div>
+                            <div class="proName">
+                                Kem danh rang PS
+                            </div>
+                        </div>
+                        <div class="pro">
+                            <div class="proImg">
+                                <img src="/truong/img/user.jpg">
+                                </img>
+                            </div>
+                            <div class="proName">
+                                Kem danh rang PS
+                            </div>
+                        </div>
+                        <div class="pro">
+                            <div class="proImg">
+                                <img src="/truong/img/user.jpg">
+                                </img>
+                            </div>
+                            <div class="proName">
+                                Kem danh rang PS
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js" type="module">
+        </script>
+        <script nomodule="" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js">
+        </script>
+        <script type="text/javascript">
+            //menu toggle
+		    let toggle = document.querySelector('.toggle');
+		    let main = document.querySelector('.main');
+		    let navigation = document.querySelector('.navigation');
+
+		    toggle.onclick = function(){
+		      navigation.classList.toggle('active');
+		      main.classList.toggle('active');
+		    }
+
+		    //add hovered class for selected list item
+		    let list = document.querySelectorAll('.navigation li');
+		    function hoveredLink(){
+		      this.classList.add('hovered');
+		    }
+		    function unhoveredLink(){
+		      this.classList.remove('hovered')
+		    }
+		    list.forEach((item)=>{
+		      item.addEventListener('mouseover', hoveredLink);
+		      item.addEventListener('mouseleave', unhoveredLink);
+		    });
+        </script>
+        <script type="text/javascript">
+            var chartDom1 = document.getElementById('mainChart');
+            var chartDom2 = document.getElementById('categoryChart');
+    		var mainChart = echarts.init(chartDom1);
+            var categoryChart = echarts.init(chartDom2);
+
+    		window.onresize = function () {
+      			mainChart.resize();
+    		};
+
+    		var mainChartOption;
+
+		    mainChartOption = {
+		      title: {
+		        text: 'Buy and Sales'
+		      },
+		      tooltip: {
+		        trigger: 'axis'
+		      },
+		      legend: {
+		        data: ['Buy', 'Sell']
+		      },
+		      toolbox: {
+		        show: true,
+		        feature: {
+		          dataView: { show: true, readOnly: false },
+		          magicType: { show: true, type: ['line', 'bar'] },
+		          restore: { show: true },
+		          saveAsImage: { show: true }
+		        }
+		      },
+		      calculable: true,
+		      xAxis: [
+		        {
+		          type: 'category',
+		          // prettier-ignore
+		          data: ["one", "two", "three"],
+		        }
+		      ],
+		      yAxis: [
+		        {
+		          type: 'value'
+		        }
+		      ],
+		      series: [
+		        {
+		          name: 'Buy',
+		          type: 'bar',
+		          data: [1, 2, 3],
+		          markPoint: {
+		            data: [
+		              { type: 'max', name: 'Max' },
+		              { type: 'min', name: 'Min' }
+		            ]
+		          }
+		          
+		        },
+		        {
+		          name: 'Sell',
+		          type: 'bar',
+		          data: [2, 3, 4],
+		          markPoint: {
+		            data: [
+		              { type: 'max', name: 'Max' },
+		              { type: 'min', name: 'Min' }
+		            ]
+		          }
+		          
+		        }
+		      ]
+		    };
+
+		    mainChartOption.color = [
+		      '#999',
+		      '#287bff'
+		    ]
+
+		    mainChartOption && mainChart.setOption(mainChartOption);
+            mainChartOption && categoryChart.setOption(mainChartOption);
+        </script>
+    </body>
+</html>

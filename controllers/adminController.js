@@ -301,6 +301,10 @@ const loadDetailOrder = async (req, res)=>{
     
 }
 
+const loadDetailProduct = (req, res)=>{
+    res.render('managerView/detailProduct');
+}
+
 
 module.exports = {
     loadDashboard,
@@ -311,5 +315,6 @@ module.exports = {
     getShiftManager,
     getHourStatistic,
     getStaffManager,
-    loadDetailOrder
+    loadDetailOrder,
+    loadDetailProduct
 }
