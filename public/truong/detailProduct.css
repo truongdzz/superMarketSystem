@@ -253,6 +253,7 @@ body{
 .analytic .card ion-icon{
     font-size: 50px;
     color: var(--black2);
+    display: none;
 }
 
 .analytic .card:hover{
@@ -287,7 +288,7 @@ body{
 
 .main .mainContent .analytic{
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
     margin-bottom: 20px;
     grid-column-gap: 20px;
 }
@@ -303,8 +304,28 @@ body{
 
 .main .mainContent .chart .subChart{
     display: grid;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 3fr 2fr;
     grid-column-gap: 20px;
+}
+
+.main .mainContent .chart .subChart .recentPurchase .table .row{
+    display: flex;
+    align-items: center;
+    height: 40px;
+    border-bottom: 1px solid var(--black2);
+}
+
+.main .mainContent .chart .subChart .recentPurchase .table .row:hover{
+    background: var(--black2);
+}
+
+.main .mainContent .chart .subChart .recentPurchase .table .row .cell{
+    width: 30%;
+
+}
+
+.main .mainContent .chart .subChart .recentPurchase .table .row .cell:first-child{
+    width: 40%;
 }
 
 .main .sideBar {
@@ -338,4 +359,57 @@ body{
     color: var(--white);
     border: none;
     padding: 0px 10px;
+    cursor: pointer;
+}
+
+.main .sideBar .relativeProduct{
+    margin-bottom: 20px;
+}
+
+.main .sideBar .relativeProduct .pro{
+    display: flex;
+}
+
+.main .sideBar .relativeProduct .pro:hover{
+    background-color: var(--black2);
+}
+
+.main .sideBar .relativeProduct .pro img{
+    width: 50px;
+    margin-right: 10px;
+}
+
+/**/
+.main .sideBar .leadProduct{
+    margin-bottom: 20px;
+}
+
+.main .sideBar .leadProduct .pro{
+    display: flex;
+}
+
+.main .sideBar .leadProduct .pro:hover{
+    background-color: var(--black2);
+}
+
+.main .sideBar .leadProduct .pro img{
+    width: 50px;
+    margin-right: 10px;
+}
+/**/
+.main .sideBar .badPrduct{
+    margin-bottom: 20px;
+}
+
+.main .sideBar .badProduct .pro{
+    display: flex;
+}
+
+.main .sideBar .badProduct .pro:hover{
+    background-color: var(--black2);
+}
+
+.main .sideBar .badProduct .pro img{
+    width: 50px;
+    margin-right: 10px;
 }
