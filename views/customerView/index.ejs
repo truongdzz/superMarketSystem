@@ -87,9 +87,10 @@
                                                     <div class="home-product-item__price">
                                                         <% if(dataItem.discount>0){%>
                                                             <span class="home-product-item__price-old"><%=dataItem.sellPrice%> VND</span>
-                                                            <span class="home-product-item__price-current"><%=dataItem.sellPrice*(1-dataItem.discount*0.01)%> VND</span>
+                                                            <span class="home-product-item__price-current"><%=dataItem.sellPrice*(1-dataItem.discount*0.01)%> VNĐ</span>
+                                                            
                                                         <%}else{%>
-                                                            <span class="home-product-item__price-current"><%=dataItem.sellPrice%> VND</span>
+                                                            <span class="home-product-item__price-current"><%=dataItem.sellPrice%> VNĐ</span>
                                                         <%} %> 
 
                                                     </div>
@@ -110,7 +111,7 @@
                                                         <span class="home-product-item__sold">88 Đã bán</span>
                                                     </div>
 
-                                                    <div class="home-product-item__buy-btn">
+                                                    <div class="home-product-item__buy-btn" onclick="insertProducttocart('<%=dataItem.id%>')">
                                                         <span class="home-product-item__buy-btn-title">Thêm vào giỏ</span>
                                                         <span class="home-product-item__buy-btn-icon">
                                                             <i class="fa-solid fa-cart-plus"></i>
@@ -206,6 +207,67 @@
                 //     }
                     
                 // }   
+                
+                //============================ them dau chi tien=====================================
+                let listDisPrice=Array.from(document.getElementsByClassName("home-product-item__price-current"))
+                listDisPrice=listDisPrice.concat(Array.from(document.getElementsByClassName("home-product-item__price-old")))
+                listDisPrice=listDisPrice.concat(Array.from(document.getElementsByClassName("header__cart-item-price")))
+                for (let i = 0; i < listDisPrice.length; i++) {
+                    let element = listDisPrice[i];
+                    // console.log(listDisPrice)
+                    let inputstr=element.textContent;
+                    let arrstring=element.textContent.split(" ");
+                    element.textContent=arrstring[0].toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')+' '+arrstring[1];
+                    
+                }
+
+                // ================== ajax xoa gio hang=======================================================
+
+
+                function deleteProductoutofcart(idProduct,idOrder){
+                    let xhttp=new XMLHttpRequest();
+                    alert(idOrder,idProduct);
+
+
+                    url='/delProductOutCart/'+idProduct+'/'+idOrder;
+                    xhttp.open("GET",url);
+                    xhttp.send();
+
+                    xhttp.onload=function(){
+                        alert(this.responseText);
+                        location.reload();
+                    }
+
+                }
+
+                function insertProducttocart(idProduct){
+                    // alert(idProduct);
+                    let xhttp = new XMLHttpRequest();
+                    url='/insertProductToCart/'+idProduct;
+                    xhttp.open("GET",url);
+                    xhttp.send();
+
+                    // xhttp.onload=function(){
+                    //     alert(this.responseText);
+                    // }
+
+                    // xhttp.onload=function(){
+                    //     alert('ok');
+                    // }
+
+                    xhttp.onload=function(){
+                        if(this.status==400){
+                            alert(this.responseText);
+                        }
+                        else if(this.status==200){
+                            alert(this.responseText+this.status);
+                            location.reload();
+                        }
+                    }
+
+                }
+                
+
         </script>
 
     </body>

@@ -194,21 +194,22 @@
                             <!-- cart Item -->
                             <% productInCart.forEach(function(productitem){%>
                                 <li class="header__cart-item">
-                                    <img src="https://cf.shopee.vn/file/f1d312166b7f53462de7816d3169b073" alt="" class="header__cart-img">
+                                    <!-- <img src="https://cf.shopee.vn/file/f1d312166b7f53462de7816d3169b073" alt="" class="header__cart-img"> -->
+                                    <img src=<%=productitem.good_img%> alt="" class="header__cart-img">
                                     <div class="header__cart-item-info">
                                         <div class="header__cart-item-head">
-                                            <h5 class="header__cart-item-name">BỘ kem đặc trị vùng mắt Bộ 2 chai nước súc miệng Colgate kháng 99% vi khuẩn Plax bạc hà 500ml/chai Bộ 2 chai nước súc miệng Colgate kháng 99% vi khuẩn Plax bạc hà 500ml/chai</h5>
+                                            <h5 class="header__cart-item-name"><%=productitem.name%></h5>
                                             <div class="header__cart-item-price-wrap">
-                                                <span class="header__cart-item-price">2.000.000đ</span>
+                                                <span class="header__cart-item-price"><%=productitem.sellPrice*(1-productitem.discount*0.01) %> đ</span>
                                                 <span class="header__cart-item-multiple">x</span>
-                                                <span class="header__cart-item-qnt">2</span>
+                                                <span class="header__cart-item-qnt"><%=productitem.amount%> </span>
                                             </div>
                                         </div>
                                         <div class="header__cart-item-body">
                                             <span class="header__cart-item-description">
-                                                Phân loại: Bạc
+                                                Phân loại: <%=productitem.category%>
                                             </span>
-                                            <span class="header__cart-item-remove">
+                                            <span class="header__cart-item-remove" onclick="deleteProductoutofcart('<%=productitem.goodID%>','<%=productitem.orderID%>')">
                                                 xóa
                                             </span>
                                         </div>
@@ -216,7 +217,7 @@
                                 </li>
                             <%}); %> 
 
-                            <li class="header__cart-item">
+                            <!-- <li class="header__cart-item">
                                 <img src="https://cf.shopee.vn/file/f1d312166b7f53462de7816d3169b073" alt="" class="header__cart-img">
                                 <div class="header__cart-item-info">
                                     <div class="header__cart-item-head">
@@ -258,7 +259,7 @@
                                         </span>
                                     </div>
                                 </div>
-                            </li>
+                            </li> -->
 
                         </ul>
                         <a href="#" class="header__cart-view-cart btn btn--primary">Xem giỏ hàng</a>

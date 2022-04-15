@@ -193,6 +193,17 @@
 
         <script>
 
+                let listDisPrice=Array.from(document.getElementsByClassName("home-product-item__price-current"))
+                listDisPrice=listDisPrice.concat(Array.from(document.getElementsByClassName("home-product-item__price-old")))
+                for (let i = 0; i < listDisPrice.length; i++) {
+                    let element = listDisPrice[i];
+                    console.log(listDisPrice)
+                    let inputstr=element.textContent;
+                    let arrstring=element.textContent.split(" ");
+                    element.textContent=arrstring[0].toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')+' '+arrstring[1];
+                    
+                }
+
             // change color of ative link
                 let categorylist=document.querySelectorAll('.category-list .category-item a');
                 let currentative=document.querySelector('.category-list .category-item--active');

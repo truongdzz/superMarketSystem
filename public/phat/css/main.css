@@ -1056,6 +1056,11 @@
     color: var(--primary-color);
     margin-left: 10px;
 }
+p.home-product-item__price-current{
+    margin-top: 0;
+    margin-bottom: 0;
+}
+/* .sale-price */
 
 .home-product-item__action{
     display: flex;
