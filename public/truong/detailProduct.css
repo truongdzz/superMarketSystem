@@ -1,32 +1,27 @@
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
-
-*{
+* {
     margin: 0px;
     padding: 0px;
     box-sizing: border-box;
     font-family: 'Ubuntu', sans-serif;
 }
-
-:root
-{
+:root {
     --blue: #287bff;
     --white: #fff;
     --grey: #f5f5f5;
     --black1: #222;
     --black2: #999;
 }
-
-body{
+body {
     min-height: 100vh;
     overflow-x: hidden;
 }
 
-.container{
+.container {
     position: relative;
     width: 100%;
 }
-
-.navigation{
+.navigation {
     position: fixed;
     width: 70px;
     height: 100%;
@@ -35,39 +30,30 @@ body{
     transition: 0.5s;
     overflow: hidden;
 }
-
-.navigation.active{
+.navigation.active {
     width: 250px;
 }
-
-.navigation ul{
+.navigation ul {
     position: absolute;
     top: 0px;
     left: 0px;
     width: 100%;
 }
-
-.navigation ul li{
+.navigation ul li {
     position: relative;
     width: 100%;
     list-style: none;
     border-top-left-radius: 30px;
     border-bottom-left-radius: 30px;
 }
-
-
-.navigation ul li.active,
-.navigation ul li:hover,
-.navigation ul li.hovered{ 
+.navigation ul li.active, .navigation ul li:hover, .navigation ul li.hovered {
     background: var(--white);
 }
-
-.navigation ul li:nth-child(1){
+.navigation ul li:nth-child(1) {
     margin-bottom: 40px;
     pointer-events: none;
 }
-
-.navigation ul li a{
+.navigation ul li a {
     position: relative;
     display: block;
     width: 100%;
@@ -75,26 +61,20 @@ body{
     text-decoration: none;
     color: var(--white);
 }
-
-.navigation ul li.active a,
-.navigation ul li:hover a,
-.navigation ul li.hovered a{
+.navigation ul li.active a, .navigation ul li:hover a, .navigation ul li.hovered a {
     color: var(--blue);
 }
-
-.navigation ul li a .icon{
+.navigation ul li a .icon {
     position: relative;
     min-width: 60px;
     height: 60px;
     line-height: 70px;
     text-align: center;
 }
-
-.navigation ul li a .icon ion-icon{
-    font-size: 1.75em ;
+.navigation ul li a .icon ion-icon {
+    font-size: 1.75em;
 }
-
-.navigation ul li a .title{
+.navigation ul li a .title {
     position: relative;
     display: block;
     padding: 0px 10px;
@@ -103,11 +83,9 @@ body{
     text-align: start;
     white-space: nowrap;
 }
-
 /* Curve oustside */
-.navigation ul li.active a::before,
-.navigation ul li:hover a::before,
-.navigation ul li.hovered a::before{
+
+.navigation ul li.active a::before, .navigation ul li:hover a::before, .navigation ul li.hovered a::before {
     content: "";
     position: absolute;
     top: -50px;
@@ -119,10 +97,7 @@ body{
     box-shadow: 35px 35px 0 10px var(--white);
     pointer-events: none;
 }
-
-.navigation ul li.active a::after,
-.navigation ul li:hover a::after,
-.navigation ul li.hovered a::after{
+.navigation ul li.active a::after, .navigation ul li:hover a::after, .navigation ul li.hovered a::after {
     content: "";
     position: absolute;
     bottom: -50px;
@@ -134,9 +109,9 @@ body{
     box-shadow: 35px -35px 0 10px var(--white);
     pointer-events: none;
 }
-
 /* main */
-.main{
+
+.main {
     position: absolute;
     width: calc(100% - 70px);
     left: 70px;
@@ -144,28 +119,25 @@ body{
     background: var(--white);
     transition: 0.5s;
 }
-
-.main.active{
+.main.active {
     left: 250px;
     width: calc(100% - 250px);
 }
-
-.topbar{
+.topbar {
     position: fixed;
     top: 0px;
     right: 0px;
     z-index: 100;
     background: var(--white);
     width: inherit;
-    box-shadow: 0 7px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 7px 10px rgba(0, 0, 0, 0.1);
     height: 60px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 0px 10px;
 }
-
-.toggle{
+.toggle {
     position: relative;
     top: 0px;
     width: 60px;
@@ -177,19 +149,17 @@ body{
     font-size: 2.5em;
     cursor: pointer;
 }
-
-.search{
+.search {
     position: relative;
     width: 400px;
     margin: 0px 10px;
 }
-
-.search label{
+.search label {
     position: relative;
     width: 100%;
 }
 
-.search label input{
+.search label input {
     width: 100%;
     height: 40px;
     border-radius: 40px;
@@ -197,16 +167,17 @@ body{
     font-size: 18px;
     outline: none;
     border: 1px solid var(--black2);
+    position: relative;
 }
 
-.search label ion-icon{
+
+.search label ion-icon {
     position: absolute;
     top: 0px;
     left: 10px;
     font-size: 1.2em;
 }
-
-.user{
+.user {
     position: relative;
     width: 40px;
     min-width: 40px;
@@ -215,201 +186,211 @@ body{
     overflow: hidden;
     cursor: pointer;
 }
-
-.user img{
+.user img {
     position: absolute;
     top: 0px;
-    left:0px;
+    left: 0px;
     width: 100%;
     min-width: 40px;
     height: 100%;
     object-fit: cover;
 }
-
-.card{
+.card {
     background-color: var(--white);
     border-radius: 20px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
     padding: 20px;
 }
-
-.card .cardHeader{
+.card .cardHeader {
     font-size: 25px;
     font-weight: 500;
     color: var(--blue);
     margin-bottom: 20px;
 }
-
-.analytic .card{
+.analytic .card {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
-
-.analytic .card .cardHeader{
+.analytic .card .cardHeader {
     margin-bottom: 0px;
 }
-
-.analytic .card ion-icon{
+.analytic .card ion-icon {
     font-size: 50px;
     color: var(--black2);
     display: none;
 }
-
-.analytic .card:hover{
+.analytic .card:hover {
     background-color: var(--blue);
 }
-
-.analytic .card:hover .cardHeader{
+.analytic .card:hover .cardHeader {
     color: var(--white);
 }
-
-.analytic .card:hover ion-icon{
+.analytic .card:hover ion-icon {
     color: var(--white);
 }
-
-.analytic .card .cardNumber{
+.analytic .card .cardNumber {
     font-size: 20px;
     font-weight: 500;
 }
-
-.main{
+.main {
     padding: 20px;
     margin-top: 50px;
     display: grid;
     grid-template-columns: 3fr 1fr;
     grid-column-gap: 20px;
 }
-
-.main .mainContent{
+.main .mainContent {
     display: flex;
     flex-direction: column;
 }
 
-.main .mainContent .analytic{
+.main .mainContent .productName{
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+}
+.main .mainContent .productName .cardHeader{
+    font-size: 60px;
+    line-height: 100px;
+}
+.main .mainContent .productName .img{
+    
+}
+.main .mainContent .productName .img img{
+    height: 100px;
+}
+.main .mainContent .analytic {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     margin-bottom: 20px;
     grid-column-gap: 20px;
 }
-
-.main .mainContent .chart{
+.main .mainContent .chart {
     display: flex;
     flex-direction: column;
 }
-
-.main .mainContent .chart .mainChart{
+.main .mainContent .chart .chartContainer {
     margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
 }
-
-.main .mainContent .chart .subChart{
+.main .mainContent .chart .chartContainer .selection{
+    margin-bottom: 20px;
+    display: flex;
+}
+.main .mainContent .chart .chartContainer .selection button{
+    margin-right: 20px;
+    padding: 5px 10px;
+    background: transparent;
+    border: 1px solid var(--blue);
+    color: var(--blue);
+    cursor: pointer;
+}
+.main .mainContent .chart .subChart {
     display: grid;
-    grid-template-columns: 3fr 2fr;
+    grid-template-columns: 1fr;
     grid-column-gap: 20px;
 }
-
-.main .mainContent .chart .subChart .recentPurchase .table .row{
+.main .mainContent .chart .subChart .recentPurchase .table .row {
     display: flex;
     align-items: center;
     height: 40px;
     border-bottom: 1px solid var(--black2);
 }
-
-.main .mainContent .chart .subChart .recentPurchase .table .row:hover{
+.main .mainContent .chart .subChart .recentPurchase .table .row:hover {
     background: var(--black2);
 }
-
-.main .mainContent .chart .subChart .recentPurchase .table .row .cell{
+.main .mainContent .chart .subChart .recentPurchase .table .row .cell {
     width: 30%;
-
 }
-
-.main .mainContent .chart .subChart .recentPurchase .table .row .cell:first-child{
+.main .mainContent .chart .subChart .recentPurchase .table .row:first-child .cell {
+    font-weight: 500;
+    font-size: 20px;
+}
+.main .mainContent .chart .subChart .recentPurchase .table .row .cell:first-child {
     width: 40%;
 }
-
 .main .sideBar {
     display: flex;
     flex-direction: column;
 }
-
-.main .sideBar .settingForm{
+.main .sideBar .settingForm {
     margin-bottom: 20px;
 }
-
-.main .sideBar .settingForm .form .formElement{
+.main .sideBar .settingForm .form .formElement {
     display: grid;
     grid-template-columns: auto auto;
     margin-bottom: 10px;
 }
-
-.main .sideBar .settingForm .form .formElement label{
+.main .sideBar .settingForm .form .formElement label {
     grid-column-start: 1;
     grid-column-end: 3;
 }
 
+ 
 .main .sideBar .settingForm .form .formElement input{
+    -moz-appearance: textfield;
+}
+.main .sideBar .settingForm .form .formElement input::-webkit-outer-spin-button, 
+.main .sideBar .settingForm .form .formElement input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    
+    margin: 0px;
+}
+.main .sideBar .settingForm .form .formElement input {
     width: 100%;
     height: 25px;
     padding-left: 10px;
 }
-
-.main .sideBar .settingForm .form .formElement button{
+.main .sideBar .settingForm .form .formElement button {
     background: var(--blue);
     color: var(--white);
     border: none;
     padding: 0px 10px;
     cursor: pointer;
 }
-
-.main .sideBar .relativeProduct{
+.main .sideBar .relativeProduct {
     margin-bottom: 20px;
 }
-
-.main .sideBar .relativeProduct .pro{
+.main .sideBar .relativeProduct .pro {
     display: flex;
+    align-items: center;
 }
-
-.main .sideBar .relativeProduct .pro:hover{
-    background-color: var(--black2);
+.main .sideBar .relativeProduct .pro:hover {
+    border: 1px solid var(--black2);
 }
-
-.main .sideBar .relativeProduct .pro img{
-    width: 50px;
-    margin-right: 10px;
-}
-
-/**/
-.main .sideBar .leadProduct{
-    margin-bottom: 20px;
-}
-
-.main .sideBar .leadProduct .pro{
-    display: flex;
-}
-
-.main .sideBar .leadProduct .pro:hover{
-    background-color: var(--black2);
-}
-
-.main .sideBar .leadProduct .pro img{
+.main .sideBar .relativeProduct .pro img {
     width: 50px;
     margin-right: 10px;
 }
 /**/
-.main .sideBar .badPrduct{
+
+.main .sideBar .leadProduct {
     margin-bottom: 20px;
 }
-
-.main .sideBar .badProduct .pro{
+.main .sideBar .leadProduct .pro {
     display: flex;
 }
-
-.main .sideBar .badProduct .pro:hover{
+.main .sideBar .leadProduct .pro:hover {
     background-color: var(--black2);
 }
+.main .sideBar .leadProduct .pro img {
+    width: 50px;
+    margin-right: 10px;
+}
+/**/
 
-.main .sideBar .badProduct .pro img{
+.main .sideBar .badPrduct {
+    margin-bottom: 20px;
+}
+.main .sideBar .badProduct .pro {
+    display: flex;
+}
+.main .sideBar .badProduct .pro:hover {
+    background-color: var(--black2);
+}
+.main .sideBar .badProduct .pro img {
     width: 50px;
     margin-right: 10px;
 }

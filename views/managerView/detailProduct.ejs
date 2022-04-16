@@ -7,13 +7,15 @@
                     Product name
                 </title>
                 <link href="/truong/detailProduct.css" rel="stylesheet">
-                    <script src="/truong/echarts.js">
-                    </script>
                 </link>
+                <script src="/truong/echarts.js">
+                </script>
+                <link rel="stylesheet" type="text/css" href="/truong/getAllProduct.css">
             </meta>
         </meta>
     </head>
     <body>
+        <div class="info" id="productId" style="display: none;"><%=product.id%></div>
         <div class="container">
             <!-- navigation -->
             <div class="navigation">
@@ -129,9 +131,12 @@
                     <!-- search -->
                     <div class="search">
                         <label>
-                            <input placeholder="Search here" type="text">
+                            <input placeholder="Search here" type="text" id="searchBar">
                                 <ion-icon name="search-outline">
                                 </ion-icon>
+                                <div class="table card hide" id="result">
+                                    
+                                </div>
                             </input>
                         </label>
                     </div>
@@ -142,14 +147,20 @@
                     </div>
                 </div>
                 <div class="mainContent">
+                    <div class="card productName">
+                            
+                            <div class="img"><img src="<%=product.good_img%>"></div>
+                            <div class="cardHeader"><%=product.name%></div>
+                        </div>
                     <div class="analytic">
+                        
                         <div class="card inventory">
                             <div>
                                 <div class="cardHeader">
                                     Inventory
                                 </div>
                                 <div class="cardNumber">
-                                    123
+                                    <%=inventory%>
                                 </div>    
                             </div>
                             
@@ -162,7 +173,7 @@
                                     Total Purchase
                                 </div>
                                 <div class="cardNumber">
-                                    123000 Đ
+                                    <%=totalPurchase%> Đ
                                 </div>    
                             </div>
                             
@@ -175,7 +186,7 @@
                                     Total Sell
                                 </div>
                                 <div class="cardNumber">
-                                    123000 Đ
+                                    <%=totalSell%> Đ
                                 </div>    
                             </div>
                             
@@ -188,7 +199,7 @@
                                     Total Income
                                 </div>
                                 <div class="cardNumber">
-                                    123000 Đ
+                                    <%=totalIncomes%> Đ
                                 </div>    
                             </div>
                             
@@ -197,13 +208,16 @@
                         </div>
                     </div>
                     <div class="chart">
-                        <div class="mainChart card" id="mainChart" style="width: 100%; height: 500px;">
+                        <div class="chartContainer card">
+                            <div class="selection">
+                                <button id="weekButton"  proId="<%=product.id%>">This Week</button>
+                                <button id="monthButton"  proId="<%=product.id%>">This Month</button>
+                                <button id="yearButton"   proId="<%=product.id%>">This Year</button>
+                            </div>
+                            <div class="mainChart" id="mainChart" style="width: 100%; height: 500px;">
+                            </div>
                         </div>
                         <div class="subChart">
-                            <div class="categoryChart card">
-                                <div id="categoryChart" style="height: 400px; width: 100%;">
-                                </div>    
-                            </div>
                             <div class="recentPurchase card">
                                 <div class="cardHeader">
                                     Recent Purchase
@@ -220,17 +234,20 @@
                                             Price
                                         </div>
                                     </div>
+                                    <%for (var i = 0; i < recentPurchase.length; i++) {%>
+                                        <%const item = recentPurchase[i]%>
                                     <div class="row">
                                         <div class="cell">
-                                            14-3-2022 12:00
+                                            <%=item.time%>
                                         </div>
                                         <div class="cell">
-                                            200
+                                            <%=item.amount%>
                                         </div>
                                         <div class="cell">
-                                            1000000
+                                            <%=item.amount * item.price%>
                                         </div>
                                     </div>
+                                    <%}%>
                                 </div>
                             </div>
                         </div>
@@ -244,19 +261,27 @@
                         <div class="form">
                             <div class="formElement">
                                 <label>
-                                    Sell Price:
+                                    Purchase Price: <span id="vl0"><%=product.buyPrice%></span> Đ
                                 </label>
-                                <input name="sellPrice" placeholder="Sell Price (VND)" type="text">
+                                <input name="buyPrice" placeholder="Purchase Price (VND)" type="number" id="buyPrice" proId="<%=product.id%>">
                                 </input>    
-                                <button>Change</button>
+                                <button onclick="updateBuyPrice(<%=product.id%>)" id="btn0">Change</button>
                             </div>
                             <div class="formElement">
                                 <label>
-                                    Discount:
+                                    Sell Price: <span id="vl1"><%=product.sellPrice%></span> Đ
                                 </label>
-                                <input name="discount" placeholder="(0 - 100)%" type="text">
+                                <input name="sellPrice" placeholder="Sell Price (VND)" type="number" id="sellPrice" proId="<%=product.id%>">
                                 </input>    
-                                <button>Change</button>
+                                <button onclick="updateSellPrice(<%=product.id%>)" id="btn1">Change</button>
+                            </div>
+                            <div class="formElement">
+                                <label>
+                                    Discount: <span id="vl2"><%=product.discount%></span> %
+                                </label>
+                                <input name="discount" placeholder="(0 - 100)%" type="number" id="discount" proId="<%=product.id%>">
+                                </input>    
+                                <button onclick="updateDiscount(<%=product.id%>)" id="btn2">Change</button>
                             </div>
                         </div>
                     </div>
@@ -264,98 +289,21 @@
                         <div class="cardHeader">
                             Relative Product
                         </div>
-                        <div class="pro">
-                            <div class="proImg">
-                                <img src="/truong/img/user.jpg">
-                                </img>
-                            </div>
-                            <div class="proName">
-                                Kem danh rang PS
-                            </div>
-                        </div>
-                        <div class="pro">
-                            <div class="proImg">
-                                <img src="/truong/img/user.jpg">
-                                </img>
-                            </div>
-                            <div class="proName">
-                                Kem danh rang PS
-                            </div>
-                        </div>
-                        <div class="pro">
-                            <div class="proImg">
-                                <img src="/truong/img/user.jpg">
-                                </img>
-                            </div>
-                            <div class="proName">
-                                Kem danh rang PS
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card leadProduct">
-                        <div class="cardHeader">
-                            Lead Product
-                        </div>
-                        <div class="pro">
-                            <div class="proImg">
-                                <img src="/truong/img/user.jpg">
-                                </img>
-                            </div>
-                            <div class="proName">
-                                Kem danh rang PS
-                            </div>
-                        </div>
-                        <div class="pro">
-                            <div class="proImg">
-                                <img src="/truong/img/user.jpg">
-                                </img>
-                            </div>
-                            <div class="proName">
-                                Kem danh rang PS
-                            </div>
-                        </div>
-                        <div class="pro">
-                            <div class="proImg">
-                                <img src="/truong/img/user.jpg">
-                                </img>
-                            </div>
-                            <div class="proName">
-                                Kem danh rang PS
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card badProduct">
-                        <div class="cardHeader">
-                            Sản phẩm ế
-                        </div>
-                        <div class="pro">
-                            <div class="proImg">
-                                <img src="/truong/img/user.jpg">
-                                </img>
-                            </div>
-                            <div class="proName">
-                                Kem danh rang PS
-                            </div>
-                        </div>
-                        <div class="pro">
-                            <div class="proImg">
-                                <img src="/truong/img/user.jpg">
-                                </img>
-                            </div>
-                            <div class="proName">
-                                Kem danh rang PS
-                            </div>
-                        </div>
-                        <div class="pro">
-                            <div class="proImg">
-                                <img src="/truong/img/user.jpg">
-                                </img>
-                            </div>
-                            <div class="proName">
-                                Kem danh rang PS
-                            </div>
-                        </div>
-                    </div>
+                        <%for (var i = 0; i < relativeProduct.length; i++) {%>
+                            <%const item = relativeProduct[i];%>
+                            <div class="pro">
+                                <div class="proImg">
+                                    <img src="<%=item.good_img%>">
+                                    </img>
+                                </div>
+                                <div class="proName">
+                                    <%=item.name%>
+                                </div>
+                            </div>    
+                        <%}%>
+                        
+                        
+                    
                 </div>
             </div>
         </div>
@@ -389,9 +337,9 @@
         </script>
         <script type="text/javascript">
             var chartDom1 = document.getElementById('mainChart');
-            var chartDom2 = document.getElementById('categoryChart');
+            
     		var mainChart = echarts.init(chartDom1);
-            var categoryChart = echarts.init(chartDom2);
+            
 
     		window.onresize = function () {
       			mainChart.resize();
@@ -424,6 +372,7 @@
 		          type: 'category',
 		          // prettier-ignore
 		          data: ["one", "two", "three"],
+                  axisLabel: { interval: 0, rotate: 30 }
 		        }
 		      ],
 		      yAxis: [
@@ -465,7 +414,165 @@
 		    ]
 
 		    mainChartOption && mainChart.setOption(mainChartOption);
-            mainChartOption && categoryChart.setOption(mainChartOption);
+            
+            let weekData;
+            let monthData;
+            let yearData;
+
+            const productId = document.getElementById('productId');
+
+            const buyPrice = document.getElementById('buyPrice');
+            const sellPrice = document.getElementById("sellPrice");
+            const discount = document.getElementById("discount");
+            //trigger event when press enter
+            sellPrice.addEventListener('keyup', function(event){
+                if(event.keyCode === 13){
+                    updateSellPrice(productId.innerText);
+                }
+            })
+            discount.addEventListener('keyup', function(event){
+                if(event.keyCode === 13){
+                    updateDiscount(productId.innerText);
+                }
+            })
+            buyPrice.addEventListener('keyup', function(event){
+                if(event.keyCode === 13){
+                    updateBuyPrice(productId.innerText);
+                }
+            })
+
+
+
+            const xhttp = new XMLHttpRequest();
+            xhttp.onload = function(){
+                if(this.status == 401){
+                    const ask = confirm("Bạn không có quyền truy cập vào địa chỉ này.");
+                    if(ask) location.href = "/login/staff";
+                    return;
+                }
+                if(this.status == 403){
+                    const ask = confirm("Phiên của bạn đã hết hạn, bạn có muốn đăng nhập lại không?");
+                    if(ask) location.href = "/login/staff";
+                    return;
+                }
+                const data = JSON.parse(this.responseText);
+
+                if(data.message != 'OK'){
+                    alert(data.message);
+                    
+                    if(data.type == "price"){
+                        const vl1 = document.getElementById('vl1');
+                        vl1.innerText = data.newValue;
+                    }
+                    if(data.type == "discount"){
+                        const vl2 = document.getElementById('vl2');
+                        vl2.innerText = data.newValue;
+                    }
+                    if(data.type == "buyPrice"){
+                        const vl0 = document.getElementById('vl0');
+                        vl0.innerText = data.newValue;
+                    }
+                    
+                } else {
+                    if(data.type == 'week') {
+                        weekData = data;
+                        getMonthData();   
+                        
+                    }
+                    if(data.type == 'month') {
+                        monthData = data;
+                        
+                        getYearData();    
+                    }
+                    
+                    if(data.type == 'year') {
+                        yearData = data;
+                        
+                    }
+                    
+                }
+            }
+
+            
+            //get week data
+            function getWeekData(){
+                xhttp.open('GET', ('/admin/getWeekData/' + productId.innerText));
+                xhttp.send();    
+            }
+            getWeekData();
+            
+            //get month data
+            function getMonthData(){
+                const url = '/admin/getMonthData/' + productId.innerText;
+                xhttp.open('GET', url);
+                xhttp.send();
+            }
+            
+            
+            //get year data
+            function getYearData(){
+                const url = '/admin/getYearData/' + productId.innerText;
+                xhttp.open('GET', url);
+                xhttp.send();
+            }
+            
+
+
+            function updateSellPrice(id){
+                if (sellPrice.value != "" && !isNaN(Number(sellPrice.value))) {
+                    const url1 = '/admin/updateSellPrice/' + id + '/' + sellPrice.value;
+                    xhttp.open('PUT', url1);
+                    xhttp.send();    
+                } else {
+                    alert('Please input the right value.')
+                }
+            }
+
+            function updateDiscount(id){
+                if (discount.value != "" && !isNaN(Number(discount.value))) {
+                    const url = '/admin/updateDiscount/' + id + '/' + discount.value;
+                    xhttp.open('PUT', url);
+                    xhttp.send();
+                } else {
+                    alert('Please input the right value.')
+                }
+            }
+
+            function updateBuyPrice(id){
+                if (buyPrice.value != "" && !isNaN(Number(buyPrice.value))) {
+                    const url = '/admin/updateBuyPrice/' + id + '/' + buyPrice.value;
+                    xhttp.open('PUT', url);
+                    xhttp.send();
+                } else {
+                    alert('Please input the right value.')
+                }   
+            }
+
+
+            const weekButton = document.getElementById('weekButton');
+            weekButton.addEventListener('click', function(){
+                mainChartOption.xAxis[0].data = weekData.label;
+                mainChartOption.series[0].data = weekData.buyData;
+                mainChartOption.series[1].data = weekData.sellData;
+                mainChartOption && mainChart.setOption(mainChartOption);
+            })
+
+            const monthButton = document.getElementById('monthButton');
+            monthButton.addEventListener('click', function(){
+                mainChartOption.xAxis[0].data = monthData.label;
+                mainChartOption.series[0].data = monthData.buyData;
+                mainChartOption.series[1].data = monthData.sellData;
+                mainChartOption && mainChart.setOption(mainChartOption);  
+            })
+
+            const yearButton = document.getElementById('yearButton');
+            yearButton.addEventListener('click', function(){
+                mainChartOption.xAxis[0].data = yearData.label;
+                mainChartOption.series[0].data = yearData.buyData;
+                mainChartOption.series[1].data = yearData.sellData;
+                mainChartOption && mainChart.setOption(mainChartOption);  
+            })
         </script>
+        <script type="text/javascript" src="/truong/getAllProduct.js"></script>
     </body>
 </html>

@@ -8,6 +8,32 @@ const StaffInfo= require('../models/staffModel');
 const ShiftInfo = require('../models/shiftModel');
 const moment = require('moment');
 
+//convert time zone to gmt +7
+function convertTZ(date) {
+    return new Date((typeof date === "string" ? new Date(date) : date).toLocaleString("en-US", {timeZone: "Asia/Ho_Chi_Minh"}));   
+}
+
+//format time output
+function formatTime(date){
+    return date.getFullYear() + '-' + (date.getMonth()+1) + '-' + date.getDate();
+}
+
+function getDayOfMonth(month, year){
+    month += 1;
+    if(month == 2){
+        if(year % 4 == 0){
+            if(year % 100 == 0){
+                if(year % 400 == 0) return 29;
+                else return 28;
+            } else return 29;
+        } else return 28;
+    }
+
+    if([1,3,5,7,8,10,12].includes(month)) return 31;
+    else return 30;
+}
+
+
 const loadDashboard = async (req, res) => {
     try {
         let Data = function () {
@@ -120,7 +146,6 @@ const getBuyAndSaleDataByTime = async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
-
 }
 
 const getLeadProduct = async (req, res) => {
@@ -219,8 +244,6 @@ const getShiftManager = async(req, res) => {
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
-
-
 }
 const getHourStatistic = (req, res) => {
     res.render('managerView/hour_statistic.ejs');
@@ -252,7 +275,6 @@ const getStaffManager = async(req, res) => {
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
-
 }
 
 
@@ -284,7 +306,7 @@ const loadDetailOrder = async (req, res)=>{
             product.total = product.amount * product.sellPrice * (100-product.discount) / 100;
             productList.push(product);
         }
-        console.log(productList);
+        
 
 
         const data = {
@@ -301,10 +323,332 @@ const loadDetailOrder = async (req, res)=>{
     
 }
 
-const loadDetailProduct = (req, res)=>{
-    res.render('managerView/detailProduct');
+const loadDetailProduct = async (req, res)=>{
+    const {id} = req.params;
+    let data = {};
+    try{
+        //get product
+        const product = await Product.getProductById(id);
+        data.product = product[0];
+
+        //get product name
+        data.productName = product[0].name;
+
+        //get product amount
+        data.inventory = product[0].amount;
+
+        //get total sell
+        let totalSell = 0;
+        const sellHistory = await GoodsInOrder.getGoodsById(id);
+        for (var i = 0; i < sellHistory.length; i++) {
+            const item = sellHistory[i];
+            totalSell += item.amount * item.price;
+        }
+        data.totalSell = totalSell;
+
+        //get total purchase
+        let totalPurchase = 0;
+        purchaseHistory = await ImportOrder.getOrdersByProductId(id);
+        for (var j = 0; j < purchaseHistory.length; j++) {
+            const item = purchaseHistory[j];
+            totalPurchase += item.amount*item.price;
+        }
+        data.totalPurchase = totalPurchase;
+
+        //get total income
+        const totalIncomes = totalSell - totalPurchase;
+        data.totalIncomes = totalIncomes;
+
+        //get relative product
+        const relativeProduct = await Product.getProductByCateGory(product[0].category);
+        data.relativeProduct = relativeProduct;
+
+        //get recent purchase
+        const recentPurchase = await ImportOrder.getOrdersByProductId(id);
+        data.recentPurchase = recentPurchase;
+        for (var i = 0; i < data.recentPurchase.length; i++) {
+            data.recentPurchase[i].time = convertTZ(data.recentPurchase[i].time);
+            data.recentPurchase[i].time = formatTime(data.recentPurchase[i].time);
+        }
+        
+        res.render('managerView/detailProduct', data);    
+    }
+    catch(error){
+        if (error) {
+            return res.status(500).json({message: error.message});
+        }
+    }
+    
 }
 
+const updateProductPrice = async (req, res) => {
+    const {id, value} = req.params;
+    try{
+        await Product.updatePrice(id, value);
+        res.status(200).send(JSON.stringify({
+            message: "The Product price has been updated.",
+            type: 'price',
+            newValue: value
+        }));
+    } catch(error){
+        if(error) {
+            console.log(error.message);
+            return res.status(500).send(JSON.stringify({
+                message: 'Server Error'
+            }));
+        }
+            
+    }
+}
+
+const updateDiscount = async (req, res) =>{
+    const {id, value} = req.params;
+    try{
+        await Product.updateDiscount(id, value);
+        res.status(200).send(JSON.stringify({
+            message: "The product discount has been updated.",
+            type: 'discount',
+            newValue: value
+        }));
+    } catch(error){
+        if(error){
+            console.log(error.message);
+            return res.status(500).send(JSON.stringify({
+                message: "Server Error"
+            }));
+        }
+    }
+}
+
+const updateBuyPrice = async (req,  res)=>{
+    const {id, value} = req.params;
+    try{
+        await Product.updateBuyPrice(id, value);
+        res.status(200).json({
+            message: "Product's purchase price has been updated",
+            type: 'buyPrice',
+            newValue: value
+        })
+    } catch(error){
+        if (error) {
+            console.log(error.message);
+            return res.status(500).json({
+                message: "Server error, try it later"
+            });
+        }
+    }
+}
+
+
+const getWeekData = async (req, res)=>{
+    const {id} = req.params;
+    try{
+        
+        let label = [];
+        let buyData = [];
+        let sellData = [];
+        const now = new Date();
+        const date = new Date();
+        date.setHours(0,0,0,0);
+        let day = date.getDay();
+        if(day === 0) day = 8;
+        const distance = day - 1;
+        const from = new Date(date.getTime() - distance * 24*60*60*1000);
+        
+        for (var i = from.getTime(); i < now.getTime(); i += 24*60*60*1000) {
+            //set label
+            let moment = new Date(i);
+            moment = convertTZ(moment);
+            label.push(formatTime(moment));
+
+            //set buy value
+            const orders = await ImportOrder.getOrdersByTimeId(i, i+24*60*60*1000, id);
+            let value = 0;
+            for (var k = 0; k < orders.length; k++) {
+                const item = orders[k];
+                value += item.price*item.amount;
+            }
+            buyData.push(value);
+
+            //set sell values
+            const sellOrders = await Order.getAllOrdersByTime(i, i+24*60*60*1000);
+            let proInOrder = [];
+            for (var j = 0; j < sellOrders.length; j++) {
+                const order = sellOrders[j];
+                const goods = await GoodsInOrder.getGoodsInOrderById(order, id);
+                proInOrder = [...proInOrder, ...goods];
+            }
+            let value1 = 0;
+            for (var l = 0; l < proInOrder.length; l++) {
+                value1 += proInOrder[l].price * proInOrder[l].amount;
+            }
+            sellData.push(value1);
+        }
+
+        res.json({
+            message: 'OK',
+            type: 'week',
+            label: label,
+            buyData: buyData,
+            sellData: sellData
+        })
+
+    } catch(error){
+        if(error){
+            console.log(error.message);
+            res.status(500).json({
+                message: "Server error. Try it later."
+            })
+        }
+    }
+}
+
+const getMonthData = async (req, res)=>{
+    const {id} = req.params;
+    
+    try{
+        
+        let label = [];
+        let buyData = [];
+        let sellData = [];
+        const now = new Date();
+        const date = new Date();
+        date.setHours(0,0,0,0);
+        date.setDate(1);
+        let day = date.getDate();
+
+        //get the first day of month
+        const from = date;
+
+        for (var i = from.getTime(); i < now.getTime(); i += 3*24*60*60*1000) {
+            //set label
+            let moment = new Date(i);
+            moment = convertTZ(moment);
+            label.push(formatTime(moment));
+
+            //set buy value
+            const orders = await ImportOrder.getOrdersByTimeId(i, i+3*24*60*60*1000, id);
+            
+            let value = 0;
+            for (var k = 0; k < orders.length; k++) {
+                const item = orders[k];
+                value += item.price*item.amount;
+            }
+            buyData.push(value);
+
+            //set sell values
+            const sellOrders = await Order.getAllOrdersByTime(i, i+3*24*60*60*1000);
+            let proInOrder = [];
+            for (var j = 0; j < sellOrders.length; j++) {
+                const order = sellOrders[j];
+                const goods = await GoodsInOrder.getGoodsInOrderById(order, id);
+                proInOrder = [...proInOrder, ...goods];
+            }
+            let value1 = 0;
+            for (var l = 0; l < proInOrder.length; l++) {
+                value1 += proInOrder[l].price * proInOrder[l].amount;
+            }
+            sellData.push(value1);
+        }
+
+        res.json({
+            message: 'OK',
+            type: 'month',
+            label: label,
+            buyData: buyData,
+            sellData: sellData
+        })
+
+    } catch(error){
+        if(error){
+            console.log(error.message);
+            res.status(500).json({
+                message: "Server error. Try it later."
+            })
+        }
+    }
+}
+
+const getYearData = async (req, res)=>{
+    const {id} = req.params;
+    try{
+        
+        let label = [];
+        let buyData = [];
+        let sellData = [];
+        const now = new Date();
+        const date = new Date();
+        date.setHours(0,0,0,0);
+        date.setMonth(0);
+        date.setDate(1);
+
+        //get the first day of month
+        const from = date;
+
+        let i = 0;
+        let time = from.getTime();
+        while(i<=11){
+            //set label
+            let moment = convertTZ(new Date(time));
+            label.push(formatTime(moment));
+
+            //set buy value
+            const orders = await ImportOrder.getOrdersByTimeId(time, time+getDayOfMonth(i)*24*60*60*1000, id);
+            
+            let value = 0;
+            for (var k = 0; k < orders.length; k++){
+                const item = orders[k];
+                value += item.price*item.amount;
+            }
+            buyData.push(value);
+
+            //set sell values
+            const sellOrders = await Order.getAllOrdersByTime(time, time+getDayOfMonth(i)*24*60*60*1000);
+            let proInOrder = [];
+            for (var j = 0; j < sellOrders.length; j++) {
+                const order = sellOrders[j];
+                const goods = await GoodsInOrder.getGoodsInOrderById(order,id);
+                proInOrder = [...proInOrder, ...goods];
+            }
+            let value1 = 0;
+            for (var l = 0; l < proInOrder.length; l++) {
+                
+                value1 += proInOrder[l].price * proInOrder[l].amount;
+            }
+            sellData.push(value1);
+            time += getDayOfMonth(i)*24*60*60*1000;
+            i++;
+        }
+
+        res.json({
+            message: 'OK',
+            type: 'year',
+            label: label,
+            buyData: buyData,
+            sellData: sellData
+        })
+
+    } catch(error){
+        if(error){
+            console.log(error.message);
+            res.status(500).json({
+                message: "Server error. Try it later."
+            })
+        }
+    }
+}
+
+const getAllProduct = async (req, res)=>{
+    try{
+        const data = await Product.getAllProduct();
+        res.status(200).json(data);
+    }catch(error){
+        console.log(error.message);
+        res.status(500).json({
+            message: 'Server error'
+        })
+    }
+}
 
 module.exports = {
     loadDashboard,
@@ -316,5 +660,12 @@ module.exports = {
     getHourStatistic,
     getStaffManager,
     loadDetailOrder,
-    loadDetailProduct
+    loadDetailProduct,
+    updateProductPrice,
+    updateDiscount,
+    updateBuyPrice,
+    getWeekData,
+    getMonthData,
+    getYearData,
+    getAllProduct
 }

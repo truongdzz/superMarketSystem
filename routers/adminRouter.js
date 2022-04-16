@@ -8,7 +8,14 @@ const verifyRoles = require('../middlewares/verifyRoles');
 route.use(verifyJWT, verifyRoles('admin'));
 
 
-route.get('/detailProduct', adminController.loadDetailProduct);
+route.get('/getAllProduct', adminController.getAllProduct);
+route.get('/getYearData/:id', adminController.getYearData);
+route.get('/getMonthData/:id', adminController.getMonthData);
+route.get('/getWeekData/:id', adminController.getWeekData);
+route.put('/updateBuyPrice/:id/:value', adminController.updateBuyPrice);
+route.put('/updateDiscount/:id/:value', adminController.updateDiscount);
+route.put('/updateSellPrice/:id/:value', adminController.updateProductPrice);
+route.get('/detailProduct/:id', adminController.loadDetailProduct);
 route.get('/detailOrder/:id', adminController.loadDetailOrder);
 route.get('/leadCategory', adminController.getLeadCategory);
 route.get('/leadProduct', adminController.getLeadProduct);

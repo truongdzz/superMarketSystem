@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard</title>
   <link rel="stylesheet" href="truong/adminpanel.css">
+  <link rel="stylesheet" type="text/css" href="/truong/getAllProduct.css">
 </head>
 <body>
   <div class="container">
@@ -86,8 +87,12 @@
         <!-- search -->
         <div class="search">
           <label>
-            <input type="text" placeholder="Search here">
-            <ion-icon name="search-outline"></ion-icon>
+            <input type="text" placeholder="Search here" id="searchBar">
+              <ion-icon name="search-outline"></ion-icon>
+              <div class="table card hide" id="result">
+                                    
+              </div>
+            </input>
           </label>
         </div>
         <!-- user image -->
@@ -307,5 +312,6 @@
       location.href = "/admin/detailOrder/" + id;
     }
   </script>
+  <script type="text/javascript" src="/truong/getAllProduct.js"></script>
 </body>
 </html>
