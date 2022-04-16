@@ -231,8 +231,6 @@ a {
     object-fit: cover;
 }
 
-
-
 .cardHeader {
     display: flex;
     justify-content: space-between;
@@ -241,7 +239,7 @@ a {
 
 .cardHeader h2 {
     font-weight: 600;
-    color: var(--blue);
+    color: green;
 }
 
 .recentCustomers {
@@ -273,18 +271,27 @@ a {
     display: grid;
     grid-template-columns: 2fr 1fr;
     grid-column-gap: 20px;
+    margin-top: 20px;
 }
 
-.details .control{
+.details .control {
     display: flex;
     flex-direction: column;
     position: fixed;
-    width: 30%;
+    width: 20%;
     right: 20px;
     top: 70px;
     height: 100vh;
     overflow-y: scroll;
     padding-bottom: 50px;
+}
+
+.details .control .active {
+    border: 5px solid green;
+}
+
+.details .control .nhaphang.active {
+    border: 5px solid var(--blue);
 }
 
 .details .control .recentCustomers .form-product form {
@@ -293,13 +300,13 @@ a {
     grid-row-gap: 10px;
 }
 
-.details .control .recentCustomers .form-product form input{
+.details .control .recentCustomers .form-product form input {
     width: 100%;
     height: 25px;
     padding: 0px 10px;
 }
 
-.details .products-container{
+.details .products-container {
     width: 100%;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -308,7 +315,7 @@ a {
 
 .main .products-container .product {
     text-align: center;
-    width: 200px;
+    width: 300px;
     display: grid;
     padding: 0 2rem;
     padding-top: 2rem;
@@ -439,6 +446,12 @@ a {
     right: 10px;
 }
 
+.buttons a.import {
+    background: var(--blue);
+    color: #fff;
+    right: 10px;
+}
+
 .buttons a.delete:hover {
     background: red;
     color: white;
@@ -449,9 +462,19 @@ a {
     color: #fff;
 }
 
+.buttons a.import:hover {
+    background: blue;
+    color: #fff;
+}
+
 .formBar {
     align-items: center;
     padding-top: 15px;
+}
+
+.catname {
+    position: absolute;
+    margin: 0 30px;
 }
 
 .searchBar {

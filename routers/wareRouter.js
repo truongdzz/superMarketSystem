@@ -11,6 +11,8 @@ route.get('/updateproduct', wareController.updateproduct);
 route.get('/addproduct', wareController.addproduct);
 route.get('/importproduct', wareController.importproduct);
 route.get('/deleteproduct/:id', wareController.deleteproduct);
+route.get('/getPage', wareController.getPage);
+route.get('/searchproduct', wareController.searchproduct);
 route.post('/', wareController.postPage);
 route.get('/', wareController.getPage);
 

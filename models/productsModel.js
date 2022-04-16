@@ -34,34 +34,6 @@ Product.getAllProduct = ()=>{
     return promise;
 }
 
-Product.upadteAmount = (product, result)=>{
-    const sql = "UPDATE goods SET amount = amount - ? WHERE id = ? ";
-    db.query(sql, [product.amount, product.id], (err, data)=>{
-        if(err) result(err, null); 
-        else result(null, data);
-    })
-}
-
-Product.updateproduct = (productid, tensp, amount, position, price) => {
-    const sql = "UPDATE goods SET name = ? , amount = ? , position = ? , sellPrice = ? WHERE id = ? ";
-    db.query(sql, [tensp, amount, position, price, productid], (err, data) => {})
-}
-
-Product.addproduct = (img, name, amount, position, price) => {
-    const sql = "INSERT INTO `goods` (`name`, `sellPrice`, `amount`,  `position`, `good_img`) VALUES (? , ? , ? , ?, ?); ";
-    db.query(sql, [name, price, amount, position, img], (err, data) => {})
-}
-
-Product.importproduct = (imid, imamount, staff_id) => {
-    const sql = "INSERT INTO `importOrder` (`good`, `amount`, `time`, `staff`) VALUES (? , ? , current_timestamp(), ? );";
-    db.query(sql, [imid, imamount, staff_id], (err, data) => {})
-}
-
-Product.deleteproduct = (pid) => {
-    const sql = "DELETE FROM goods WHERE id = ?  ";
-    db.query(sql, [pid], (err, data) => {})
-}
-
 Product.getProductByCateGory = (cat) => {
     const promise = new Promise((resolve, reject) => {
         const sql = "SELECT * FROM goods WHERE category = ?";
@@ -73,14 +45,18 @@ Product.getProductByCateGory = (cat) => {
     return promise;
 }
 
-Product.updateproduct = (productid, tensp, amount, position, price) => {
-    const sql = "UPDATE goods SET name = ? , amount = ? , position = ? , sellPrice = ? WHERE id = ? ";
-    db.query(sql, [tensp, amount, position, price, productid], (err, data) => {})
+Product.upadteAmount = (product, result)=>{
+    const sql = "UPDATE goods SET amount = amount - ? WHERE id = ? ";
+    db.query(sql, [product.amount, product.id], (err, data)=>{
+        if(err) result(err, null); 
+        else result(null, data);
+    })
 }
 
 Product.addproduct = (img, name, amount, position, price) => {
     const sql = "INSERT INTO `goods` (`name`, `sellPrice`, `amount`,  `position`, `good_img`) VALUES (? , ? , ? , ?, ?); ";
     db.query(sql, [name, price, amount, position, img], (err, data) => {})
+
 }
 
 Product.importproduct = (imid, imamount, imamount1, staff_id) => {
@@ -88,11 +64,30 @@ Product.importproduct = (imid, imamount, imamount1, staff_id) => {
     db.query(sql, [imid, imamount, staff_id], (err, data) => {})
     const sql1 = "UPDATE goods SET amount = ? WHERE id = ? ";
     db.query(sql1, [imamount1, imid], (err, data) => {})
+
+
+
 }
 
 Product.deleteproduct = (pid) => {
     const sql = "DELETE FROM goods WHERE id = ?  ";
     db.query(sql, [pid], (err, data) => {})
+
+
+}
+
+Product.searchproduct = (search) => {
+
+    const promise = new Promise((resolve, reject) => {
+        var str = "%".concat(search, "%")
+        const sql = "SELECT * FROM `goods` WHERE name LIKE ? OR id LIKE ?"
+        db.query(sql, [str, str], (err, data) => {
+            if (err) reject(err);
+            else resolve(data);
+        })
+    })
+    return promise;
+
 }
 
 Product.updatePrice = (id, price)=>{
