@@ -4,12 +4,12 @@ const staffDB = require('../models/staffModel');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
-const handleUserRefreshToken = async (req, res) => {
+const handleUserRefreshToken = async(req, res) => {
     //get cookies
     const cookies = req.cookies;
 
     //if there is no cookies
-    if (!cookies?.jwt) return res.status(401).json({ message: 'Unauthorized' });
+    if (!cookies.jwt) return res.status(401).json({ message: 'Unauthorized' });
 
     //get token from client
     const refreshToken = cookies.jwt;
@@ -30,21 +30,19 @@ const handleUserRefreshToken = async (req, res) => {
                     return res.status(403).json({ message: 'Forbidden' });
                 }
 
-                const accessToken = jwt.sign(
-                    {
+                const accessToken = jwt.sign({
                         userInfo: {
                             username: foundUser.username,
                             userRole: foundUser.role
                         }
                     },
-                    process.env.ACCESS_TOKEN_SECRET,
-                    { expiresIn: '15m' }
+                    process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15m' }
                 );
 
-                res.cookie('accessToken', accessToken, { httpOnly: true, maxAges: 15*60*1000});
+                res.cookie('accessToken', accessToken, { httpOnly: true, maxAges: 15 * 60 * 1000 });
 
                 res.redirect('/');
-                
+
             }
         )
     } catch (error) {
@@ -52,12 +50,12 @@ const handleUserRefreshToken = async (req, res) => {
     }
 }
 
-const handleStaffRefreshToken = async (req, res) => {
+const handleStaffRefreshToken = async(req, res) => {
     //get cookies
     const cookies = req.cookies;
 
     //if there is no cookies
-    if (!cookies?.jwt) return res.status(401).render('others/401.ejs');
+    if (!cookies.jwt) return res.status(401).render('others/401.ejs');
 
     //get token from client
     const refreshToken = cookies.jwt;
@@ -90,25 +88,23 @@ const handleStaffRefreshToken = async (req, res) => {
                 //     { expiresIn: '15m' }
                 // );
 
-                const newRefreshToken = jwt.sign(
-                    {
+                const newRefreshToken = jwt.sign({
                         userInfo: {
                             username: foundStaff.username,
                             userRole: foundStaff.role,
                             staffid: foundStaff.id
                         }
                     },
-                    process.env.REFRESH_TOKEN_SECRET,
-                    {expiresIn: '15m'}
-                    
+                    process.env.REFRESH_TOKEN_SECRET, { expiresIn: '15m' }
+
                 );
-                
+
                 // res.cookie('accessToken', accessToken, {httpOnly:true, maxAges: 15*60*1000});
-                res.cookie('jwt', newRefreshToken, {httpOnly: true});
-                
-                if(foundStaff.role === "admin"){
-                    res.redirect('/admin');    
-                } else if(foundStaff.role === "cashier"){
+                res.cookie('jwt', newRefreshToken, { httpOnly: true });
+
+                if (foundStaff.role === "admin") {
+                    res.redirect('/admin');
+                } else if (foundStaff.role === "cashier") {
                     res.redirect('/cashier');
                 } else res.redirect('/ware');
             }

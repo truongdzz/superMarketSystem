@@ -12,33 +12,64 @@ var moment = require('moment');
 const { json } = require('express/lib/response');
 
 const getPage = async(req, res) => {
-    try {
-        let Data = function() {
-            this.products = null;
-        };
-        data = new Data;
+    const { search } = req.query
+    if (search) {
+        try {
+            let Data = function() {
+                this.products = null;
+                this.cate = "all";
+            };
+            data = new Data;
 
-        result = []
-        const products = await Product.getAllProduct();
-        data.products = products;
-        res.render('wareView/wareStaff.ejs', { data: data });
-    } catch (error) {
-        res.status(500).json({ message: error.message });
+            result = []
+            const products = await Product.searchproduct(search);
+            data.products = products;
+            res.render('wareView/wareStaff.ejs', { data: data });
+        } catch (error) {
+            res.status(500).json({ message: error.message });
+        }
+
+    } else {
+        try {
+            let Data = function() {
+                this.products = null;
+                this.cate = "all";
+            };
+            data = new Data;
+
+            result = []
+            const products = await Product.getAllProduct();
+            data.products = products;
+            res.render('wareView/wareStaff.ejs', { data: data });
+        } catch (error) {
+            res.status(500).json({ message: error.message });
+        }
     }
 
+}
+
+const searchproduct = async(req, res) => {
+    const { search } = req.query
+    if (search) {
+        const products = await Product.searchproduct(search);
+        res.send(JSON.stringify(products));
+    }
 }
 
 const postPage = async(req, res) => {
     try {
 
         const { cat } = req.body;
+        if (cat == "11") res.redirect('/ware/getPage/')
         let Data = function() {
             this.products = null;
+            this.cate = "";
         };
         data = new Data;
 
         const products = await Product.getProductByCateGory(cat);
         data.products = products;
+        data.cate = cat;
         res.render('wareView/wareStaff.ejs', { data: data });
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -105,5 +136,6 @@ module.exports = {
     addproduct,
     importproduct,
     deleteproduct,
-    postPage
+    postPage,
+    searchproduct,
 }
