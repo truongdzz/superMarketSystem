@@ -83,7 +83,19 @@ const deleteProductOutCart= async function(req,res){
     const orderid=req.params.orderid;
     try {
         const deleteResult=await CartProduct.deleteProductOutCart(gooddelete,orderid);        
+
+        // get product in cart after delete
+        let num = await CartProduct.numberProductInCart(orderid);
+        num = Object.values(JSON.parse(JSON.stringify(num)))[0].num
+        console.log(num);
+
+        if(num==0){
+            console.log(orderid);
+           let temp= await CartProduct.deleteOrderById(orderid);
+        }
+
         res.status(200).send('xoa thành cong')
+
 
     } catch (error) {
         if (error) {

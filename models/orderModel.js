@@ -180,4 +180,35 @@ Order.createPendingOrder=function(userId){
     })
     return promise;
 }
+
+Order.numberProductInCart=function (orderId){
+    const promise =new Promise((res,rej)=>{
+        const sql=`
+        SELECT COUNT(*) AS num
+        FROM goodsinorder gi
+        WHERE gi.orderID = ?
+        `;
+        db.query(sql,orderId,(err,data)=>{
+            if(err)rej(err)
+            else res(data);
+        })
+    })
+    return promise;
+}
+
+Order.deleteOrderById=function(orderId){
+    const promise = new Promise((res,rej)=>{
+        const sql=`
+        DELETE FROM \`order\` 
+        WHERE \`order\`.id = ?
+        `;
+        db.query(sql,orderId,(err,data)=>{
+            if(err)rej(err)
+            else res(data);
+        })
+    })
+
+    return promise;
+}
+
 module.exports = Order;
