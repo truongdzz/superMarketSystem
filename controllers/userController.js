@@ -6,14 +6,13 @@ const UserMode=require('../models/userModel');
 
 
 
-const buying=async (req,res)=>{
+const UserBanner=async(req,res)=>{
     try {
         let login=false;
         let productInCart;
-        if(req.username){
+        let username=req.username;
+        if(username){
             login=true;
-            // console.log(req.userId)
-            // console.log(res.userId in res);
             productInCart=await CartProduct.getOnlineOrderByUserId(req.userId);
             if(productInCart.length<=0){
                 productInCart=false;
@@ -23,18 +22,58 @@ const buying=async (req,res)=>{
             login=false;
             productInCart=false;
         }
-        // console.log(req.username);
+
+        return {
+            isLogin:login,
+            productInCart:productInCart,
+        }
+
+
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+const buying=async (req,res)=>{
+    try {
+        // let login=false;
+        // let productInCart;
+        // let username=req.username;
+        // if(username){
+        //     login=true;
+        //     // console.log(req.userId)
+        //     // console.log(res.userId in res);
+        //     productInCart=await CartProduct.getOnlineOrderByUserId(req.userId);
+        //     if(productInCart.length<=0){
+        //         productInCart=false;
+        //     }
+        // }
+        // else{
+        //     login=false;
+        //     productInCart=false;
+        // }
+        // console.log(username);
         // console.log(login);
         // console.log(productInCart.length);
         // console.log(productInCart);
         const goodList=await Goods.getALLgoods();
         const categorylist=await Category.getAllCategory();
-        res.render('customerView/index.ejs',{
+        const temp1= await UserBanner(req,res);
+        const temp2={
             data:goodList,
             categories:categorylist,
-            isLogin:login,
-            productInCart:productInCart,
-        });
+        }
+        res.render('customerView/index.ejs',{
+            ...temp1,
+            ...temp2
+        })
+
+        // res.render('customerView/index.ejs',{
+        //     data:goodList,
+        //     categories:categorylist,
+        //     isLogin:login,
+        //     productInCart:productInCart,
+        // });
     } catch (error) {
         console.log(error)
     }
@@ -45,37 +84,46 @@ const buying=async (req,res)=>{
 const buyCategory=async (req,res)=>{
     try {
 
-        let login=false;
-        let productInCart;
-        if(req.username){
-            login=true;
-            productInCart=await CartProduct.getOnlineOrderByUserId(req.userId);
-            if(productInCart.length<=0){
-                productInCart=false;
-            }
-        }
-        else{
-            login=false;
-            productInCart=false;
-        }
+        // let login=false;
+        // let productInCart;
+        // if(req.username){
+        //     login=true;
+        //     productInCart=await CartProduct.getOnlineOrderByUserId(req.userId);
+        //     if(productInCart.length<=0){
+        //         productInCart=false;
+        //     }
+        // }
+        // else{
+        //     login=false;
+        //     productInCart=false;
+        // }
 
         const cate_id=getIDfrompath(req.path);
         const goodList=await Goods.getGoodsForCategory(cate_id);
         const categorylist=await Category.getAllCategory();
-        res.render('customerView/buyForCategory.ejs',{
+        const temp1= await UserBanner(req,res);
+        const temp2={
             data:goodList,
             categories:categorylist,
-            isLogin:login,
-            productInCart:productInCart,
-            // pathNow:'/'+req.path
+        }
+
+        res.render('customerView/buyForCategory.ejs',{
+           ...temp1,
+           ...temp2
         })
+
+        // res.render('customerView/buyForCategory.ejs',{
+        //     data:goodList,
+        //     categories:categorylist,
+        //     isLogin:login,
+        //     productInCart:productInCart,
+        //     // pathNow:'/'+req.path
+        // })
+
     } catch (error) {
         console.log(error);
     }
 
-    // console.log(req.path);
-    // console.log(getIDfrompath(req.path))
-    // res.send(""+req.path)
 }
 
 const deleteProductOutCart= async function(req,res){
@@ -87,10 +135,10 @@ const deleteProductOutCart= async function(req,res){
         // get product in cart after delete
         let num = await CartProduct.numberProductInCart(orderid);
         num = Object.values(JSON.parse(JSON.stringify(num)))[0].num
-        console.log(num);
+        // console.log(num);
 
         if(num==0){
-            console.log(orderid);
+            // console.log(orderid);
            let temp= await CartProduct.deleteOrderById(orderid);
         }
 
@@ -175,9 +223,20 @@ function getIDfrompath(path){
     return path.slice(10)
 }
 
+
+const cartpage=async (req,res)=>{
+    try {
+        const temp1= await UserBanner(req,res);
+        res.render('customerView/usercart.ejs',temp1);
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 module.exports={
     buying,
     buyCategory,
     deleteProductOutCart,
     insertProductToCart,
+    cartpage,
 }

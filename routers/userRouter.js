@@ -7,6 +7,7 @@ router.use(verifyUserJWT);
 router.get('/category-*/',userController.buyCategory)
 router.get('/delProductOutCart/:goodid/:orderid',userController.deleteProductOutCart)
 router.get('/insertProductToCart/:goodid',userController.insertProductToCart)
+router.get('/cart',userController.cartpage)
 router.get('/',userController.buying);
 
 

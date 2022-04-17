@@ -86,4 +86,6 @@ User.getUserIdByUsername = function (userName){
     return promise;
 }
 
+
+
 module.exports = User;

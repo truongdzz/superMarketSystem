@@ -1303,3 +1303,72 @@ i.home-product-item__like-icon-fill{
     font-size: 1.4rem;
     color: #737373;
 }
+
+.Product-Cart-list{
+    height: 200px;
+    background-color: var(--white-color);
+}
+
+.Price-View{
+    /* height: 200px; */
+    background-color: var(--white-color);
+    padding: 0 10px;
+}
+.order-status{
+    font-size: 1.5rem;
+    padding: 10px 0 15px 0;
+    color: #737373;
+    border-bottom: solid 1px var(--border-color);
+}
+.order-price-infor{
+    font-size: 1.5rem;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    /* margin-bottom: 20px; */
+}
+
+.order-price-infor-heading{
+    font-weight: 400;
+    margin-bottom: 30px;
+    margin-top: 25px;
+}
+
+.provisional-price-infor,
+.ship-price-infor{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    color: #737373;
+}
+
+.ship-price-infor{
+    margin-bottom: 20px;
+}
+
+.total-price-infor{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+.total-price-infor-heading{
+    margin-top: 0;
+}
+
+.total-price{
+    font-size: 1.8rem;
+    color: var(--primary-color);
+}
+
+.buying-btn{
+    width: 100%;
+}
+
+.buying-btn:hover{
+    opacity: 70%;
+}
+
+.Product-Cart-list{
+    padding: 10px 20px;
+}

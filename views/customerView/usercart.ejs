@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Home page</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+        <link rel="stylesheet" href="/phat/css/base.css">
+        <link rel="stylesheet" href="/phat/css/main.css">
+        <link rel="stylesheet" href="/phat/fonts/fontawesome-free-6.1.1/css/all.min.css">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    </head>
+
+    <body>
+        <!-- <h1>Home page</h1>
+        <p>customer view</p>
+        <a href="/login/user" class="btn">login for customer</a>
+        <br>
+        <a href="/login/staff">login for staff</a>
+        <br>
+        <a href="/register/user">Register for user</a>
+        <br>
+        <a href="/register/staff">Register for staff</a> -->
+
+        <div class="app">
+
+            <!-- header -->
+            <%-include('../partials/banner.ejs') %> 
+            <!--  -->
+
+            <div class="app__container">
+                
+                <div class="grid">
+                    <div class="grid__row app__content">
+                        <div class="grid__column-8-5">
+                            <div class="Product-Cart-list">
+                                <div class="Product-Cart-item">
+                                    <img class="Product-Cart-item-img" src="https://lzd-img-global.slatic.net/g/p/99f622ae5873272aa6bbe032f5621f1b.jpg_120x120q80.jpg_.webp" alt="">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- price view -->
+                        <div class="grid__column-3-5">
+                            <div class="Price-View">
+                                <div class="order-status">
+                                    <span>Trạng thái: pending</span>
+                                </div>
+                                <div class="order-price-infor">
+                                    <h2 class="order-price-infor-heading">
+                                        Thông Tin sản Phẩm
+                                    </h2>
+                                    <div class="provisional-price-infor">
+                                        <div class="provisional-price-infor-heading">Tạm Tính ( 0 sản phẩm):</div>
+                                        <div class="provisional-price">0 Đ</div>
+                                    </div>
+                                    <div class="ship-price-infor">
+                                        <div class="ship-price-infor-heading">Phí giao hàng:</div>
+                                        <div class="ship-price">0 Đ</div>
+                                    </div>
+                                    <hr>
+                                    <div class="total-price-infor">
+                                        <h3 class="total-price-infor-heading">Tổng cộng:</h3>
+                                        <div class="total-price">0 Đ</div>
+                                    </div>
+                                    <div class="btn btn--primary buying-btn">Mua hàng</div>                                 
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!-- footer -->
+            <%-include('../partials/buyingFooter.ejs') %> 
+            <!--  -->
+
+        </div>
+
+        <script>
+        </script>
+
+    </body>
+</html>
