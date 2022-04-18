@@ -211,4 +211,41 @@ Order.deleteOrderById=function(orderId){
     return promise;
 }
 
+Order.OrderIDfromUserid=function(userid){
+    const promise = new Promise((res,rej)=>{
+        const sql=`
+        SELECT o.id
+        FROM user u
+        JOIN \`order\` o On u.id = o.userid
+        WHERE o.status = 'pending' AND u.id=?
+        `;
+        db.query(sql,userid,(err,data)=>{
+            if(err)rej(err)
+            else res(data);
+        })
+    })
+    return promise;
+}
+Order.getPriceOfOrder= async function (userid){
+    let orderId= await Order.OrderIDfromUserid(userid);
+    orderId=Object.values(JSON.parse(JSON.stringify(orderId)))[0].id;
+    // console.log(userid)
+    // console.log(orderId);
+    const promise = new Promise((res,rej)=>{
+        const sql= `
+        SELECT SUM(indiviPrice) AS price
+        FROM (
+            Select gi.amount * ((1 - gs.discount * 0.01) * gs.sellPrice) AS indiviPrice
+            FROM goodsinorder gi
+            JOIN goods gs ON gs.id = gi.goodID
+            WHERE gi.orderID = ? 
+        ) AS pricelist
+        `;
+        db.query(sql,orderId,(err,data)=>{
+            if(err)rej(err)
+            else res(data);
+        })
+    })
+    return promise;
+}
 module.exports = Order;

@@ -34,20 +34,19 @@
                 <div class="grid">
                     <div class="grid__row app__content">
                         <div class="grid__column-8-5">
+                            <% if(check){ %> 
                             <div class="Product-Cart-list">
                                 
                                 <%productlist.forEach(function(dataItem){%>
                                     <div class="Product-Cart-item">
                                         <img class="grid__column-2 Product-Cart-item-img" src="<%= dataItem.good_img %>" alt="">
                                         <div class="grid__column-5 Product-Cart-item-infor">
-                                            <h3 class="Product-Cart-item-name">
-                                                <%= dataItem.name %>
-                                            </h3>
+                                            <h3 class="Product-Cart-item-name"><%= dataItem.name %></h3>
                                             <div class="Product-Cart-item-type"><%= dataItem.category %></div>
                                         </div>
                                         <div class="grid__column-2 Product-Cart-item-price-delete">
                                             <div class="Product-Cart-item-price"><%=dataItem.sellPrice*(1-dataItem.discount*0.01)%> VNĐ</div>
-                                            <div class="Product-Cart-item-delete">
+                                            <div class="Product-Cart-item-delete" onclick="deleteProductoutofcart('<%=dataItem.goodID%>','<%=dataItem.orderID%>')">
                                                 <i class="fa-solid fa-trash-can"></i>
                                             </div>
                                         </div>
@@ -66,7 +65,7 @@
 
 
 
-                                <div class="Product-Cart-item">
+                                <!-- <div class="Product-Cart-item">
                                     <img class="grid__column-2 Product-Cart-item-img" src="https://lzd-img-global.slatic.net/g/p/99f622ae5873272aa6bbe032f5621f1b.jpg_120x120q80.jpg_.webp" alt="">
                                     <div class="grid__column-5 Product-Cart-item-infor">
                                         <h3 class="Product-Cart-item-name">
@@ -116,8 +115,9 @@
                                             <i class="fa-solid fa-plus"></i>
                                         </div>
                                     </div>
-                                </div>
-
+                                </div> -->
+                            <% }%>
+                                
                             </div>
                         </div>
                         <!-- price view -->
@@ -131,17 +131,17 @@
                                         Thông Tin sản Phẩm
                                     </h2>
                                     <div class="provisional-price-infor">
-                                        <div class="provisional-price-infor-heading">Tạm Tính ( 0 sản phẩm):</div>
-                                        <div class="provisional-price">0 Đ</div>
+                                        <div class="provisional-price-infor-heading">Tạm Tính ( <%=productInCart.length%> sản phẩm):</div>
+                                        <div class="provisional-price"><%= price%> Đ</div>
                                     </div>
                                     <div class="ship-price-infor">
                                         <div class="ship-price-infor-heading">Phí giao hàng:</div>
-                                        <div class="ship-price">0 Đ</div>
+                                        <div class="ship-price"><%= shipfee%> Đ</div>
                                     </div>
                                     <hr>
                                     <div class="total-price-infor">
                                         <h3 class="total-price-infor-heading">Tổng cộng:</h3>
-                                        <div class="total-price">0 Đ</div>
+                                        <div class="total-price"><%= totalprice%> Đ</div>
                                     </div>
                                     <div class="btn btn--primary buying-btn">Mua hàng</div>                                 
 
@@ -163,6 +163,34 @@
         </div>
 
         <script>
+            // let deleteIncon=document.getElementsByClassName('Product-Cart-item-delete')
+            // for (let i = 0; i < deleteIncon.length; i++) {
+            //     const element = deleteIncon[i];
+            //     let parentelem=element.parentNode;
+            //     let grandparentelem=parentelem.parentNode;
+            //     element.onclick=function(){
+            //         console.log(grandparentelem);
+            //         grandparentelem.parentNode.removeChild(grandparentelem);
+            //     }
+            // }
+
+            function deleteProductoutofcart(idProduct,idOrder){
+                let xhttp=new XMLHttpRequest();
+                // alert(idOrder,idProduct);
+
+
+                url='/delProductOutCart/'+idProduct+'/'+idOrder;
+                xhttp.open("GET",url);
+                xhttp.send();
+
+                xhttp.onload=function(){
+                    // alert(this.responseText);
+                    location.reload();
+                }
+
+            }
+
+
         </script>
 
     </body>

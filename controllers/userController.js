@@ -225,19 +225,75 @@ function getIDfrompath(path){
 
 const cartpage=async (req,res)=>{
     try {
-        const temp1= await UserBanner(req,res);
+        const temp1= await UserBanner(req,res); // banner
+
         let username=req.username;
         let userid =await UserMode.getUserIdByUsername(username);
-        userid=Object.values(JSON.parse(JSON.stringify(userid)))[0].id;
-        // console.log(userid);
-        let productlist=await CartProduct.getOnlineOrderByUserId(userid);
-        console.log(productlist);
+        userid=Object.values(JSON.parse(JSON.stringify(userid)))[0].id; //userid
+
+
+        let productlist;
+        
+        let temp_={
+            price:0,
+            shipfee:0,
+            totalprice:0,
+            check:false,
+        }
+
+        let numOfPendingCart= await CartProduct.getNumPendingCart(username);
+        numOfPendingCart=Object.values(JSON.parse(JSON.stringify(numOfPendingCart)))[0].num;
+        if(numOfPendingCart<=0){
+            // res.render('customerView/usercart.ejs',
+            // {
+            //     ...temp1,
+            //     ...temp_,
+            // });
+            res.redirect('/');
+            return;
+        }
+
+        let orderID=await CartProduct.OrderIDfromUserid(userid); // orderid
+        orderID=Object.values(JSON.parse(JSON.stringify(orderID)))[0].id;
+
+        let numOfProduct=await CartProduct.numberProductInCart(orderID);
+        numOfProduct=Object.values(JSON.parse(JSON.stringify(numOfProduct)))[0].num;
+
+        if(numOfProduct<0){
+            // res.render('customerView/usercart.ejs',{
+            //     price:0,
+            //     shipfee:0,
+            //     totalprice:0,
+            //     check:false,
+            // });
+            res.redirect('/');
+            return;
+        }
+
+
+        let price=0;
+        if(numOfProduct>0 && numOfPendingCart>0){
+            price=await CartProduct.getPriceOfOrder(userid);
+            price=Object.values(JSON.parse(JSON.stringify(price)))[0].price;
+            productlist=await CartProduct.getOnlineOrderByUserId(userid);
+        }
+        // console.log(price);
+        let shipfee=10;
+        let totalprice =price+shipfee
+        // console.log(productlist);
         let temp2={
             productlist:productlist
         }
+        let temp3={
+            price,
+            shipfee,
+            totalprice,
+            check:true,
+        }
         res.render('customerView/usercart.ejs',{
             ...temp1,
-            ...temp2
+            ...temp2,
+            ...temp3
         });
     } catch (error) {
         console.log(error)
