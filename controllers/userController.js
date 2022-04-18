@@ -80,7 +80,6 @@ const buying=async (req,res)=>{
 
 }
 
-
 const buyCategory=async (req,res)=>{
     try {
 
@@ -227,7 +226,19 @@ function getIDfrompath(path){
 const cartpage=async (req,res)=>{
     try {
         const temp1= await UserBanner(req,res);
-        res.render('customerView/usercart.ejs',temp1);
+        let username=req.username;
+        let userid =await UserMode.getUserIdByUsername(username);
+        userid=Object.values(JSON.parse(JSON.stringify(userid)))[0].id;
+        // console.log(userid);
+        let productlist=await CartProduct.getOnlineOrderByUserId(userid);
+        console.log(productlist);
+        let temp2={
+            productlist:productlist
+        }
+        res.render('customerView/usercart.ejs',{
+            ...temp1,
+            ...temp2
+        });
     } catch (error) {
         console.log(error)
     }
