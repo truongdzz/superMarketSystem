@@ -248,4 +248,32 @@ Order.getPriceOfOrder= async function (userid){
     })
     return promise;
 }
+
+Order.updateQuantityInOrder=function(goodid,orderid,quantity){
+    const promise=new Promise((res,rej)=>{
+        const sql= `UPDATE goodsinorder
+                    SET amount = ${quantity}
+                    WHERE goodID=${goodid} AND orderID=${orderid}`;
+        // console.log(sql);
+        db.query(sql,(err,data)=>{
+            if(err) rej(err)
+            else res(data);
+        })
+    })
+    return promise;
+}
+
+Order.updatePriceInOrder = function (orderID,price){
+    const promise = new Promise((res,rej)=>{
+        const sql=`UPDATE \`order\`
+                   SET price = ${price}
+                   WHERE id=${orderID}`;
+        db.query(sql,(err,data)=>{
+            if(err) rej(err)
+            else res(data);
+        })
+    })
+    return promise;
+}
+
 module.exports = Order;

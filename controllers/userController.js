@@ -216,7 +216,6 @@ const insertProductToCart= async function(req,res){
         console.log(error);
     }
 }
-
 function getIDfrompath(path){
     path=''+path;
     return path.slice(10)
@@ -225,6 +224,11 @@ function getIDfrompath(path){
 
 const cartpage=async (req,res)=>{
     try {
+
+        if(!req.username){
+            res.redirect('/');
+            return;
+        }
         const temp1= await UserBanner(req,res); // banner
 
         let username=req.username;
@@ -244,11 +248,7 @@ const cartpage=async (req,res)=>{
         let numOfPendingCart= await CartProduct.getNumPendingCart(username);
         numOfPendingCart=Object.values(JSON.parse(JSON.stringify(numOfPendingCart)))[0].num;
         if(numOfPendingCart<=0){
-            // res.render('customerView/usercart.ejs',
-            // {
-            //     ...temp1,
-            //     ...temp_,
-            // });
+
             res.redirect('/');
             return;
         }
@@ -260,12 +260,6 @@ const cartpage=async (req,res)=>{
         numOfProduct=Object.values(JSON.parse(JSON.stringify(numOfProduct)))[0].num;
 
         if(numOfProduct<0){
-            // res.render('customerView/usercart.ejs',{
-            //     price:0,
-            //     shipfee:0,
-            //     totalprice:0,
-            //     check:false,
-            // });
             res.redirect('/');
             return;
         }
@@ -275,12 +269,12 @@ const cartpage=async (req,res)=>{
         if(numOfProduct>0 && numOfPendingCart>0){
             price=await CartProduct.getPriceOfOrder(userid);
             price=Object.values(JSON.parse(JSON.stringify(price)))[0].price;
+            CartProduct.updatePriceInOrder(orderID,price);
             productlist=await CartProduct.getOnlineOrderByUserId(userid);
         }
-        // console.log(price);
-        let shipfee=10;
+
+        let shipfee=0;
         let totalprice =price+shipfee
-        // console.log(productlist);
         let temp2={
             productlist:productlist
         }
@@ -300,10 +294,29 @@ const cartpage=async (req,res)=>{
     }
 }
 
+const increasingProductTocart=async function (req,res){
+    let goodid=req.params.goodid;
+    let orderid=req.params.orderid;
+    let quantity=req.params.quantity;
+    const updatecart =await CartProduct.updateQuantityInOrder(goodid,orderid,quantity);
+
+    let username=req.username;
+    let userid =await UserMode.getUserIdByUsername(username);
+    userid=Object.values(JSON.parse(JSON.stringify(userid)))[0].id; //userid
+
+    price=await CartProduct.getPriceOfOrder(userid);
+    price=Object.values(JSON.parse(JSON.stringify(price)))[0].price;
+    CartProduct.updatePriceInOrder(orderid,price);
+
+    
+    res.status(200).send(''+price);
+}
+
 module.exports={
     buying,
     buyCategory,
     deleteProductOutCart,
     insertProductToCart,
     cartpage,
+    increasingProductTocart,
 }

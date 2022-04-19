@@ -52,11 +52,14 @@
                                         </div>
                                         <div class="grid__column-3 Product-Cart-item-select">
                                             <div class="Product-Cart-item-minus Product-Cart-item-select-icon">
-                                                <i class="fa-solid fa-minus"></i>
+                                                <i class="fa-solid fa-minus"></i>   
+                                                <div class="minus-click" onclick="decreasingProduct(event,'<%=dataItem.goodID%>','<%=dataItem.orderID%>')"></div>
+
                                             </div>
-                                            <div class="Product-Cart-item-quanity">1</div>
+                                            <div class="Product-Cart-item-quanity"><%=dataItem.amount%></div>
                                             <div class="Product-Cart-item-plus Product-Cart-item-select-icon">
                                                 <i class="fa-solid fa-plus"></i>
+                                                <div class="plus-click" onclick="increasingProduct(event,'<%=dataItem.goodID%>','<%=dataItem.orderID%>')"></div>
                                             </div>
                                         </div>
                                     </div>
@@ -163,16 +166,7 @@
         </div>
 
         <script>
-            // let deleteIncon=document.getElementsByClassName('Product-Cart-item-delete')
-            // for (let i = 0; i < deleteIncon.length; i++) {
-            //     const element = deleteIncon[i];
-            //     let parentelem=element.parentNode;
-            //     let grandparentelem=parentelem.parentNode;
-            //     element.onclick=function(){
-            //         console.log(grandparentelem);
-            //         grandparentelem.parentNode.removeChild(grandparentelem);
-            //     }
-            // }
+
 
             function deleteProductoutofcart(idProduct,idOrder){
                 let xhttp=new XMLHttpRequest();
@@ -187,6 +181,33 @@
                     // alert(this.responseText);
                     location.reload();
                 }
+
+            }
+
+            
+
+            function increasingProduct(e,goodID,orderID){
+
+                let parentQuantity=e.target.parentNode.parentNode;
+                let quantityNode = parentQuantity.querySelector('.Product-Cart-item-quanity')
+                quantityNode.innerText=parseInt(quantityNode.innerText)+1;
+                const quantity=quantityNode.innerText;
+
+
+                let xhttp = new XMLHttpRequest();
+                url ='/increasingProduct/'+goodID+'/'+orderID+'/'+quantity;
+                xhttp.open("GET",url);
+                xhttp.send();
+
+                xhttp.onload=function(){
+                    let price = this.responseText;
+                    document.querySelector('.provisional-price').innerText=price+ ' Đ';
+                    let feePriceNode=document.querySelector('.ship-price').innerText;
+                    let feePrice = feePriceNode.split(' ')[0];
+                    document.querySelector('.total-price').innerText = (parseInt(feePrice)+ parseInt(price))+' Đ';
+        
+                }
+
 
             }
 

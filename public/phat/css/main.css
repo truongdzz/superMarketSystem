@@ -1433,6 +1433,7 @@ i.home-product-item__like-icon-fill{
 }
 
 .Product-Cart-item-select-icon{
+    position: relative;
     height: 3.0rem;
     width: 3.0rem;
     line-height: 3.0rem;
@@ -1440,6 +1441,15 @@ i.home-product-item__like-icon-fill{
     background-color: #737373;
     opacity: 40%;
 }
+
+.plus-click{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
 .Product-Cart-item-select-icon:hover{
     opacity: 70%;
     cursor: pointer;
