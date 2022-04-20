@@ -9,6 +9,8 @@ router.get('/delProductOutCart/:goodid/:orderid',userController.deleteProductOut
 router.get('/insertProductToCart/:goodid',userController.insertProductToCart)
 router.get('/cart',userController.cartpage)
 router.get('/increasingProduct/:goodid/:orderid/:quantity',userController.increasingProductTocart)
+router.get('/decreasingProduct/:goodid/:orderid/:quantity',userController.decreasingProductTocart)
+
 router.get('/',userController.buying);
 
 

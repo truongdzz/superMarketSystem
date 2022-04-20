@@ -1450,6 +1450,14 @@ i.home-product-item__like-icon-fill{
     bottom: 0;
 }
 
+.minus-click{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
 .Product-Cart-item-select-icon:hover{
     opacity: 70%;
     cursor: pointer;

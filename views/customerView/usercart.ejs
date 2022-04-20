@@ -212,6 +212,32 @@
             }
 
 
+            function decreasingProduct(e,goodID,orderID){
+                let parentQuantity=e.target.parentNode.parentNode;
+                let quantityNode = parentQuantity.querySelector('.Product-Cart-item-quanity')
+                if(parseInt(quantityNode.innerText)>1){
+                    quantityNode.innerText=parseInt(quantityNode.innerText)-1;
+                    const quantity=quantityNode.innerText;
+
+                    let xhttp = new XMLHttpRequest();
+                    url ='/decreasingProduct/'+goodID+'/'+orderID+'/'+quantity;
+                    xhttp.open("GET",url);
+                    xhttp.send();
+
+                    xhttp.onload=function(){
+                        let price=this.responseText;
+                        document.querySelector('.provisional-price').innerText=price+ ' Đ';
+                        let feePriceNode=document.querySelector('.ship-price').innerText;
+                        let feePrice = feePriceNode.split(' ')[0];
+                        document.querySelector('.total-price').innerText = (parseInt(feePrice)+ parseInt(price))+' Đ';
+                    }
+
+
+                }
+
+            }
+
+
         </script>
 
     </body>

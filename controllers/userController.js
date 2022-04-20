@@ -171,16 +171,12 @@ const insertProductToCart= async function(req,res){
                 userId= Object.values(JSON.parse(JSON.stringify(userId)))[0].id;
                 console.log(userId);
                 const generateOrder= await CartProduct.createPendingOrder(userId);
-                // res.status(200).send("ok")
-                // return;
                 // // them vao bang
-                // res.status(200).send("da tao bang thanh cong");
-                // console.log('them bang thanh cong')
+
                 
             }
                //co bang rôi
-                // console.log(numCart.num)
-                // res.send("có bản rồi-"+numCart.num+'-');
+
                 let orderPendingId= await CartProduct.getIdPendingCart(userName);
                 orderPendingId=Object.values(JSON.parse(JSON.stringify(orderPendingId)))[0].id; // thong tin id bang pending
                 // console.log(orderPendingId);
@@ -196,7 +192,11 @@ const insertProductToCart= async function(req,res){
                else{
                 //    console.log('inser');
                    // them hang vao bang
-                   let insertToCart=await CartProduct.insertProductToCart(orderPendingId,goodid);
+                   await CartProduct.insertProductToCart(orderPendingId,goodid);
+                //    price=await CartProduct.getPriceOfOrder(userid);
+                //     price=Object.values(JSON.parse(JSON.stringify(price)))[0].price;
+                //     CartProduct.updatePriceInOrder(orderid,price);
+                // console.log(goodid,orderPendingId,)
                    res.status(200).send('Sản phẩm đã được thêm');
                    return ;
                }
@@ -312,6 +312,23 @@ const increasingProductTocart=async function (req,res){
     res.status(200).send(''+price);
 }
 
+const decreasingProductTocart=async function(req,res){
+    let goodid=req.params.goodid;
+    let orderid=req.params.orderid;
+    let quantity=req.params.quantity;
+    const updatecart =await CartProduct.updateQuantityInOrder(goodid,orderid,quantity);
+
+    let username=req.username;
+    let userid =await UserMode.getUserIdByUsername(username);
+    userid=Object.values(JSON.parse(JSON.stringify(userid)))[0].id; //userid
+
+    price=await CartProduct.getPriceOfOrder(userid);
+    price=Object.values(JSON.parse(JSON.stringify(price)))[0].price;
+    CartProduct.updatePriceInOrder(orderid,price);
+
+    res.status(200).send(''+price);
+}
+
 module.exports={
     buying,
     buyCategory,
@@ -319,4 +336,5 @@ module.exports={
     insertProductToCart,
     cartpage,
     increasingProductTocart,
+    decreasingProductTocart,
 }
