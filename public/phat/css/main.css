@@ -1,6 +1,8 @@
 .header{
     height: var(--header-height);
-    background-image: linear-gradient(0,#fe6433,#f53e2d);
+    /* background-image: linear-gradient(0,#fe6433,#f53e2d); */
+    /* background-image: linear-gradient(0,#0f62f9,#f53e2d); */
+    background-color: #0f62f9;
 }
 
 .header__navbar{
@@ -1230,7 +1232,8 @@ i.home-product-item__like-icon-fill{
 /* footer */
 .footer{
     padding-top: 16px;
-    border-top: 4px solid var(--primary-color);
+    /* border-top: 4px solid var(--primary-color); */
+    border-top: 4px solid #0f62f9;
     background-color: var(--white-color);
 }
 

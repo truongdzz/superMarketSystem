@@ -110,7 +110,7 @@
                                                         <span class="home-product-item__sold">88 Đã bán</span>
                                                     </div>
 
-                                                    <div class="home-product-item__buy-btn">
+                                                    <div class="home-product-item__buy-btn" onclick="insertProducttocart('<%=dataItem.id%>')">
                                                         <span class="home-product-item__buy-btn-title">Thêm vào giỏ</span>
                                                         <span class="home-product-item__buy-btn-icon">
                                                             <i class="fa-solid fa-cart-plus"></i>
@@ -230,26 +230,63 @@
 
                 };
                 
-                // for (let i = 0; i < categorylist.length; i++) {
-                //     categorylist[i].onload =function(e){
-                //         let currentative=document.querySelector('.category-list .category-item--active');
-                //         if(currentative){
-                //             currentative.classList.remove('category-item--active'); // remove old active
-                //         }
-                //         let newcategoryactive = e.target.parentNode;
-                //         // console.log([newcategoryactive]);
-                //         newcategoryactive.classList.add('category-item--active'); // add active 
-                //     }
-                    
-                // }   
-
-
 
                 function tachURL(path){
                     path=''+path;
                     let num=path.lastIndexOf('/category-');
                     return path.slice(num);
                 }
+
+
+
+
+                // ================== ajax xoa gio hang=======================================================
+
+
+                function deleteProductoutofcart(idProduct,idOrder){
+                    let xhttp=new XMLHttpRequest();
+                    // alert(idOrder,idProduct);
+
+
+                    url='/delProductOutCart/'+idProduct+'/'+idOrder;
+                    xhttp.open("GET",url);
+                    xhttp.send();
+
+                    xhttp.onload=function(){
+                        // alert(this.responseText);
+                        location.reload();
+                    }
+
+                }
+
+                function insertProducttocart(idProduct){
+                    // alert(idProduct);
+                    let xhttp = new XMLHttpRequest();
+                    url='/insertProductToCart/'+idProduct;
+                    xhttp.open("GET",url);
+                    xhttp.send();
+
+                    // xhttp.onload=function(){
+                    //     alert(this.responseText);
+                    // }
+
+                    // xhttp.onload=function(){
+                    //     alert('ok');
+                    // }
+
+                    xhttp.onload=function(){
+                        if(this.status==400){
+                            // alert(this.responseText);
+                        }
+                        else if(this.status==200){
+                            alert(this.responseText+this.status);
+                            location.reload();
+                        }
+                    }
+
+                }
+
+
         </script>
 
     </body>
