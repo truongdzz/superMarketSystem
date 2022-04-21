@@ -28,7 +28,7 @@ const handleUserLogout = async (req, res) => {
             });
             res.clearCookie('jwt', { httpOnly: true, maxAges: 24 * 60 * 60 * 1000 });
             // res.clearCookie('accessToken', { httpOnly: true, maxAges: 15*60*1000});
-            res.redirect('/login/user');
+            res.redirect('/');
         }
 
 

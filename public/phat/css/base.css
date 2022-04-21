@@ -1,5 +1,6 @@
 :root{
     --primary-color:#ee4d2d;
+    /* --primary-color:#0f62f9; */
     --white-color:#fff;
     --black-color:#000;
     --text-color:#333;
@@ -41,6 +42,11 @@ html{
 
 
 /* test */
+.grid__column-1{
+    padding-left: 5px;
+    padding-right: 5px;
+    width: calc(calc(100% / 12)  *1);
+}
 .grid__column-2{
     padding-left: 5px;
     padding-right: 5px;
@@ -53,12 +59,74 @@ html{
     width: 20%;
 }
 
+.grid__column-3{
+    padding-left: 5px;
+    padding-right: 5px;
+    width: calc(calc(100% / 12) * 3);
+}
+
+.grid__column-3-5{
+    padding-left: 5px;
+    padding-right: 5px;
+    width: calc(calc(100% / 12) * 3.5);
+}
+
+.grid__column-4{
+    padding-left: 5px;
+    padding-right: 5px;
+    width: calc(calc(100% / 12) * 4);
+}
+
+.grid__column-5{
+    padding-left: 5px;
+    padding-right: 5px;
+    width: calc(calc(100% / 12) * 5);
+}
+
+.grid__column-6{
+    padding-left: 5px;
+    padding-right: 5px;
+    width: calc(calc(100% / 12) * 6);
+}
+
+.grid__column-7{
+    padding-left: 5px;
+    padding-right: 5px;
+    width: calc(calc(100% / 12) * 7);
+}
+
+.grid__column-8{
+    padding-left: 5px;
+    padding-right: 5px;
+    width: calc(calc(100% / 12) * 8);
+}
+
+.grid__column-8-5{
+    padding-left: 5px;
+    padding-right: 5px;
+    width: calc(calc(100% / 12) * 8.5);
+}
+
+.grid__column-9{
+    padding-left: 5px;
+    padding-right: 5px;
+    width: calc(calc(100% / 12) * 9);
+}
+
 .grid__column-10{
     padding-left: 5px;
     padding-right: 5px;
     width: 83.3333%;
 
 }
+
+.grid__column-11{
+    padding-left: 5px;
+    padding-right: 5px;
+    width: calc(calc(100% / 12) * 11);
+}
+
+
 /* Animation */
 @keyframes fadeIn {
     from{

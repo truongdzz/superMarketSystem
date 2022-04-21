@@ -1,0 +1,318 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    font-family: 'Ubuntu', sans-serif;
+}
+
+:root
+{
+    --blue: #287bff;
+    --white: #fff;
+    --grey: #f5f5f5;
+    --black1: #222;
+    --black2: #999;
+}
+
+body{
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.container{
+    position: relative;
+    width: 100%;
+}
+
+.navigation{
+    position: fixed;
+    width: 70px;
+    height: 100%;
+    background: var(--blue);
+    border-left: 1px solid var(--blue);
+    transition: 0.5s;
+    overflow: hidden;
+}
+
+.navigation.active{
+    width: 250px;
+}
+
+.navigation ul{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+}
+
+.navigation ul li{
+    position: relative;
+    width: 100%;
+    list-style: none;
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+}
+
+
+.navigation ul li.active,
+.navigation ul li:hover,
+.navigation ul li.hovered{ 
+    background: var(--white);
+}
+
+.navigation ul li:nth-child(1){
+    margin-bottom: 40px;
+    pointer-events: none;
+}
+
+.navigation ul li a{
+    position: relative;
+    display: block;
+    width: 100%;
+    display: flex;
+    text-decoration: none;
+    color: var(--white);
+}
+
+.navigation ul li.active a,
+.navigation ul li:hover a,
+.navigation ul li.hovered a{
+    color: var(--blue);
+}
+
+.navigation ul li a .icon{
+    position: relative;
+    min-width: 60px;
+    height: 60px;
+    line-height: 70px;
+    text-align: center;
+}
+
+.navigation ul li a .icon ion-icon{
+    font-size: 1.75em ;
+}
+
+.navigation ul li a .title{
+    position: relative;
+    display: block;
+    padding: 0px 10px;
+    height: 60px;
+    line-height: 60px;
+    text-align: start;
+    white-space: nowrap;
+}
+
+/* Curve oustside */
+.navigation ul li.active a::before,
+.navigation ul li:hover a::before,
+.navigation ul li.hovered a::before{
+    content: "";
+    position: absolute;
+    top: -50px;
+    right: 0px;
+    width: 50px;
+    height: 50px;
+    background: transparent;
+    border-radius: 50%;
+    box-shadow: 35px 35px 0 10px var(--white);
+    pointer-events: none;
+}
+
+.navigation ul li.active a::after,
+.navigation ul li:hover a::after,
+.navigation ul li.hovered a::after{
+    content: "";
+    position: absolute;
+    bottom: -50px;
+    right: 0px;
+    width: 50px;
+    height: 50px;
+    background: transparent;
+    border-radius: 50%;
+    box-shadow: 35px -35px 0 10px var(--white);
+    pointer-events: none;
+}
+
+/* main */
+.main{
+    position: absolute;
+    width: calc(100% - 70px);
+    left: 70px;
+    min-height: 100vh;
+    background: var(--white);
+    transition: 0.5s;
+}
+
+.main.active{
+    left: 250px;
+    width: calc(100% - 250px);
+}
+
+.topbar{
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    z-index: 100;
+    background: var(--white);
+    width: inherit;
+    box-shadow: 0 7px 10px rgba(0,0,0,0.1);
+    height: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 10px;
+}
+
+.toggle{
+    position: relative;
+    top: 0px;
+    width: 60px;
+    height: 60px;
+    background: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2.5em;
+    cursor: pointer;
+}
+
+.search{
+    position: relative;
+    width: 400px;
+    margin: 0px 10px;
+}
+
+.search label{
+    position: relative;
+    width: 100%;
+}
+
+.search label input{
+    width: 100%;
+    height: 40px;
+    border-radius: 40px;
+    padding: 5px 35px;
+    font-size: 18px;
+    outline: none;
+    border: 1px solid var(--black2);
+}
+
+.search label ion-icon{
+    position: absolute;
+    top: 0px;
+    left: 10px;
+    font-size: 1.2em;
+}
+
+.user{
+    position: relative;
+    width: 40px;
+    min-width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.user img{
+    position: absolute;
+    top: 0px;
+    left:0px;
+    width: 100%;
+    min-width: 40px;
+    height: 100%;
+    object-fit: cover;
+}
+
+.card{
+    border-radius: 20px;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
+    padding: 20px;
+}
+
+.card .cardHeader{
+    font-size: 30px;
+    font-weight: 500;
+    color: var(--blue);
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.content .form{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    margin-top: 20vh;
+}
+
+.content .card .cardHeader{
+    grid-column-start: 1;
+    grid-column-end: 3;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.content .form .helu{
+    display: flex;
+}
+
+.content .form .helu:nth-child(2){
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+
+}
+
+.content .form .helu .col{
+    padding: 10px;
+    width: 100%;
+}
+
+.content .form  button{
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid var(--blue);
+    background: transparent;
+    font-size: 20px;
+    color: var(--blue);
+    width: 100%;
+}
+
+.content .form  button:hover{
+    background: var(--blue);
+    color: var(--white);
+    cursor: pointer;
+}
+
+.content .form .helu .col label{
+    
+    display: block;
+    margin: 10px 0px !important;
+}
+
+.content .form .helu .col input{
+    -moz-appearance: textfield;
+}
+.content .form .helu .col input::-webkit-outer-spin-button, 
+.content .form .helu .col input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    
+    margin: 0px;
+}
+
+.content .form .col input{
+    height: 30px;
+    width: 100%;
+    padding: 5px;
+    font-size: 15px;
+    border-radius: 10px;
+    border: 1px solid var(--black2);
+}
+
+/* =================== media query ======================= */

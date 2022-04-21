@@ -72,6 +72,20 @@ User.getUserByTime = (hour) => {
     return promise;
 }
 
+User.getUserIdByUsername = function (userName){
+    const promise = new Promise((res,rej)=>{
+        const sql=`SELECT u.id
+                   FROM user u
+                   WHERE u.username = ?        
+        `
+        db.query(sql,userName,(err,data)=>{
+            if(err) rej(err)
+            else res(data);
+        })
+    })
+    return promise;
+}
+
 User.getUserById = (id)=>{
     const promise = new Promise((resolve, reject)=>{
         const sql = 'SELECT * FROM user WHERE id = ?';

@@ -54,7 +54,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="">
+                        <a href="/staff/editProfile">
                             <span class="icon">
                                 <ion-icon name="settings-outline">
                                 </ion-icon>
@@ -361,6 +361,7 @@
             console.log(newProduct);
             const otherProduct = JSON.parse(JSON.stringify(newProduct));
             otherProduct.amount = 1;
+            otherProduct.realPrice = otherProduct.sellPrice * (100 - otherProduct.discount) / 100;
             addedProduct = [...addedProduct, otherProduct];
             reloadBill();
         }
@@ -444,9 +445,10 @@
             for (let index = 0; index < addedProduct.length; index++) {
                 const product = addedProduct[index];
                 priceValue += product.sellPrice * product.amount;
-                const discount = product.sellPrice * (product.discount/100) * product.amount;
+                const productPrice = product.sellPrice * product.amount;
+                const discount = product.sellPrice * ((product.discount)/100) * product.amount;
                 discountValue += discount;
-                totalValue += priceValue - discount;
+                totalValue += productPrice - discount;
             }
             if (usePointDiscount.checked) {
                 totalValue -= pointDiscountValue;

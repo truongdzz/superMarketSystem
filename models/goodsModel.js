@@ -23,6 +23,15 @@ Good.getALLgoods=function(){
     return promise;
 }
 
-
+Good.getGoodsForCategory=function(categoryId){
+    const promise=new Promise((resolve,reject)=>{
+        const sql="SELECT * FROM goods WHERE category = ? ";
+        database.query(sql,categoryId,(err,data)=>{
+            if(err) reject(err);
+            else resolve(data);
+        });
+    });
+    return promise;
+}
 
 module.exports=Good

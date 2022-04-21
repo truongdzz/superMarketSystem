@@ -54,7 +54,8 @@ const checkout = async (req, res) => {
             const goodsInOrder = {
                 goodID: product.id,
                 amount: product.amount,
-                orderID: insertedOrderId
+                orderID: insertedOrderId,
+                price: product.realPrice
             };
             //insert product in order
             GoodsInOrder.createNew(goodsInOrder, (err, data) => {

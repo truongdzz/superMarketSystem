@@ -18,65 +18,61 @@
     <!-- navigation -->
     <div class="navigation">
       <ul>
-        <li>
-          <a href="">
-            <span class="icon">
-              <ion-icon name="logo-apple"></ion-icon>
-            </span>
-            <span class="title">Brand name</span>
-          </a>
-        </li>
-        <li class="">
-          <a href="/admin">
-            <span class="icon">
-              <ion-icon name="home-outline"></ion-icon>
-            </span>
-            <span class="title">Dashboard</span>
-          </a>
-        </li>
-        <li>
-          <a href="">
-            <span class="icon">
-              <ion-icon name="person-outline"></ion-icon>
-            </span>
-            <span class="title">HR Management</span>
-          </a>
-        </li>
-        <li class="active">
-          <a href="/admin/statistic">
-            <span class="icon">
-              <ion-icon name="trending-up-outline"></ion-icon>
-            </span>
-            <span class="title">Statistic</span>
-          </a>
-        </li>
-        <li>
-          <a href="">
-            <span class="icon">
-              <ion-icon name="chatbubble-outline"></ion-icon>
-            </span>
-            <span class="title">Message</span>
-          </a>
-        </li>
-        <li>
-          <a href="">
-            <span class="icon">
-              <ion-icon name="settings-outline"></ion-icon>
-            </span>
-            <span class="title">Settings</span>
-          </a>
-        </li>
-        
-        <li>
-          <a href="/logout/staff">
-            <span class="icon">
-              <ion-icon name="log-out-outline"></ion-icon>
-            </span>
-            <span class="title">Sign out</span>
-          </a>
-        </li>
+          <li>
+              <a href="">
+                  <span class="icon"><ion-icon name="logo-apple"></ion-icon></span>
+                  <span class="title">Brand name</span>
+              </a>
+          </li>
+          <li class="">
+              <a href="/admin">
+                  <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
+                  <span class="title">Dashboard</span>
+              </a>
+          </li>
+          <li>
+              <a href="/admin/staffmanager">
+                  <span class="icon"><ion-icon name="person-outline"></ion-icon></span>
+                  <span class="title">HR Management</span>
+              </a>
+          </li>
+          <li class="active">
+              <a href="/admin/statistic">
+                  <span class="icon">
+        <ion-icon name="trending-up-outline"></ion-icon>
+      </span>
+                  <span class="title">Statistic</span>
+              </a>
+          </li>
+          <li>
+              <a href="/admin/shiftmanager">
+                  <span class="icon">
+                      <ion-icon name="checkmark-done-outline"></ion-icon>
+                  </span>
+                  <span class="title">Shift Manager</span>
+              </a>
+          </li>
+          
+          <li>
+              <a href="">
+                  <span class="icon"><ion-icon name="chatbubble-outline"></ion-icon></span>
+                  <span class="title">Message</span>
+              </a>
+          </li>
+          <li>
+              <a href="/staff/editProfile">
+                  <span class="icon"><ion-icon name="settings-outline"></ion-icon></span>
+                  <span class="title">Settings</span>
+              </a>
+          </li>
+          <li>
+              <a href="/logout/staff">
+                  <span class="icon"><ion-icon name="log-out-outline"></ion-icon></span>
+                  <span class="title">Sign out</span>
+              </a>
+          </li>
       </ul>
-    </div>
+  </div>
 
     <!-- main -->
     <div class="main">
@@ -108,11 +104,11 @@
           <h1>Business Statistic</h1>
           <div>
             <span>From:</span>
-            <input type="date" id="fromdate">
+            <input type="date" id="fromdate" >
           </div>
           <div>
             <span>To:</span>
-            <input type="date" id="todate">
+            <input type="date" id="todate" >
           </div>
           <div>
             <span>Step:</span>
@@ -171,13 +167,22 @@
   </script>
 
   <script>
+    const now = new Date();
+    const before = new Date(now.getTime()-7*24*60*60*1000);
+
     const from = document.getElementById("fromdate");
     const to = document.getElementById("todate");
     const step = document.getElementById("step");
+
+    from.value = before.getYear() + '-' +  (before.getMonth()+1)<10 ? ('0' + (before.getMonth()+1)) : (before.getMonth()+1) + '-' + before.getDate() < 10 ? ('0' + before.getDate()) : before.getDate();
+
+    to.value = now.getYear() + '-' +  (now.getMonth()+1)<10 ? ('0' + (now.getMonth()+1)) : (now.getMonth()+1) + '-' + now.getDate() < 10 ? ('0' + now.getDate()) : now.getDate();
+
     from.addEventListener("change", update);
     to.addEventListener("change", update);
     step.addEventListener("change", update);
 
+    update();
     let data1;
 
 
@@ -214,7 +219,7 @@
         {
           type: 'category',
           // prettier-ignore
-          data: ["one", "two", "three"],
+          data: [],
         }
       ],
       yAxis: [
@@ -226,7 +231,7 @@
         {
           name: 'Buy',
           type: 'bar',
-          data: [1, 2, 3],
+          data: [],
           markPoint: {
             data: [
               { type: 'max', name: 'Max' },
@@ -234,13 +239,13 @@
             ]
           },
           markLine: {
-            data: [{ type: 'average', name: 'Avg' }]
+            
           }
         },
         {
           name: 'Sell',
           type: 'bar',
-          data: [2, 3, 4],
+          data: [],
           markPoint: {
             data: [
               { type: 'max', name: 'Max' },
@@ -272,6 +277,8 @@
     }
 
     function update() {
+      console.log('alo')
+      console.log(from.value)
       if (from.value && to.value) {
         const fromdate = new Date(from.value).getTime();
         const todate = new Date(to.value).getTime();
@@ -288,9 +295,6 @@
     }
     
 
-  </script>
-
-  <script>
 
     var chartDom2 = document.getElementById('leadProduct');
     var myChart2 = echarts.init(chartDom2);
@@ -328,12 +332,12 @@
       },
       yAxis: {
         type: 'category',
-        data: ['1', '2', '3', '4', '5', '6']
+        data: []
       },
       series: [
         {
           type: 'bar',
-          data: [19325, 23438, 31000, 121594, 134141, 681807]
+          data: []
         }
       ]
     };
@@ -353,9 +357,7 @@
 
     
 
-  </script>
-
-  <script>
+ 
 
 
     var chartDom = document.getElementById('leadCategory');
@@ -397,11 +399,7 @@
           center: ['50%', '50%'],
           selectedMode: 'single',
           data: [
-            { value: 1548, name: 'CityE' },
-            { value: 735, name: 'CityC' },
-            { value: 510, name: 'CityD' },
-            { value: 434, name: 'CityB' },
-            { value: 335, name: 'CityA' }
+          
           ],
           emphasis: {
             itemStyle: {
@@ -425,6 +423,8 @@
         myChart.setOption(option);
       }
     }
+
+    update();
 
   </script>
   <script type="text/javascript" src="/truong/getAllProduct.js"></script>

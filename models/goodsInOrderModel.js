@@ -9,7 +9,7 @@ let GoodsInOrder = function(goodsInOrder){
 }
 
 GoodsInOrder.createNew = (goodsInOrder, result) => {
-    const sql = "INSERT INTO goodsInOrder (goodID, amount, orderID) VALUES (?, ?, ?)";
+    const sql = "INSERT INTO goodsInOrder (goodID, amount, orderID, price) VALUES (?, ?, ?, ?)";
     db.query(sql, Object.values(goodsInOrder), (err, data)=>{
         if(err) result(err, null);
         else result(null, data);

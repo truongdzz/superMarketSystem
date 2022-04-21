@@ -308,8 +308,8 @@ body{
 
 .details .recentOrders{
     position: relative;
-    display: grid;
-    min-height: 500px;
+    display: flex;
+    flex-direction: column;
     background: var(--white);
     padding: 20px;
     box-shadow: 0px 7px 25px rgba(0,0,0,0.1);

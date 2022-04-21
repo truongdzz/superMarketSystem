@@ -19,7 +19,7 @@ database.connect(function(err){
 
 //view engine
 app.set('view engine', 'ejs');
-app.set('views', './views')
+app.set('views', './views');
 
 //loginRouter
 const authRouter = require('./routers/authRouter');
@@ -41,9 +41,9 @@ app.use('/refresh', refreshRouter)
 const adminRouter = require('./routers/adminRouter');
 app.use('/admin', adminRouter);
 
-// //staffRouter
-// const staffRouter = require('./routers/staffRouter');
-// app.use('/staff', staffRouter);
+//staffRouter
+const staffRouter = require('./routers/staffRouter');
+app.use('/staff', staffRouter);
 
 //cashierRouter
 const cashierRouter = require('./routers/cashierRouter');
