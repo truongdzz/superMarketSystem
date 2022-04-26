@@ -211,7 +211,7 @@ const insertProductToCart= async function(req,res){
             // console.log('shiba wtf cache');
             // res.status(400).send("SOS");
             // return ;
-            console.log(req.username);
+            // console.log(req.username+'fdsa');
             res.status(400).send("đăng nhập đi bạn êi");
         }
     } catch (error) {
