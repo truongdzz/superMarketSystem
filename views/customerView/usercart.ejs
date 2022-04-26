@@ -146,7 +146,7 @@
                                         <h3 class="total-price-infor-heading">Tổng cộng:</h3>
                                         <div class="total-price"><%= totalprice%> Đ</div>
                                     </div>
-                                    <div class="btn btn--primary buying-btn">Mua hàng</div>                                 
+                                    <div class="btn btn--primary buying-btn" onclick="changestatusOrder('<%=productlist[0].orderID%>')">Mua hàng</div>                                 
 
                                 </div>
 
@@ -235,6 +235,20 @@
 
                 }
 
+            }
+
+            function changestatusOrder(orderID){
+                
+                let xhttp = new XMLHttpRequest();
+                url='/changestatusOrder/'+orderID;
+                xhttp.open("GET",url);
+                xhttp.send();
+
+                xhttp.onload=function(){
+                    // alert(this.responseText);
+                    alert('đơn của bạn đã đặt thành công');
+                    location.reload();
+                }
             }
 
 

@@ -10,6 +10,19 @@
 </head>
 
 <body>
+    <!-- modals -->
+    <!-- <div class="card modals hide " id="modals">
+        <div class="inside">
+            <div class="table" id="tableContent">
+            </div>
+            <div class="">
+                <button onclick="closee()">Close</button>
+            </div>
+        </div>    
+    </div> -->
+
+    <!-- end modals -->
+
     <div class="container">
 
         <!-- navigation -->
@@ -104,45 +117,7 @@
 
                 </div>
             </div>
-            <!-- card -->
-            <div class="cardBox">
-                <a href="#gotoviewstaff" class="card">
-                    <span class="tooltiptext">Click to go to staff manager</span>
-                    <div>
-                        <div class="number">5,248</div>
-                        <div class="cardName">Staffs</div>
-                    </div>
-                    <div class="iconBox">
-                        <ion-icon name="person-outline"></ion-icon>
-                    </div>
-                </a>
-                <a href="#gotostatistic" class="card">
-                    <span class="tooltiptext">Click to go to Hour Statistics</span>
-                    <div>
-                        <div class="number">40,000</div>
-                        <div class="cardName">Total working hour</div>
-                    </div>
-                    <div class="iconBox">
-                        <ion-icon name="time-outline"></ion-icon>
-                    </div>
-                </a>
-                <!-- <div class="card">
-          <div>
-            <div class="number">280</div>
-            <div class="cardName">Comments</div>
-          </div>
-          <div class="iconBox"><ion-icon name="chatbubbles-outline"></ion-icon></div>
-        </div>
-
-        <div class="card">
-          <div>
-            <div class="number">$4,562</div>
-            <div class="cardName">Earnings</div>
-          </div>
-          <div class="iconBox"><ion-icon name="cash-outline"></ion-icon></div>
-        </div> -->
-            </div>
-
+        
             <!-- detail -->
             <div class="details">
                 <!-- order list -->
@@ -157,50 +132,83 @@
                         </div>
                         <a href="" class="btn">View All</a>
                     </div>
-                    <table>
-
-                        <thead>
-                            <tr>
-                                <td>Shift</td>
-                                <td>Name</td>
-                                <td>Phone Number</td>
-                                <td>Status</td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <% data.shiftinfo.forEach((shift)=> { %>
-                                <tr>
-                                    <td>
-                                        <%= shift.number%>
-                                    </td>
-                                    <td>
-                                        <%= shift.name %>
-                                    </td>
-                                    <td>
-                                        <%= shift.phonenum %>
-                                    </td>
-                                    <td>
-                                        <% if(shift.status=="checked" ){ %>
-                                            <span class="status delivered">Checked</span>
-                                            <% } else if(shift.status=="inshift" ) { %>
-                                                <span class="status inprogress">In shift</span>
-                                                <% } else if(shift.status=="pending" ){%>
-                                                    <span class="status pending">Pending</span>
-                                                    <% } else if(shift.status=="absent" ){%>
-                                                        <span class="status return">Absent</span>
-                                                        <% } %>
-
-                                    </td>
-                                </tr>
-                                <%}) %>
-
-
-                        </tbody>
-                    </table>
+                    <div class="table">
+                        <div class="row">
+                            <div class="cell">
+                                
+                            </div>
+                            <div class="cell">Morning</div>
+                            <div class="cell">Afternoon</div>
+                            <div class="cell">Night</div>
+                        </div>
+                        <div class="row">
+                            <div class="cell">Monday</div>
+                            <%for(let i = 0; i<3; i++){%>
+                                <div class="cell" id="<%=1+i%>">
+                                        <div id="nameList"></div>
+                                        <button onclick="choose(<%=1+i%>)">Choose</button>    
+                                </div>
+                            <%}%>
+                        </div>
+                        <div class="row">
+                            <div class="cell">Tuesday</div>
+                            <%for(let i = 0; i<3; i++){%>
+                                <div class="cell" id="<%=4+i%>">
+                                    <div id="nameList"></div>
+                                    <button onclick="choose(<%=4+i%>)">Choose</button>    
+                                </div>
+                            <%}%>
+                        </div>
+                        <div class="row">
+                            <div class="cell">Wednesday</div>
+                            <%for(let i = 0; i<3; i++){%>
+                                <div class="cell" id="<%=7+i%>">
+                                    <div id="nameList"></div>
+                                    <button onclick="choose(<%=7+i%>)">Choose</button>    
+                                </div>
+                            <%}%>
+                        </div>
+                        <div class="row">
+                            <div class="cell">Thursday</div>
+                            <%for(let i = 0; i<3; i++){%>
+                                <div class="cell" id="<%=10+i%>">
+                                    <div id="nameList"></div>
+                                    <button onclick="choose(<%=10+i%>)">Choose</button>    
+                                </div>
+                            <%}%>
+                        </div>
+                        <div class="row">
+                            <div class="cell">Friday</div>
+                            <%for(let i = 0; i<3; i++){%>
+                                <div class="cell" id="<%=13+i%>">
+                                    <div id="nameList"></div>
+                                    <button onclick="choose(<%=13+i%>)">Choose</button>    
+                                </div>
+                            <%}%>
+                        </div>
+                        <div class="row">
+                            <div class="cell">Saturday</div>
+                            <%for(let i = 0; i<3; i++){%>
+                                <div class="cell" id="<%=16+i%>">
+                                    <div id="nameList"></div>
+                                    <button onclick="choose(<%=16+i%>)">Choose</button>    
+                                </div>
+                            <%}%>
+                        </div>
+                        <div class="row">
+                            <div class="cell">Sunday</div>
+                            <%for(let i = 0; i<3; i++){%>
+                                <div class="cell" id="<%=19+i%>">
+                                    <div id="nameList"></div>
+                                    <button onclick="choose(<%=19+i%>)">Choose</button>    
+                                </div>
+                            <%}%>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- New customer -->
-                <div class="recentCustomers">
+                <!-- <div class="recentCustomers">
                     <div class="cardHeader">
                         <h2>Shift Details</h2>
                     </div>
@@ -211,10 +219,24 @@
                     <p>Shift 1: 7:00 - 9:00</p>
                     <p>Shift 1: 7:00 - 9:00</p>
                     <p>Shift 1: 7:00 - 9:00</p>
-
-
+                </div> -->
+                <div class="staffList card">
+                    <div class="cardHeader">
+                        <p>Staff</p>
+                        <select name="" id="status" onchange="filter(this.value)">
+                            <option value="Waiting">Registration</option>
+                            <option value="Accepted">Accepted</option>
+                            <option value="Onleave">Onleave</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="table" id="tableContent">
+                        
+                    </div>
                 </div>
             </div>
+
+            
         </div>
     </div>
 
@@ -246,6 +268,103 @@
             item.addEventListener('mouseover', hoveredLink);
             item.addEventListener('mouseleave', unhoveredLink);
         });
+
+
+        // ---------------------------
+        // get data
+        let Schedule;
+        let Staff;
+        const xhttp = new XMLHttpRequest();
+        xhttp.onload = function(){
+            try{
+                Schedule = JSON.parse(this.responseText).schedules;
+                Staff = JSON.parse(this.responseText).staffs
+                
+
+            } catch(error){
+                console.log(error.message);
+                alert("Error to load data");
+            }
+                
+        }
+        xhttp.open('GET', '/admin/getSchedule');
+        xhttp.send();
+        //--------------------------------
+        //get staff of shift
+        const cellList = document.getElementsByClassName('nameList');
+        for (var i = 1; i <= cellList.length; i++) {
+            const item = cellList[i];
+            const schedule = Schedule.filter(item => item.status == "Accepted" && item.shift == i);
+            const staffid = schedule.map(item => item.staff);
+            const staff = Staff.filter(person => staffid.includes(person.id));
+            let text = ""
+            for (var o = 0; o < staff.length; o++) {
+                text += `
+                <div>${staff[o].name}</div>
+                `
+            }
+            item.innerHTML = text;
+        }
+
+
+        //select a shift
+        let currentShift;
+        function choose(shift){
+            const schedule = Schedule.filter(item => item.status == "Waiting" && item.shift == shift);
+            const staffid = schedule.map(item => item.staff);
+            const staff = Staff.filter(person => staffid.includes(person.id));
+            const table = document.getElementById('tableContent');
+            let text = "";
+            for (var i = 0; i < staff.length; i++) {
+                const item = staff[i];
+                text = text +  `
+                <div class="row">
+                    <div class="cell">${item.name}</div>
+                    <div class="cell"><button onclick="addSchedule()">Choose</button></div>
+                </div>
+                `
+            }
+            table.innerHTML = text;
+            const sele = document.getElementById('status');
+            sele.value = "Waiting";
+            for (var j = 1; j <= 21; j++) {
+                const cell = document.getElementById(String(j));
+                cell.classList.remove('hightLighted');    
+            }
+            const cell = document.getElementById(String(shift));
+            cell.classList.add('hightLighted');    
+            currentShift = shift;
+        }
+
+        function filter(status){
+            const schedule = Schedule.filter(item => (item.status == status && item.shift == currentShift));
+            const staffid = schedule.map(item => item.staff);
+            let staff;
+            if(status == "Other"){
+                staff = Staff;
+            } else staff = Staff.filter(person => staffid.includes(person.id));
+            const table = document.getElementById('tableContent');
+            let text = "";
+            for (let i = 0; i < staff.length; i++) {
+                const item = staff[i];
+                text = text +  `
+                <div class="row">
+                    <div class="cell">${item.name}</div>
+                    <div class="cell"><button onclick="addSchedule()">Choose</button></div>
+                </div>
+                `
+            }
+            table.innerHTML = text;    
+        }
+
+        function loadStaff(shift){
+
+            const schedule = Schedule.filter(item => (item.status == "Accepted" && item.shift == shift));
+            const staffid = schedule.map(item => item.staff);
+            const staff = Staff.filter(person => staffid.includes(person.id));
+
+        }
+
     </script>
 </body>
 

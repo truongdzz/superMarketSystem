@@ -6,6 +6,7 @@ const ImportOrder = require('../models/importOdersModel');
 const Category = require('../models/categoryModel');
 const StaffInfo= require('../models/staffModel');
 const ShiftInfo = require('../models/shiftModel');
+const Schedule = require('../models/scheduleModel');
 const moment = require('moment');
 
 //convert time zone to gmt +7
@@ -650,6 +651,23 @@ const getAllProduct = async (req, res)=>{
     }
 }
 
+const getSchedule = async (req, res)=>{
+    try{
+        
+        const schedule = await Schedule.getScheduleAll();
+        const staff = await StaffInfo.pullData();
+        res.status(200).json({
+            message: "ok",
+            schedules: schedule,
+            staffs: staff
+        })
+    } catch(error){
+        console.log(error.message);
+        res.status(500).json({
+            message: "Server error, try it later."
+        })
+    }
+}
 
 
 module.exports = {
@@ -669,5 +687,6 @@ module.exports = {
     getWeekData,
     getMonthData,
     getYearData,
-    getAllProduct
+    getAllProduct,
+    getSchedule
 }

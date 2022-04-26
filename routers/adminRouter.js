@@ -7,6 +7,7 @@ const verifyJWT = require('../middlewares/verifyJWT');
 const verifyRoles = require('../middlewares/verifyRoles');
 route.use(verifyJWT, verifyRoles('admin'));
 
+route.get('/getSchedule', adminController.getSchedule);
 route.get('/getAllProduct', adminController.getAllProduct);
 route.get('/getYearData/:id', adminController.getYearData);
 route.get('/getMonthData/:id', adminController.getMonthData);

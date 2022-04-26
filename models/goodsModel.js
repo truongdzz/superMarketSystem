@@ -34,4 +34,18 @@ Good.getGoodsForCategory=function(categoryId){
     return promise;
 }
 
+Good.getSellPriceFromGoodId = function(goodId){
+    return new Promise((res,rej)=>{
+        const sql = `
+        SELECT (sellPrice * (1-discount*0.01)) as sellPrice
+        FROM goods gs
+        WHERE gs.id = ?        
+        `;
+        database.query(sql,goodId,(err,data)=>{
+            if(err) rej(err);
+            else res(data);
+        });
+    });
+}
+
 module.exports=Good

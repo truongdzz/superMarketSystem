@@ -179,7 +179,7 @@ const insertProductToCart= async function(req,res){
 
                 let orderPendingId= await CartProduct.getIdPendingCart(userName);
                 orderPendingId=Object.values(JSON.parse(JSON.stringify(orderPendingId)))[0].id; // thong tin id bang pending
-                // console.log(orderPendingId);
+               
                 
 
                 // kiem tra xem hang co trong bang chua
@@ -190,9 +190,11 @@ const insertProductToCart= async function(req,res){
                     return ;
                }
                else{
-                //    console.log('inser');
+                   let priceOfGood= await Goods.getSellPriceFromGoodId(goodid);
+                   priceOfGood=Object.values(JSON.parse(JSON.stringify(priceOfGood)))[0].sellPrice;
+                //    console.log(priceOfGood);
                    // them hang vao bang
-                   await CartProduct.insertProductToCart(orderPendingId,goodid);
+                   await CartProduct.insertProductToCart(orderPendingId,goodid,priceOfGood);
                 //    price=await CartProduct.getPriceOfOrder(userid);
                 //     price=Object.values(JSON.parse(JSON.stringify(price)))[0].price;
                 //     CartProduct.updatePriceInOrder(orderid,price);
@@ -209,7 +211,7 @@ const insertProductToCart= async function(req,res){
             // console.log('shiba wtf cache');
             // res.status(400).send("SOS");
             // return ;
-            console.log(req.username);
+            // console.log(req.username+'fdsa');
             res.status(400).send("đăng nhập đi bạn êi");
         }
     } catch (error) {
@@ -329,6 +331,14 @@ const decreasingProductTocart=async function(req,res){
     res.status(200).send(''+price);
 }
 
+const changestatusOrder = async function(req,res){
+    let orderID=req.params.orderID;
+    const result = await CartProduct.changestatusorder(orderID);
+    if(result){
+        res.redirect('/');
+    }
+}
+
 module.exports={
     buying,
     buyCategory,
@@ -337,4 +347,5 @@ module.exports={
     cartpage,
     increasingProductTocart,
     decreasingProductTocart,
+    changestatusOrder,
 }
