@@ -150,16 +150,19 @@ Order.productExistInCart=function(orderId,goodId){
     return promise;
 }
 
-Order.insertProductToCart=function(orderId,goodId,num){
+Order.insertProductToCart=function(orderId,goodId,priceOfGood,num){
     if(num==undefined){
         num=1;
     }
+    if(priceOfGood==undefined){
+        priceOfGood=0;
+    }
     const promise = new Promise((res,rej)=>{
         const sql=`
-        INSERT INTO goodsinorder (orderID,goodID,amount)
-        VALUES (?,?,?)
+        INSERT INTO goodsinorder (orderID,goodID,amount,price)
+        VALUES (?,?,?,?)
         `
-        db.query(sql,[orderId,goodId,num],(err,data)=>{
+        db.query(sql,[orderId,goodId,num,priceOfGood],(err,data)=>{
             if(err)rej(err)
             else res(data);
         })
@@ -274,6 +277,18 @@ Order.updatePriceInOrder = function (orderID,price){
         })
     })
     return promise;
+}
+
+Order.changestatusorder = function(orderID){
+    return new Promise((res,rej)=>{
+        const sql=`UPDATE \`order\`
+                   SET status = 'inprogress'
+                   WHERE id=${orderID}`;
+        db.query(sql,(err,data)=>{
+            if(err) rej(false)
+            else res(true);
+        })
+    })
 }
 
 module.exports = Order;

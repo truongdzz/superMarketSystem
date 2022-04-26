@@ -1,5 +1,4 @@
 const db = require('./configDB');
-
 //User object constructor
 let User = function (user) {
     this.username = user.username;

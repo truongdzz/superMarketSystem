@@ -10,6 +10,7 @@ router.get('/insertProductToCart/:goodid',userController.insertProductToCart)
 router.get('/cart',userController.cartpage)
 router.get('/increasingProduct/:goodid/:orderid/:quantity',userController.increasingProductTocart)
 router.get('/decreasingProduct/:goodid/:orderid/:quantity',userController.decreasingProductTocart)
+router.get('/changestatusOrder/:orderID',userController.changestatusOrder)
 
 router.get('/',userController.buying);
 
