@@ -348,6 +348,9 @@
                                     <div class="cell"><%=item.status%></div>
                                     <div class="cell">
                                         <button onclick="deleteSchedule(<%=item.staff%>, <%=item.shift%>)">Delete</button>
+                                        <%if(item.status == "Pending"){%>
+                                        <button onclick="acceptSchedule(<%=item.staff%>, <%=item.shift%>)">Accept</button>
+                                        <%}%>
                                     </div>
                                 </div>
                             <%}%>
@@ -505,7 +508,13 @@
                 xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                 xhttp.send(data);
             }
-
+            //===========================
+            //accept schedule
+            function acceptSchedule(staffid, shift){
+                const url = '/staff/acceptSchedule?staffid=' + staffid + "&shift=" + shift;
+                xhttp.open("GET", url);
+                xhttp.send();
+            }
         </script>
 
     </body>

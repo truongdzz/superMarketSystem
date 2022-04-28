@@ -174,7 +174,13 @@
                         		<div class="cell"><%=item.date.toISOString().replace("T", " ").replace(".000Z","")%></div>
                         		<div class="cell"><%=item.price%></div>
                         		<div class="cell"><%=item.type%></div>
-                        		<div class="cell"><%=item.status%></div>
+                        		<div class="cell">
+                                    <select onchange="changeStatus(this.value, <%=item.id%>)">
+                                        <option value="<%=item.status%>"><%=item.status%></option>
+                                        <option value="return">Returned</option>
+                                        <option value="delivered">Delivered</option>
+                                    </select>      
+                                </div>
                         	</div>
                         	<%}%>
                         	
@@ -233,69 +239,30 @@
         </script>
         <script>
             //menu toggle
-    let toggle = document.querySelector('.toggle');
-    let main = document.querySelector('.main');
-    let navigation = document.querySelector('.navigation');
+            let toggle = document.querySelector('.toggle');
+            let main = document.querySelector('.main');
+            let navigation = document.querySelector('.navigation');
 
-    toggle.onclick = function(){
-      navigation.classList.toggle('active');
-      main.classList.toggle('active');
-    }
+            toggle.onclick = function(){
+              navigation.classList.toggle('active');
+              main.classList.toggle('active');
+            }
 
-    //add hovered class for selected list item
-    let list = document.querySelectorAll('.navigation li');
-    function hoveredLink(){
-      this.classList.add('hovered');
-    }
-    function unhoveredLink(){
-      this.classList.remove('hovered')
-    }
-    list.forEach((item)=>{
-      item.addEventListener('mouseover', hoveredLink);
-      item.addEventListener('mouseleave', unhoveredLink);
-    });
+            //add hovered class for selected list item
+            let list = document.querySelectorAll('.navigation li');
+            function hoveredLink(){
+              this.classList.add('hovered');
+            }
+            function unhoveredLink(){
+              this.classList.remove('hovered')
+            }
+            list.forEach((item)=>{
+              item.addEventListener('mouseover', hoveredLink);
+              item.addEventListener('mouseleave', unhoveredLink);
+            });
 
-    const onlinePercent = document.getElementById("onlinePercent");
-    const onlineSpan = document.getElementById("onl");
-    const onlPercent = Number(onlinePercent.innerText.replace("%", ""));
-    if(onlPercent >= 0){
-      onlineSpan.innerText = "+";
-    }
-    if(onlPercent >= 0 && onlPercent < 20){
-      onlinePercent.classList.add("ok");
-    } else if(onlPercent >= 20){
-      onlinePercent.classList.add("good");
-    } else {
-      onlinePercent.classList.add("bad")
-    }
-
-    const offLinePercent = document.getElementById("offlinePercent");
-    const offlineSpan = document.getElementById("off");
-    const offPercent = Number(offlinePercent.innerText.replace("%", ""));
-    if (offPercent >= 0) {
-      offlineSpan.innerText = "+";
-    }
-    if(offPercent >=0 && offPercent < 20){
-      offlinePercent.classList.add("ok");
-    } else if(offPercent >= 20 ){
-      offlinePercent.classList.add("good");
-    } else{
-      offlinePercent.classList.add("bad");
-    }
-
-    const userPercent = document.getElementById("userPercent");
-    const userSpan = document.getElementById("user");
-    const percent = Number(userPercent.innerText.replace("%", ""));
-    if(percent >= 0){
-      userSpan.innerText = "+";
-    }
-    if(percent > 0 && percent < 20){
-      userPercent.classList.add("ok");
-    } else if(percent >= 20){
-      userPercent.classList.add("good");
-    } else {
-      userPercent.classList.add("bad");
-    }
+            
         </script>
+        <script type="text/javascript" src="/truong/changeOrderStatus.js"></script>
     </body>
 </html>

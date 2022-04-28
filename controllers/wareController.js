@@ -92,8 +92,8 @@ const updateproduct = async(req, res) => {
 const addproduct = async(req, res) => {
 
     try {
-        const { image, addname, addamount, addposition, addprice } = req.query;
-        Product.addproduct(image, addname, addamount, addposition, addprice)
+        const { image, addname, addamount, addposition, addprice, category } = req.query;
+        Product.addproduct(image, addname, addamount, addposition, addprice, category)
         res.redirect('/ware')
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -122,6 +122,7 @@ const deleteproduct = async(req, res) => {
         Product.deleteproduct(pid);
         res.redirect('/ware');
     } catch (error) {
+        console.log(error);
         res.status(500).json({ message: error.message });
     }
 

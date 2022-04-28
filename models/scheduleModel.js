@@ -83,4 +83,15 @@ Schedule.getScheduleAll = ()=>{
     return promise;         
 }
 
+Schedule.addSchedule = (id, number, status)=>{
+    const promise = new Promise((resolve, reject)=>{
+        const sql = 'INSERT INTO `schedule` VALUES (?, ?, ?)';
+        db.query(sql, [id, Number(number), status], (err, data)=>{
+            if(err) reject(err);
+            else resolve(data);
+        })
+    })
+    return promise;
+}
+
 module.exports = Schedule;

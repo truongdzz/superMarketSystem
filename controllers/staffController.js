@@ -108,16 +108,39 @@ const deleteSchedule = async (req, res)=>{
             })
         } else {
             const schedule = foundSchedule[0];
-            if(schedule.status != 'Waiting'){
-                await Schedule.setStatus(id, shift, 'Request delete');
+            if(schedule.status == "Accepted"){
+                //turn to pending
+                await Schedule.setStatus(id, shift, "Onleave");
                 return res.status(200).json({
-                    message: 'This schedule is being applied on system schedule. Your request will be solve by admin soon. You are not allowed to absent until admin response.'
+                    message: "Your request of leaving this shift has been send",
+                    reload: true
+                })
+            }
+            if(schedule.status == "Pending"){
+                //turn to pending
+                await Schedule.deleteSchedule(id, shift);
+                return res.status(200).json({
+                    message: "Your refuse of joining this shift has been send",
+                    reload: true
+                })
+            }
+            if(schedule.status == "Onleave"){
+                return res.status(200).json({
+                    message: "Your request of leaving this shift has been send. You cant delete this schedule until admin's response.",
+                    reload: true
+                })
+            }
+            if(schedule.status == "Waiting"){
+                //turn to pending
+                await Schedule.deleteSchedule(id, shift);
+                return res.status(200).json({
+                    message: "Your request of joining this shift has been deleted",
+                    reload: true
                 })
             }
         }
-        await Schedule.deleteSchedule(id, shift);
         res.status(200).json({
-            message: 'Schedule deleted.',
+            message: 'No Schedule deleted.????!!!!!',
             reload: true
         })
     }catch(error){
@@ -128,10 +151,28 @@ const deleteSchedule = async (req, res)=>{
     }
 }
 
+const acceptSchedule = async (req, res)=>{
+    //turn status from pending to accept
+    try{
+        const {staffid, shift} = req.query;
+        await Schedule.setStatus(staffid, shift, "Accepted");
+        res.status(200).json({
+            message: "You are now working on this shift.",
+            reload: true
+        })
+    }catch(err){
+        console.log(err);
+        res.status(500).json({
+            message: "Server error, try it later."
+        })
+    }
+}
+
 module.exports = {
     loadEditProfile,
     updateProfile,
     updatePassword,
     registSchedule,
-    deleteSchedule
+    deleteSchedule,
+    acceptSchedule
 }

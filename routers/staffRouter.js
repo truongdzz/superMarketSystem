@@ -6,6 +6,7 @@ const verifyJWT = require('../middlewares/verifyJWT');
 const verifyRoles = require('../middlewares/verifyRoles');
 route.use(verifyJWT, verifyRoles('admin', 'cashier', 'Ware'));
 
+route.get('/acceptSchedule', staffController.acceptSchedule);
 route.delete('/deleteSchedule', staffController.deleteSchedule);
 route.post('/registSchedule', staffController.registSchedule);
 route.get('/editProfile', staffController.loadEditProfile);

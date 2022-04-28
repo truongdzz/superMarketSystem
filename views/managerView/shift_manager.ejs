@@ -206,25 +206,13 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- New customer -->
-                <!-- <div class="recentCustomers">
-                    <div class="cardHeader">
-                        <h2>Shift Details</h2>
-                    </div>
-                    <h3>Shift Date:
-                        <%= moment().format('Do MMMM, YYYY'); %>
-                    </h3>
-                    <p>Shift 1: 7:00 - 9:00</p>
-                    <p>Shift 1: 7:00 - 9:00</p>
-                    <p>Shift 1: 7:00 - 9:00</p>
-                    <p>Shift 1: 7:00 - 9:00</p>
-                </div> -->
+                <!-- staff list -->
                 <div class="staffList card">
                     <div class="cardHeader">
                         <p>Staff</p>
                         <select name="" id="status" onchange="filter(this.value)">
                             <option value="Waiting">Registration</option>
+                            <option value="Pending">Pending</option>
                             <option value="Accepted">Accepted</option>
                             <option value="Onleave">Onleave</option>
                             <option value="Other">Other</option>
@@ -275,41 +263,75 @@
         let Schedule;
         let Staff;
         const xhttp = new XMLHttpRequest();
-        xhttp.onload = function(){
+        xhttp.onload = function (){
+            const data = JSON.parse(this.responseText);
             try{
-                Schedule = JSON.parse(this.responseText).schedules;
-                Staff = JSON.parse(this.responseText).staffs
-                
+                if(!data.action){
+                    Schedule = JSON.parse(this.responseText).schedules;
+                    Staff = JSON.parse(this.responseText).staffs
+                    
+                    //get accepted staff of every shift
+                    for (var i = 1; i <= 21; i++) {
+                        const item = document.getElementById(String(i));
+                        const schedule = Schedule.filter(item => item.status == "Accepted" && item.shift == i);
+                        const staffid = schedule.map(item => item.staff);
+                        const staff = Staff.filter(person => staffid.includes(person.id));
+                        let text = ""
+                        for (var o = 0; o < staff.length; o++) {
+                            text += `
+                            <div class="name inprogress status">${staff[o].name}</div>
+                            `
+                        }
+                        text += `<button onclick="choose(${i})">Choose</button>`
+                        item.innerHTML = text;
+                    }
+
+                    for (var i = 1; i <= 21; i++) {
+                        const item = document.getElementById(String(i));
+                        const schedule = Schedule.filter(item => item.status == "Pending" && item.shift == i);
+                        const staffid = schedule.map(item => item.staff);
+                        const staff = Staff.filter(person => staffid.includes(person.id));
+                        let text = ""
+                        for (var o = 0; o < staff.length; o++) {
+                            text += `
+                            <div class="name pending status">${staff[o].name}</div>
+                            `
+                        }
+                        item.innerHTML = text + item.innerHTML;
+                    }
+                    for (var i = 1; i <= 21; i++) {
+                        const item = document.getElementById(String(i));
+                        const schedule = Schedule.filter(item => item.status == "Onleave" && item.shift == i);
+                        const staffid = schedule.map(item => item.staff);
+                        const staff = Staff.filter(person => staffid.includes(person.id));
+                        let text = ""
+                        for (var o = 0; o < staff.length; o++) {
+                            text += `
+                            <div class="name return status">${staff[o].name}</div>
+                            `
+                        }
+                        item.innerHTML = text + item.innerHTML;
+                    }
+                } else {
+                    alert(data.message);
+                    if(data.reload) location.reload();
+                }
+
+                    
 
             } catch(error){
                 console.log(error.message);
                 alert("Error to load data");
             }
-                
         }
         xhttp.open('GET', '/admin/getSchedule');
         xhttp.send();
-        //--------------------------------
-        //get staff of shift
-        const cellList = document.getElementsByClassName('nameList');
-        for (var i = 1; i <= cellList.length; i++) {
-            const item = cellList[i];
-            const schedule = Schedule.filter(item => item.status == "Accepted" && item.shift == i);
-            const staffid = schedule.map(item => item.staff);
-            const staff = Staff.filter(person => staffid.includes(person.id));
-            let text = ""
-            for (var o = 0; o < staff.length; o++) {
-                text += `
-                <div>${staff[o].name}</div>
-                `
-            }
-            item.innerHTML = text;
-        }
-
+        //--------------------------------    
 
         //select a shift
         let currentShift;
         function choose(shift){
+            currentShift = shift;
             const schedule = Schedule.filter(item => item.status == "Waiting" && item.shift == shift);
             const staffid = schedule.map(item => item.staff);
             const staff = Staff.filter(person => staffid.includes(person.id));
@@ -320,7 +342,7 @@
                 text = text +  `
                 <div class="row">
                     <div class="cell">${item.name}</div>
-                    <div class="cell"><button onclick="addSchedule()">Choose</button></div>
+                    <div class="cell"><button onclick="doAction(${item.id}, ${currentShift})">Choose</button></div>
                 </div>
                 `
             }
@@ -333,7 +355,6 @@
             }
             const cell = document.getElementById(String(shift));
             cell.classList.add('hightLighted');    
-            currentShift = shift;
         }
 
         function filter(status){
@@ -341,28 +362,62 @@
             const staffid = schedule.map(item => item.staff);
             let staff;
             if(status == "Other"){
-                staff = Staff;
+                const otherSchedule = Schedule.filter(item => item.shift == currentShift)
+                const idArr = otherSchedule.map(item => item.staff)
+                staff = Staff.filter(person => idArr.includes(person.id) == false);
             } else staff = Staff.filter(person => staffid.includes(person.id));
             const table = document.getElementById('tableContent');
             let text = "";
+            let action = status == "Onleave" ? "Accept" 
+                : status == "Pending" ? "Cancel"
+                    : status == "Waiting" ? "Choose"
+                        :  status == "Accepted" ? "Remove" : "Request";
             for (let i = 0; i < staff.length; i++) {
                 const item = staff[i];
                 text = text +  `
                 <div class="row">
                     <div class="cell">${item.name}</div>
-                    <div class="cell"><button onclick="addSchedule()">Choose</button></div>
+                    <div class="cell"><button onclick="doAction(${item.id}, ${currentShift})">${action}</button></div>
                 </div>
                 `
             }
             table.innerHTML = text;    
         }
 
-        function loadStaff(shift){
+        function doAction(staffid, shift){
+            // find conflict schedule
+            const foundSchedule = Schedule.find(item => item.staff == staffid && item.shift == shift);
 
-            const schedule = Schedule.filter(item => (item.status == "Accepted" && item.shift == shift));
-            const staffid = schedule.map(item => item.staff);
-            const staff = Staff.filter(person => staffid.includes(person.id));
-
+            if(!foundSchedule){
+                //send a request for that shift
+                // turn to pending
+                const url = '/admin/addSchedule?staffid=' + staffid + "&shift=" + shift + "&status=Pending";
+                xhttp.open("GET", url);
+                xhttp.send();
+            } else{
+                //check status
+                if(foundSchedule.status == "Waiting"){
+                    // apply that shift (change from waiting to Accepted)
+                    const url = '/admin/changeSchedule?staffid=' + staffid + "&shift=" + shift + "&status=Accepted";
+                    xhttp.open("GET", url);
+                    xhttp.send();
+                } else if(foundSchedule.status == "Onleave"){
+                    // remove that shift for that staff
+                    const url = '/admin/deleteSchedule?staffid=' + staffid + "&shift=" + shift;
+                    xhttp.open("GET", url);
+                    xhttp.send();
+                } else if(foundSchedule.status == "Pending"){
+                    //cancel request (remove from schedule)
+                    const url = '/admin/deleteSchedule?staffid=' + staffid + "&shift=" + shift;
+                    xhttp.open("GET", url);
+                    xhttp.send();
+                } else if(foundSchedule.status == "Accepted"){
+                    // remove schedule of that staff
+                    const url = '/admin/deleteSchedule?staffid=' + staffid + "&shift=" + shift;
+                    xhttp.open("GET", url);
+                    xhttp.send();
+                }
+            }
         }
 
     </script>

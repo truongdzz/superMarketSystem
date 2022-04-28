@@ -9,11 +9,14 @@ const loadCashierPage = (req, res) => {
 }
 
 const getAllProduct = async (req, res) => {
-    try {
-        const allProduct = await Product.getAllProduct();
-        res.send(JSON.stringify(allProduct));
-    } catch (error) {
-        if (error) res.status(500).json({ message: error.message });
+    try{
+        const data = await Product.getAllProduct();
+        res.status(200).json(data);
+    }catch(error){
+        console.log(error.message);
+        res.status(500).json({
+            message: 'Server error'
+        })
     }
 }
 

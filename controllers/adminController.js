@@ -217,6 +217,7 @@ const getLeadCategory = async (req, res)=>{
         
         res.send(JSON.stringify(data));
     } catch (error) {
+        console.log(error)
         if(error) res.status(500).json({message: error.message});
     }
 }
@@ -669,6 +670,72 @@ const getSchedule = async (req, res)=>{
     }
 }
 
+const changeOrderStatus = async (req, res)=>{
+    try{
+        const {value, id} = req.query;
+
+        await Order.changeOrderStatus(value, id);
+        res.status(200).json({
+            message: "Updated success"
+        })
+    }catch(error){
+        console.log(error);
+        res.status(500).json({
+            message: "Server error, try it later"
+        })
+    }
+}
+
+const addSchedule = async (req, res)=>{
+    try{
+        const {staffid, shift, status} = req.query;
+        await Schedule.addSchedule(staffid, shift, status);
+        res.status(200).json({
+            message: "Schedule added",
+            action: true,
+            reload: true
+        })
+    }catch(err){
+        console.log(err);
+        res.status(500).json({
+            message: "Server Error, try it later"
+        })
+    }
+}
+
+const changeSchedule = async (req, res)=>{
+    try{
+        const {staffid, shift, status} = req.query;
+        await Schedule.setStatus(staffid, shift, status);
+        res.status(200).json({
+            message: "Schedule approved",
+            action: true,
+            reload: true
+        })
+    }catch(err){
+        console.log(err);
+        res.status(500).json({
+            message: "Server Error, try it later"
+        })
+    }
+}
+
+const deleteSchedule = async (req, res)=>{
+    try{
+        const {staffid, shift} = req.query;
+        await Schedule.deleteSchedule(staffid, shift);
+        res.status(200).json({
+            message: "Schedule deleted",
+            action: true,
+            reload: true
+        })
+    }catch(err){
+        console.log(err);
+        res.status(500).json({
+            message: "Server Error, try it later"
+        })
+    }
+}
 
 module.exports = {
     loadDashboard,
@@ -688,5 +755,9 @@ module.exports = {
     getMonthData,
     getYearData,
     getAllProduct,
-    getSchedule
+    getSchedule,
+    changeOrderStatus,
+    addSchedule,
+    changeSchedule,
+    deleteSchedule
 }

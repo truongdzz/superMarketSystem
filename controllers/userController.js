@@ -25,7 +25,7 @@ const UserBanner=async(req,res)=>{
 
         return {
             isLogin:login,
-            productInCart:productInCart,
+            productInCart:productInCart
         }
 
 
@@ -63,6 +63,7 @@ const buying=async (req,res)=>{
             data:goodList,
             categories:categorylist,
         }
+        console.log(temp1)
         res.render('customerView/index.ejs',{
             ...temp1,
             ...temp2

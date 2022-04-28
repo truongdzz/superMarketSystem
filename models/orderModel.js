@@ -73,10 +73,10 @@ Order.getAllOrdersByTime = (from, to) => {
 // get online oder
 Order.getOnlineOrderByUserId= function(UserId){
     const promise= new Promise((res,rej)=>{
-        const sqltemp= "SELECT goods.name,goods.description,goods.discount,goods.sellPrice,goods.good_img,goodsinorder.amount FROM `order` WHERE userid = ?";
+        const sqltemp= "SELECT goods.name,goods.description,goods.discount,goods.sellPrice,goods.good_img,goodsInOrder.amount FROM `order` WHERE userid = ?";
         const sql=`SELECT gs.name,gs.sellPrice,gs.discount,gi.amount,gs.description,gs.good_img, gi.goodID,gi.orderID,c.name AS category 
                     FROM \`order\` o 
-                    JOIN goodsinorder gi ON o.id = gi.orderID 
+                    JOIN goodsInOrder gi ON o.id = gi.orderID 
                     JOIN goods gs ON gi.goodID = gs.id 
                     JOIN category c ON c.id = gs.category  
                     WHERE o.type = 'online' AND o.status = 'pending' AND o.userid = ? `;
@@ -91,7 +91,7 @@ Order.getOnlineOrderByUserId= function(UserId){
 // delete product from cart
 Order.deleteProductOutCart=function(productDelId,orderIDs){
     const promise=new Promise((res,rej)=>{
-        const sql="DELETE FROM goodsinorder WHERE goodID =? AND orderID =?";
+        const sql="DELETE FROM goodsInOrder WHERE goodID =? AND orderID =?";
         db.query(sql,[productDelId,orderIDs],(err,data)=>{
             if (err)rej(err)
             else res(data);
@@ -137,7 +137,7 @@ Order.getIdPendingCart=function(userName){
 Order.productExistInCart=function(orderId,goodId){
     const promise=new Promise((res,rej)=>{
         const sql=`SELECT COUNT(*) as num
-                   FROM goodsinorder gi        
+                   FROM goodsInOrder gi        
                    WHERE gi.goodID=? AND gi.orderID = ?
                    LIMIT 1        
         `;
@@ -158,7 +158,7 @@ Order.insertProductToCart=function(orderId,goodId,priceOfGood,num){
     }
     const promise = new Promise((res,rej)=>{
         const sql=`
-        INSERT INTO goodsinorder (orderID,goodID,amount,price)
+        INSERT INTO goodsInOrder (orderID,goodID,amount,price)
         VALUES (?,?,?,?)
         `
         db.query(sql,[orderId,goodId,num,priceOfGood],(err,data)=>{
@@ -187,7 +187,7 @@ Order.numberProductInCart=function (orderId){
     const promise =new Promise((res,rej)=>{
         const sql=`
         SELECT COUNT(*) AS num
-        FROM goodsinorder gi
+        FROM goodsInOrder gi
         WHERE gi.orderID = ?
         `;
         db.query(sql,orderId,(err,data)=>{
@@ -238,7 +238,7 @@ Order.getPriceOfOrder= async function (userid){
         SELECT SUM(indiviPrice) AS price
         FROM (
             Select gi.amount * ((1 - gs.discount * 0.01) * gs.sellPrice) AS indiviPrice
-            FROM goodsinorder gi
+            FROM goodsInOrder gi
             JOIN goods gs ON gs.id = gi.goodID
             WHERE gi.orderID = ? 
         ) AS pricelist
@@ -253,7 +253,7 @@ Order.getPriceOfOrder= async function (userid){
 
 Order.updateQuantityInOrder=function(goodid,orderid,quantity){
     const promise=new Promise((res,rej)=>{
-        const sql= `UPDATE goodsinorder
+        const sql= `UPDATE goodsInOrder
                     SET amount = ${quantity}
                     WHERE goodID=${goodid} AND orderID=${orderid}`;
         // console.log(sql);
@@ -289,4 +289,40 @@ Order.changestatusorder = function(orderID){
         })
     })
 }
+
+
+Order.getOrderById = (id)=>{
+    const promise = new Promise((resolve, reject)=>{
+        const sql = 'SELECT * FROM `order` WHERE id = ?';
+        db.query(sql, id, (err, data)=>{
+            if(err) reject(err);
+            else resolve(data);
+        })
+    })
+    return promise;
+}
+
+Order.getOrdersByUserId = (userId)=>{
+    const promise = new Promise((resolve, reject)=>{
+        const sql = 'SELECT * FROM `order` WHERE userid = ?';
+        db.query(sql, userId, (err, data)=>{
+            if(err) reject(err);
+            else resolve(data);
+        })
+    })
+    return promise;
+}
+
+Order.changeOrderStatus = function(value, orderID){
+    const promise = new Promise((resolve, reject)=>{
+        const sql = 'UPDATE `order` SET `status` = ? WHERE `id` = ?';
+        db.query(sql, [value, orderID], (err, data)=>{
+            if(err) reject(err);
+            else resolve(data);
+        })
+    })
+    return promise;   
+}
+
+
 module.exports = Order;

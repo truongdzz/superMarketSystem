@@ -203,6 +203,7 @@
         </script>
         <script nomodule="" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js">
         </script>
+        <!-- <script type="text/javascript" src="/truong/findProduct.js"></script> -->
         <script>
             //menu toggle
         let toggle = document.querySelector('.toggle');
@@ -283,62 +284,54 @@
         const usePointDiscount = document.getElementById("use");
         usePointDiscount.addEventListener("change", evaluate);
 
-        //search bar element
-        const searchBar = document.getElementById("searchBar");
-        searchBar.addEventListener("keyup", find);
-
         //get element that show result of searchbar
-        const result = document.getElementsByClassName("result")[0];
-        const container = document.getElementsByClassName("container")[1];
+        // const result = document.getElementsByClassName("result")[0];
+        // const container = document.getElementsByClassName("container")[1];
 
         //get element that contain added product
         const billBody = document.getElementById("billBody");
 
-        //element button to remove the search bar
-        const removeSearchBar = document.getElementById("remove");
-        removeSearchBar.addEventListener("click", () => {
-            searchBar.value = "";
-            result.classList.add("hide");
-        })
+        
 
+        // search bar element
+        // const searchBar = document.getElementById("searchBar");
+        // searchBar.addEventListener("keyup", find);
 
-
-        function find() {
-            if (!searchBar.value) {
-                result.classList.add("hide");
-                return;
-            }
-            foundProduct = allProduct.filter(product => {
-                const a = product.name.indexOf(searchBar.value);
-                const b = String(product.id).indexOf(searchBar.value);
-                if (a !== -1 || b !== -1) return true;
-                else return false;
-            })
-            console.log(foundProduct);
-            if (!foundProduct.length) {
-                container.innerHTML = `No result`;
-                return;
-            }
+        // function find() {
+            // if (!searchBar.value) {
+            //     result.classList.add("hide");
+            //     return;
+            // }
+            // foundProduct = allProduct.filter(product => {
+            //     const a = product.name.indexOf(searchBar.value);
+            //     const b = String(product.id).indexOf(searchBar.value);
+            //     if (a !== -1 || b !== -1) return true;
+            //     else return false;
+            // })
+            // if (!foundProduct.length) {
+            //     container.innerHTML = `No result`;
+            //     return;
+            // }
             
-            container.innerHTML = "";
-            for (let index = 0; index < foundProduct.length; index++) {
-                const product = foundProduct[index];
-                const foundInBill = addedProduct.find(pro => pro.id === product.id);
-                if(!foundInBill){
-                    container.innerHTML += `<tr>
-                                        <td>
-                                            <img src=\"${product.good_img}\" alt=\"\">
-                                        </td>
-                                        <td>${product.name}</td>
-                                        <td>${product.amount}</td>
-                                        <td>
-                                            <button onclick="choose(${product.id})" class=\"choice\">Select</button>
-                                        </td>
-                                    </tr>`;
-                }
+            // container.innerHTML = "";
+            // for (let index = 0; index < foundProduct.length; index++) {
+            //     const product = foundProduct[index];
+            //     const foundInBill = addedProduct.find(pro => pro.id === product.id);
+            //     if(!foundInBill){
+            //         container.innerHTML += `<tr>
+            //                             <td>
+            //                                 <img src=\"${product.good_img}\" alt=\"\">
+            //                             </td>
+            //                             <td>${product.name}</td>
+            //                             <td>${product.amount}</td>
+            //                             <td>
+            //                                 <button onclick="choose(${product.id})" class=\"choice\">Select</button>
+            //                             </td>
+            //                         </tr>`;
+            //     }
                 
-            }
-            result.classList.remove("hide");
+            // }
+            // result.classList.remove("hide");
             // const choices = document.getElementsByClassName("choice");
             // for (let index = 0; index < choices.length; index++) {
             //     const choice = choices[index];
@@ -354,7 +347,109 @@
             //         reloadBill();
             //     })
             // }
+        // }
+
+
+        // for casher
+        let adata;
+        const ahttp = new XMLHttpRequest();
+        ahttp.onload = function() {
+            if (this.status == 403) {
+                const ask = inform("Phiên của bạn đã hết hạn, bạn có muốn đăng nhập lại?");
+                if (ask) {
+                    location.href = "/login/staff";
+                }
+                return;
+            } else if (this.status == 401) {
+                const ask = inform("Bạn không có quyền truy cập vào địa chỉ này, bạn có muốn đăng nhập lại?");
+                if (ask) {
+                    location.href = "/login/staff";
+                }
+                return;
+            } else if (this.status == 200) {
+                adata = JSON.parse(this.responseText);
+                adata = adata.map(item => {
+                    item.name = item.name.toUpperCase();
+                    return item;
+                })
+            } else if (this.status == 500) {
+                alert('Server Error');
+            } else {
+                console.log(this.status)
+            }
         }
+        ahttp.open('GET', '/cashier/getAllProduct');
+        ahttp.send();
+        const aSearchBar = document.getElementById('searchBar');
+        const table = document.getElementsByClassName("container")[1]; //-----
+
+        const alabatrap = document.getElementsByClassName("result")[0]; //-----
+        
+        //element button to remove the search bar
+        const removeSearchBar = document.getElementById("remove");
+        removeSearchBar.addEventListener("click", () => {
+            searchBar.value = "";
+            alabatrap.classList.add("hide");
+        })
+        
+        // const table = document.getElementById('result');
+        aSearchBar.addEventListener('keyup', function(event) {
+            
+            if (this.value.length == 0) {
+                alabatrap.classList.add('hide');
+                return;
+            }
+            let str = this.value.toUpperCase();
+            str = str.trim();
+            while (str.includes("  ")) {
+                str = str.replace("  ", " ");
+            }
+            foundProduct = adata.filter(item => {
+                if (item.name.includes(str) || item.id == str) {
+                    return true;
+                } else return false;
+            })
+            if (!foundProduct.length) {
+                table.innerHTML = `No result`;
+                return;
+            }
+            table.innerHTML = "";
+            for (var i = 0; i < foundProduct.length; i++) {
+                const item = foundProduct[i];
+                table.innerHTML += `
+                <tr>
+                    <td>
+                        <img src=\"${item.good_img}\" alt=\"\">
+                    </td>
+                    <td>${item.name}</td>
+                    <td>${item.amount}</td>
+                    <td>
+                        <button onclick="choose(${item.id})" class=\"choice\">Select</button>
+                    </td>
+                </tr>`;
+            }
+            alabatrap.classList.remove("hide");
+            const choices = document.getElementsByClassName("choice");
+            for (let index = 0; index < choices.length; index++) {
+                const choice = choices[index];
+                choice.addEventListener("click", function(evt) {
+                    console.log(evt.srcElement);
+                    console.log(evt);
+                    console.log(evt.srcElement);
+                    const newProduct = foundProduct.find(product => product.id === Number(evt.srcElement.proid));
+                    console.log(newProduct);
+                    const otherProduct = JSON.parse(JSON.stringify(newProduct));
+                    otherProduct.amount = 1;
+                    addedProduct = [...addedProduct, otherProduct];
+                    reloadBill();
+                })
+            }
+        })
+        aSearchBar.addEventListener('focusout', function(event) {
+            table.classList.add('hide');
+            this.value = "";
+        })
+
 
         function choose(id){
             const newProduct = foundProduct.find(product => product.id === Number(id));
@@ -501,6 +596,10 @@
             const tongtien = document.getElementById("total");
             const price = tongtien.innerText.replace(" Đ", "");
             
+            if(userInfo == null){
+                alert("No user selected.")
+                return;
+            }
             if (tongtien.innerText === "0 Đ") {
                 alert("Nothing in the bill to checkout!");
             } else {

@@ -360,14 +360,14 @@
  
 
 
-    var chartDom = document.getElementById('leadCategory');
-    var myChart = echarts.init(chartDom);
-    window.onresize = function () {
-      myChart.resize();
-    };
-    var option;
+    let chartDom3 = document.getElementById('leadCategory');
+    var myChart3 = echarts.init(chartDom3);
+    // window.onresize = function () {
+    //   myChart.resize();
+    // };
+    var option3;
 
-    option = {
+    option3 = {
       color: [
         '#37A2DA',
         '#32C5E9',
@@ -412,15 +412,15 @@
       ]
     };
 
-    option && myChart.setOption(option);
+    option3 && myChart3.setOption(option3);
 
     const xhttp3 = new XMLHttpRequest();
     xhttp3.onload = function () {
       console.log(this.responseText);
       if (this.responseText) {
         const data3 = JSON.parse(this.responseText);
-        option.series[0].data = data3;
-        myChart.setOption(option);
+        option3.series[0].data = data3;
+        myChart3.setOption(option3);
       }
     }
 

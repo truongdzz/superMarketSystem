@@ -11,6 +11,7 @@ router.use(verifyJWT, verifyRoles('cashier', 'admin'));
 router.post('/checkout', cashierController.checkout);
 router.get('/getUserInfo', cashierController.getUserInfo);
 router.get('/getAllProduct', cashierController.getAllProduct);
+router.get('/getAllProduct', cashierController.getAllProduct);
 router.get('/',cashierController.loadCashierPage);
 
 module.exports = router;

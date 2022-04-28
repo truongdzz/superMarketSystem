@@ -53,9 +53,11 @@ Product.upadteAmount = (product, result)=>{
     })
 }
 
-Product.addproduct = (img, name, amount, position, price) => {
-    const sql = "INSERT INTO `goods` (`name`, `sellPrice`, `amount`,  `position`, `good_img`) VALUES (? , ? , ? , ?, ?); ";
-    db.query(sql, [name, price, amount, position, img], (err, data) => {})
+Product.addproduct = (img, name, amount, position, price, category) => {
+    const sql = "INSERT INTO `goods` (`name`, `sellPrice`, `amount`,  `position`, `good_img`, `category`) VALUES (? , ? , ? , ?, ?, ?); ";
+    db.query(sql, [name, price, amount, position, img, category], (err, data) => {
+        if(err) throw err;
+    })
 
 }
 
@@ -71,9 +73,9 @@ Product.importproduct = (imid, imamount, imamount1, staff_id) => {
 
 Product.deleteproduct = (pid) => {
     const sql = "DELETE FROM goods WHERE id = ?  ";
-    db.query(sql, [pid], (err, data) => {})
-
-
+    db.query(sql, [pid], (err, data) => {
+        if(err) throw err;
+    })
 }
 
 Product.searchproduct = (search) => {

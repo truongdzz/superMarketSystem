@@ -35,7 +35,14 @@ body .modals.hide{
     display: none;
 }
 
-
+.staffList{
+    position: fixed !important;
+    right: 20px;
+    top: 80px;
+    width: 23%;
+    height: 450px;
+    overflow-y: scroll;
+}
 
 .staffList .table{
     width: 100%;
@@ -349,7 +356,7 @@ a {
 /* detail */
 
 .details {
-    position: relative;
+    /*position: relative;*/
     width: 100%;
     padding: 20px;
     display: grid;
@@ -455,6 +462,11 @@ a {
 
 .details .recentOrders .table .row .cell:first-child{
     font-weight: 500;
+}
+
+.details .recentOrders .table .row .cell .name{
+    color: var(--white);
+    margin: 5px 0px;
 }
 
 .details .recentOrders .table .row .cell button{
