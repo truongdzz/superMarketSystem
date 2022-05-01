@@ -65,10 +65,10 @@ function sortdecreaseByCategory(catergoryId){
                         </span>
                     </div>
                     
-                    <div class="home-product-item__origin">
+                    <!--<div class="home-product-item__origin">
                         <span class="home-product-item__brand">Whoa</span>
                         <span class="home-product-item__origin-name">Nhật bản</span>
-                    </div>`;
+                    </div>-->`;
                     if(element.amount>50){
                         sourceCode=sourceCode+`
                         <div class="home-product-item__favourite">
@@ -165,10 +165,10 @@ function sortincreaseByCategory(catergoryId){
                         </span>
                     </div>
                     
-                    <div class="home-product-item__origin">
+                    <!--<div class="home-product-item__origin">
                         <span class="home-product-item__brand">Whoa</span>
                         <span class="home-product-item__origin-name">Nhật bản</span>
-                    </div>`;
+                    </div>-->`;
                     if(element.amount>50){
                         sourceCode=sourceCode+`
                         <div class="home-product-item__favourite">
@@ -260,10 +260,10 @@ function sortincreaseALL(){
                     </span>
                 </div>
                 
-                <div class="home-product-item__origin">
+                <!--<div class="home-product-item__origin">
                     <span class="home-product-item__brand">Whoa</span>
                     <span class="home-product-item__origin-name">Nhật bản</span>
-                </div>`;
+                </div>-->`;
                 if(element.amount>50){
                     sourceCode=sourceCode+`
                     <div class="home-product-item__favourite">
@@ -354,10 +354,10 @@ function sortdecreaseALL(){
                     </span>
                 </div>
                 
-                <div class="home-product-item__origin">
+                <!--<div class="home-product-item__origin">
                     <span class="home-product-item__brand">Whoa</span>
                     <span class="home-product-item__origin-name">Nhật bản</span>
-                </div>`;
+                </div>-->`;
                 if(element.amount>50){
                     sourceCode=sourceCode+`
                     <div class="home-product-item__favourite">
