@@ -85,6 +85,20 @@ User.getUserIdByUsername = function (userName){
     return promise;
 }
 
+User.getUserById = function(userid){
+    return new Promise((res,rej)=>{
+        const sql=`
+        SELECT u.name
+        FROM user u 
+        WHERE u.id = ?
+        `;
+        db.query(sql,userid,(err,data)=>{
+            if(err) rej(err)
+            else res(data)
+        })
+    })
+}
+
 
 
 module.exports = User;

@@ -100,7 +100,7 @@
                 <% }else{ %> 
                 <li class="header__navbar-item header__navbar-user">
                     <img src="https://ps.w.org/cbxuseronline/assets/icon-256x256.png?rev=2284897" alt="" class="header__navbar-user-img">
-                    <span class="header__navbar-user-name">Leo PKM</span>
+                    <span class="header__navbar-user-name"><%=nameOfUser%></span>
                     <ul class="header__navbar-user-menu">
                         <li class="header__navbar-user-item">
                             <a href="">Tài Khoản của tôi</a>
@@ -210,7 +210,7 @@
                                             <span class="header__cart-item-description">
                                                 Phân loại: <%=productitem.category%>
                                             </span>
-                                            <span class="header__cart-item-remove" onclick="deleteProductoutofcart('<%=productitem.goodID%>','<%=productitem.orderID%>')">
+                                            <span class="header__cart-item-remove" onclick="deleteProductoutofcartbanner(event,'<%=productitem.goodID%>','<%=productitem.orderID%>')">
                                                 xóa
                                             </span>
                                         </div>

@@ -1412,6 +1412,8 @@ i.home-product-item__like-icon-fill{
 }
 
 .Product-Cart-item-delete{
+    /* z-index: 1; */
+    position: relative;
     margin-top: 10px;
     font-size: 2.0rem;
     font-weight: 400;
@@ -1422,6 +1424,9 @@ i.home-product-item__like-icon-fill{
 .Product-Cart-item-delete i{
     display: block;
     margin-left: 30%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
 }
 
 .Product-Cart-item-delete:hover{

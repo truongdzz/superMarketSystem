@@ -40,9 +40,9 @@
                             <div class="grid__column-10">
                                 <div class="home-filter">
                                     <span class="home-filter__label">Sắp xếp theo</span>
-                                    <button class="home-filter__btn btn">Phổ biến</button>
+                                    <!-- <button class="home-filter__btn btn">Phổ biến</button>
                                     <button class="home-filter__btn btn btn--primary">mới nhất</button>
-                                    <button class="home-filter__btn btn">Bán chạy</button>
+                                    <button class="home-filter__btn btn">Bán chạy</button> -->
 
                                     <div class="select-input">
                                         <span class="select-input__label">Giá</span>
@@ -50,11 +50,11 @@
 
                                         <!-- list option -->
                                         <ul class="select-input__list">
-                                            <li class="select-input__item">
-                                                <a href="" class="select-input__link">Giá: Thấp đến cao</a>
+                                            <li class="select-input__item" onclick="sortincreasingALL()">
+                                                <a href="#" class="select-input__link">Giá: Thấp đến cao</a>
                                             </li>
-                                            <li class="select-input__item">
-                                                <a href="" class="select-input__link">Giá: Cao đến Thấp</a>
+                                            <li class="select-input__item" onclick="sortdecreaseALL();moneyseperate()">
+                                                <a href="#" class="select-input__link">Giá: Cao đến Thấp</a>
                                             </li>
                                         </ul>
                                     </div>
@@ -194,7 +194,17 @@
             
         </div>
 
+
         <script>
+            try {
+                async function sortincreasingALL() {
+                    await sortincreaseALL();
+                    moneyseperate();
+                }                
+            } catch (error) {
+                console.log(error);
+            }
+
 
             // change color of ative link
                 // let categorylist=document.querySelectorAll('.category-list .category-item a');
@@ -211,66 +221,75 @@
                 // }   
                 
                 //============================ them dau chi tien=====================================
-                let listDisPrice=Array.from(document.getElementsByClassName("home-product-item__price-current"))
-                listDisPrice=listDisPrice.concat(Array.from(document.getElementsByClassName("home-product-item__price-old")))
-                listDisPrice=listDisPrice.concat(Array.from(document.getElementsByClassName("header__cart-item-price")))
-                for (let i = 0; i < listDisPrice.length; i++) {
-                    let element = listDisPrice[i];
-                    // console.log(listDisPrice)
-                    let inputstr=element.textContent;
-                    let arrstring=element.textContent.split(" ");
-                    element.textContent=arrstring[0].toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')+' '+arrstring[1];
-                    
+                function moneyseperate(){
+                    let listDisPrice=Array.from(document.getElementsByClassName("home-product-item__price-current"))
+                    listDisPrice=listDisPrice.concat(Array.from(document.getElementsByClassName("home-product-item__price-old")))
+                    listDisPrice=listDisPrice.concat(Array.from(document.getElementsByClassName("header__cart-item-price")))
+                    for (let i = 0; i < listDisPrice.length; i++) {
+                        let element = listDisPrice[i];
+                        // console.log(listDisPrice)
+                        let inputstr=element.textContent;
+                        let arrstring=element.textContent.split(" ");
+                        element.textContent=arrstring[0].toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')+' '+arrstring[1];
+                        
+                    }
                 }
+                moneyseperate();
+
 
                 // ================== ajax xoa gio hang=======================================================
 
 
-                function deleteProductoutofcart(idProduct,idOrder){
-                    let xhttp=new XMLHttpRequest();
-                    // alert(idOrder,idProduct);
+                // function deleteProductoutofcart(idProduct,idOrder){
+                //     let xhttp=new XMLHttpRequest();
+                //     // alert(idOrder,idProduct);
 
 
-                    url='/delProductOutCart/'+idProduct+'/'+idOrder;
-                    xhttp.open("GET",url);
-                    xhttp.send();
+                //     url='/delProductOutCart/'+idProduct+'/'+idOrder;
+                //     xhttp.open("GET",url);
+                //     xhttp.send();
 
-                    xhttp.onload=function(){
-                        // alert(this.responseText);
-                        location.reload();
-                    }
+                //     xhttp.onload=function(){
+                //         // alert(this.responseText);
+                //         location.reload();
+                //     }
 
-                }
+                // }
 
-                function insertProducttocart(idProduct){
-                    // alert(idProduct);
-                    let xhttp = new XMLHttpRequest();
-                    url='/insertProductToCart/'+idProduct;
-                    xhttp.open("GET",url);
-                    xhttp.send();
+                // function insertProducttocart(idProduct){
+                //     // alert(idProduct);
+                //     let xhttp = new XMLHttpRequest();
+                //     url='/insertProductToCart/'+idProduct;
+                //     xhttp.open("GET",url);
+                //     xhttp.send();
 
-                    // xhttp.onload=function(){
-                    //     alert(this.responseText);
-                    // }
+                //     // xhttp.onload=function(){
+                //     //     alert(this.responseText);
+                //     // }
 
-                    // xhttp.onload=function(){
-                    //     alert('ok');
-                    // }
+                //     // xhttp.onload=function(){
+                //     //     alert('ok');
+                //     // }
 
-                    xhttp.onload=function(){
-                        if(this.status==400){
-                            alert(this.responseText);
-                        }
-                        else if(this.status==200){
-                            alert(this.responseText+this.status);
-                            location.reload();
-                        }
-                    }
+                //     xhttp.onload=function(){
+                //         if(this.status==400){
+                //             alert(this.responseText);
+                //         }
+                //         else if(this.status==200){
+                //             alert(this.responseText+this.status);
+                //             location.reload();
+                //         }
+                //     }
 
-                }
+                // }
                 
 
         </script>
+
+        <script src="/phat/js/insert_delete_product.js"></script>
+        <script src="/phat/js/sortProduct.js"></script>
+        <script src="/phat/js/search_buying.js"></script>
+
 
     </body>
 </html>

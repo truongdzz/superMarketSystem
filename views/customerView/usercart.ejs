@@ -46,7 +46,7 @@
                                         </div>
                                         <div class="grid__column-2 Product-Cart-item-price-delete">
                                             <div class="Product-Cart-item-price"><%=dataItem.sellPrice*(1-dataItem.discount*0.01)%> VNĐ</div>
-                                            <div class="Product-Cart-item-delete" onclick="deleteProductoutofcart('<%=dataItem.goodID%>','<%=dataItem.orderID%>')">
+                                            <div class="Product-Cart-item-delete" onclick="deleteProductoutofcart(event,'<%=dataItem.goodID%>','<%=dataItem.orderID%>')">
                                                 <i class="fa-solid fa-trash-can"></i>
                                             </div>
                                         </div>
@@ -168,12 +168,16 @@
         <script>
 
 
-            function deleteProductoutofcart(idProduct,idOrder){
+            function deleteProductoutofcart(e,idProduct,idOrder){
+                let nextsibNode = e.target.parentNode.parentNode.nextElementSibling;
+                let quantityNode = nextsibNode.querySelector('.Product-Cart-item-quanity');
+                let quantityvalue = quantityNode.innerText;
+                console.log(quantityvalue);
                 let xhttp=new XMLHttpRequest();
                 // alert(idOrder,idProduct);
 
 
-                url='/delProductOutCart/'+idProduct+'/'+idOrder;
+                url='/delProductOutCart/'+idProduct+'/'+idOrder+'/'+quantityvalue;
                 xhttp.open("GET",url);
                 xhttp.send();
 
@@ -192,6 +196,20 @@
                 let quantityNode = parentQuantity.querySelector('.Product-Cart-item-quanity')
                 quantityNode.innerText=parseInt(quantityNode.innerText)+1;
                 const quantity=quantityNode.innerText;
+
+                let nameProduct = parentQuantity.parentNode.querySelector('.Product-Cart-item-name').innerText;
+                let nodet =document.querySelectorAll('.header__cart-item');
+                for (let i = 0; i < nodet.length; i++) {
+                    const element = nodet[i];
+                    let namenode = element.querySelector('.header__cart-item-name');
+                    // console.log(namenode.innerText);
+                    if(nameProduct.trim()==namenode.innerText.trim()){
+                        // console.log(element);
+                        element.querySelector('.header__cart-item-qnt').innerText=quantity+' ';
+                        break;
+                    }
+                    
+                }
 
 
                 let xhttp = new XMLHttpRequest();
@@ -218,6 +236,23 @@
                 if(parseInt(quantityNode.innerText)>1){
                     quantityNode.innerText=parseInt(quantityNode.innerText)-1;
                     const quantity=quantityNode.innerText;
+
+
+                    let nameProduct = parentQuantity.parentNode.querySelector('.Product-Cart-item-name').innerText;
+                    let nodet =document.querySelectorAll('.header__cart-item');
+                    for (let i = 0; i < nodet.length; i++) {
+                        const element = nodet[i];
+                        let namenode = element.querySelector('.header__cart-item-name');
+                        // console.log(namenode.innerText);
+                        if(nameProduct.trim()==namenode.innerText.trim()){
+                            // console.log(element);
+                            element.querySelector('.header__cart-item-qnt').innerText=quantity+' ';
+                            break;
+                        }
+                        
+                    }
+
+
 
                     let xhttp = new XMLHttpRequest();
                     url ='/decreasingProduct/'+goodID+'/'+orderID+'/'+quantity;
@@ -253,6 +288,10 @@
 
 
         </script>
+
+        <script src="/phat/js/insert_delete_product.js"></script>
+
+        
 
     </body>
 </html>
