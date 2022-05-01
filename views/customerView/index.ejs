@@ -50,16 +50,16 @@
 
                                         <!-- list option -->
                                         <ul class="select-input__list">
-                                            <li class="select-input__item" onclick="sortincreasingALL()">
+                                            <li class="select-input__item" onclick="sortincreaseALL()">
                                                 <a href="#" class="select-input__link">Giá: Thấp đến cao</a>
                                             </li>
-                                            <li class="select-input__item" onclick="sortdecreaseALL();moneyseperate()">
+                                            <li class="select-input__item" onclick="sortdecreaseALL()">
                                                 <a href="#" class="select-input__link">Giá: Cao đến Thấp</a>
                                             </li>
                                         </ul>
                                     </div>
 
-                                    <div class="home-filter__page">
+                                    <!-- <div class="home-filter__page">
                                         <span class="home-filter__page-num">
                                             <span class="home-filter__page-current">1</span>/ 14
                                         </span>
@@ -71,7 +71,8 @@
                                                 <i class="home-filter__page-icon fa-solid fa-caret-right"></i>                                           
                                             </a>
                                         </div>
-                                    </div>
+                                    </div> -->
+
                                 </div>
 
                                 <div class="home-product">
@@ -95,7 +96,7 @@
 
                                                         </div>
 
-                                                        <div class="home-product-item__action">
+                                                        <!-- <div class="home-product-item__action">
                                                             <span class="home-product-item__like home-product-item__like--liked">
                                                                 <i class="home-product-item__like-icon-empty fa-regular fa-heart"></i>
                                                                 <i class="home-product-item__like-icon-fill fa-solid fa-heart"></i>
@@ -109,7 +110,7 @@
                                                                 <i class="fa-solid fa-star"></i>
                                                             </div>
                                                             <span class="home-product-item__sold">88 Đã bán</span>
-                                                        </div>
+                                                        </div> -->
 
                                                         <div class="home-product-item__buy-btn" onclick="insertProducttocart('<%=dataItem.id%>')">
                                                             <span class="home-product-item__buy-btn-title">Thêm vào giỏ</span>
@@ -196,14 +197,14 @@
 
 
         <script>
-            try {
-                async function sortincreasingALL() {
-                    await sortincreaseALL();
-                    moneyseperate();
-                }                
-            } catch (error) {
-                console.log(error);
-            }
+            // try {
+            //     async function sortincreasingALL() {
+            //         await sortincreaseALL();
+            //         moneyseperate();
+            //     }                
+            // } catch (error) {
+            //     console.log(error);
+            // }
 
 
             // change color of ative link

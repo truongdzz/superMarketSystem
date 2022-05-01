@@ -16,7 +16,7 @@ const UserBanner=async(req,res)=>{
             login=true;
             productInCart=await CartProduct.getOnlineOrderByUserId(req.userId);
             // console.log('no-'+req.userId);
-            let nameOfUser = await UserMode.getUserById(req.userId);
+            let nameOfUser = await UserMode.getUserNameById(req.userId);
             nameOfUser = Object.values(JSON.parse(JSON.stringify(nameOfUser)))[0].name
             if(productInCart.length<=0){
                 productInCart=false;

@@ -42,7 +42,7 @@ function sortdecreaseByCategory(catergoryId){
                     }
                     sourceCode=sourceCode+`
                     </div>
-                    <div class="home-product-item__action">
+                    <!--<div class="home-product-item__action">
                         <span class="home-product-item__like home-product-item__like--liked">
                             <i class="home-product-item__like-icon-empty fa-regular fa-heart"></i>
                             <i class="home-product-item__like-icon-fill fa-solid fa-heart"></i>
@@ -56,7 +56,7 @@ function sortdecreaseByCategory(catergoryId){
                             <i class="fa-solid fa-star"></i>
                         </div>
                         <span class="home-product-item__sold">88 Đã bán</span>
-                    </div>
+                    </div>-->
                     
                     <div class="home-product-item__buy-btn" onclick="insertProducttocart('${element.id}')">
                         <span class="home-product-item__buy-btn-title">Thêm vào giỏ</span>
@@ -142,7 +142,7 @@ function sortincreaseByCategory(catergoryId){
                     }
                     sourceCode=sourceCode+`
                     </div>
-                    <div class="home-product-item__action">
+                    <!--<div class="home-product-item__action">
                         <span class="home-product-item__like home-product-item__like--liked">
                             <i class="home-product-item__like-icon-empty fa-regular fa-heart"></i>
                             <i class="home-product-item__like-icon-fill fa-solid fa-heart"></i>
@@ -156,7 +156,7 @@ function sortincreaseByCategory(catergoryId){
                             <i class="fa-solid fa-star"></i>
                         </div>
                         <span class="home-product-item__sold">88 Đã bán</span>
-                    </div>
+                    </div>-->
                     
                     <div class="home-product-item__buy-btn" onclick="insertProducttocart('${element.id}')">
                         <span class="home-product-item__buy-btn-title">Thêm vào giỏ</span>
@@ -237,7 +237,7 @@ function sortincreaseALL(){
                 }
                 sourceCode=sourceCode+`
                 </div>
-                <div class="home-product-item__action">
+                <!--<div class="home-product-item__action">
                     <span class="home-product-item__like home-product-item__like--liked">
                         <i class="home-product-item__like-icon-empty fa-regular fa-heart"></i>
                         <i class="home-product-item__like-icon-fill fa-solid fa-heart"></i>
@@ -251,7 +251,7 @@ function sortincreaseALL(){
                         <i class="fa-solid fa-star"></i>
                     </div>
                     <span class="home-product-item__sold">88 Đã bán</span>
-                </div>
+                </div>-->
                 
                 <div class="home-product-item__buy-btn" onclick="insertProducttocart('${element.id}')">
                     <span class="home-product-item__buy-btn-title">Thêm vào giỏ</span>
@@ -331,7 +331,7 @@ function sortdecreaseALL(){
                 }
                 sourceCode=sourceCode+`
                 </div>
-                <div class="home-product-item__action">
+                <!--<div class="home-product-item__action">
                     <span class="home-product-item__like home-product-item__like--liked">
                         <i class="home-product-item__like-icon-empty fa-regular fa-heart"></i>
                         <i class="home-product-item__like-icon-fill fa-solid fa-heart"></i>
@@ -345,7 +345,7 @@ function sortdecreaseALL(){
                         <i class="fa-solid fa-star"></i>
                     </div>
                     <span class="home-product-item__sold">88 Đã bán</span>
-                </div>
+                </div>-->
                 
                 <div class="home-product-item__buy-btn" onclick="insertProducttocart('${element.id}')">
                     <span class="home-product-item__buy-btn-title">Thêm vào giỏ</span>

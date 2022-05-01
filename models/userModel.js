@@ -85,7 +85,7 @@ User.getUserIdByUsername = function (userName){
     return promise;
 }
 
-User.getUserById = function(userid){
+User.getUserNameById = function(userid){
     return new Promise((res,rej)=>{
         const sql=`
         SELECT u.name
