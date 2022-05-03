@@ -8,6 +8,7 @@ const StaffInfo= require('../models/staffModel');
 const ShiftInfo = require('../models/shiftModel');
 const Schedule = require('../models/scheduleModel');
 const moment = require('moment');
+const { NULL } = require('mysql/lib/protocol/constants/types');
 
 //convert time zone to gmt +7
 function convertTZ(date) {
@@ -251,33 +252,37 @@ const getHourStatistic = (req, res) => {
     res.render('managerView/hour_statistic.ejs');
 }
 const getStaffManager = async(req, res) => {
-    try {
-        let Data = function() {
-            this.staffinfo = null;
-            this.recentstaff = null;
-        };
-        data = new Data;
+        try {
+            let Data = function() {
+                this.staffinfo = null;
+                this.recentstaff = null;
+                this.notifications = null;
+            };
+            data = new Data;
 
-        result = []
-        const staffinfo = await StaffInfo.pullData();
-        const recentstaff = await StaffInfo.recentStaff();
-        data.staffinfo = staffinfo;
-        data.recentstaff = recentstaff;
-        // for (let index = 0; index < staffinfo.length; index++) {
-        //     data.id = staffinfo[index].id;
-        //     data.staffname = staffinfo[index].name;
-        //     data.position = staffinfo[index].role;
-        //     result = [...result, data];
-        // }
+            const staffinfo = await StaffInfo.pullData();
+            const recentstaff = await StaffInfo.recentStaff();
+            const notifications = await StaffInfo.pullnoti(req.staffid);
 
-        // res.send(JSON.stringify(data));
+            data.staffinfo = staffinfo;
+            data.recentstaff = recentstaff;
+            data.notifications = notifications;
+
+            // for (let index = 0; index < staffinfo.length; index++) {
+            //     data.id = staffinfo[index].id;
+            //     data.staffname = staffinfo[index].name;
+            //     data.position = staffinfo[index].role;
+            //     result = [...result, data];
+            // }
+
+            // res.send(JSON.stringify(data));
 
 
-        res.render('managerView/staff_manager', { data: data });
-    } catch (error) {
-        res.status(500).json({ message: error.message });
+            res.render('managerView/staff_manager', { data: data });
+        } catch (error) {
+            res.status(500).json({ message: error.message });
+        }
     }
-}
 
 
 const loadDetailOrder = async (req, res)=>{
@@ -737,6 +742,108 @@ const deleteSchedule = async (req, res)=>{
     }
 }
 
+    ///////// update1
+const editStaff = async(req, res) => {
+    try {
+        const { staffid } = req.params;
+        let Data = function() {
+            this.staffinfo = null;
+        };
+        data = new Data;
+
+        result = []
+        const staffinfo = await StaffInfo.pullStaffID(staffid);
+        data.staffinfo = staffinfo[0];
+        // res.send(JSON.stringify(data))
+        res.render('managerView/staff_edit.ejs', { data: data });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
+const updateStaff = async(req, res) => {
+    const { staffid, name, phone, type, salarybase } = req.query;
+    try {
+        await StaffInfo.updateStaff(staffid, name, phone, type, salarybase);
+        let url = "/admin/editstaff/".concat(staffid.toString());
+        res.redirect(url)
+    } catch (error) {
+        if (error) {
+            console.log(error.message);
+            return res.status(500).send(JSON.stringify({
+                message: 'Server Error'
+            }));
+        }
+
+    }
+}
+
+const viewNoti = async(req, res) => {
+    res.render('managerView/sendnoti.ejs');
+}
+const getNoti = async(req, res) => {
+    const { notiid } = req.params;
+    try {
+        let Data = function() {
+            this.noti = null;
+        };
+        data = new Data;
+        const noti = await StaffInfo.getnoti(notiid);
+        data.noti = noti[0];
+        // res.send(JSON.stringify(data))
+        res.render('managerView/getnoti.ejs', { data: data });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
+
+const sendNoti = async(req, res) => {
+    let { forwho, staffid, title, subtitle, content } = req.body;
+    if (!staffid) {
+        staffid = 0;
+    }
+    let sender = req.staffid;
+    try {
+        await StaffInfo.sendNoti(sender, staffid, title, subtitle, content);
+        res.redirect("/admin/sendnoti")
+    } catch (error) {
+        if (error) {
+            console.log(error.message);
+            return res.status(500).send(JSON.stringify({
+                message: 'Server Error'
+            }));
+        }
+
+    }
+}
+const deleteStaff = async(req, res) => {
+    const staffid = parseInt(req.params["staffid"]);
+    try {
+        await StaffInfo.deleteStaff(staffid);
+        res.redirect("/admin/staffmanager/")
+    } catch (error) {
+        if (error) {
+            console.log(error.message);
+            return res.status(500).send(JSON.stringify({
+                message: 'Server Error'
+            }));
+        }
+
+    }
+}
+
+const searchStaff = async(req, res) => {
+        const { search } = req.query
+        if (search) {
+            const staffs = await StaffInfo.searchStaff(search);
+            res.send(JSON.stringify(staffs));
+        }
+    }
+    ////update2
+
+    ///////////update
+
 module.exports = {
     loadDashboard,
     loadStatisticPage,
@@ -759,5 +866,12 @@ module.exports = {
     changeOrderStatus,
     addSchedule,
     changeSchedule,
-    deleteSchedule
+    deleteSchedule,
+    editStaff,
+    updateStaff,
+    deleteStaff,
+    searchStaff,
+    sendNoti,
+    viewNoti,
+    getNoti
 }

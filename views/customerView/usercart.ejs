@@ -46,7 +46,7 @@
                                         </div>
                                         <div class="grid__column-2 Product-Cart-item-price-delete">
                                             <div class="Product-Cart-item-price"><%=dataItem.sellPrice*(1-dataItem.discount*0.01)%> VNĐ</div>
-                                            <div class="Product-Cart-item-delete" onclick="deleteProductoutofcart('<%=dataItem.goodID%>','<%=dataItem.orderID%>')">
+                                            <div class="Product-Cart-item-delete" onclick="deleteProductoutofcart(event,'<%=dataItem.goodID%>','<%=dataItem.orderID%>')">
                                                 <i class="fa-solid fa-trash-can"></i>
                                             </div>
                                         </div>
@@ -54,7 +54,6 @@
                                             <div class="Product-Cart-item-minus Product-Cart-item-select-icon">
                                                 <i class="fa-solid fa-minus"></i>   
                                                 <div class="minus-click" onclick="decreasingProduct(event,'<%=dataItem.goodID%>','<%=dataItem.orderID%>')"></div>
-
                                             </div>
                                             <div class="Product-Cart-item-quanity"><%=dataItem.amount%></div>
                                             <div class="Product-Cart-item-plus Product-Cart-item-select-icon">
@@ -65,9 +64,6 @@
                                     </div>
                                 <%})%>
                                 
-
-
-
                                 <!-- <div class="Product-Cart-item">
                                     <img class="grid__column-2 Product-Cart-item-img" src="https://lzd-img-global.slatic.net/g/p/99f622ae5873272aa6bbe032f5621f1b.jpg_120x120q80.jpg_.webp" alt="">
                                     <div class="grid__column-5 Product-Cart-item-infor">
@@ -92,9 +88,6 @@
                                         </div>
                                     </div>
                                 </div>
-
-
-
                                 <div class="Product-Cart-item">
                                     <img class="grid__column-2 Product-Cart-item-img" src="https://lzd-img-global.slatic.net/g/p/99f622ae5873272aa6bbe032f5621f1b.jpg_120x120q80.jpg_.webp" alt="">
                                     <div class="grid__column-5 Product-Cart-item-infor">
@@ -166,39 +159,44 @@
         </div>
 
         <script>
-
-
-            function deleteProductoutofcart(idProduct,idOrder){
+            function deleteProductoutofcart(e,idProduct,idOrder){
+                let nextsibNode = e.target.parentNode.parentNode.nextElementSibling;
+                let quantityNode = nextsibNode.querySelector('.Product-Cart-item-quanity');
+                let quantityvalue = quantityNode.innerText;
+                // console.log(quantityvalue);
                 let xhttp=new XMLHttpRequest();
                 // alert(idOrder,idProduct);
-
-
-                url='/delProductOutCart/'+idProduct+'/'+idOrder;
+                url='/delProductOutCart/'+idProduct+'/'+idOrder+'/'+quantityvalue;
                 xhttp.open("GET",url);
                 xhttp.send();
-
                 xhttp.onload=function(){
                     // alert(this.responseText);
                     location.reload();
                 }
-
             }
-
             
-
             function increasingProduct(e,goodID,orderID){
-
                 let parentQuantity=e.target.parentNode.parentNode;
                 let quantityNode = parentQuantity.querySelector('.Product-Cart-item-quanity')
                 quantityNode.innerText=parseInt(quantityNode.innerText)+1;
                 const quantity=quantityNode.innerText;
-
-
+                let nameProduct = parentQuantity.parentNode.querySelector('.Product-Cart-item-name').innerText;
+                let nodet =document.querySelectorAll('.header__cart-item');
+                for (let i = 0; i < nodet.length; i++) {
+                    const element = nodet[i];
+                    let namenode = element.querySelector('.header__cart-item-name');
+                    // console.log(namenode.innerText);
+                    if(nameProduct.trim()==namenode.innerText.trim()){
+                        // console.log(element);
+                        element.querySelector('.header__cart-item-qnt').innerText=quantity+' ';
+                        break;
+                    }
+                    
+                }
                 let xhttp = new XMLHttpRequest();
                 url ='/increasingProduct/'+goodID+'/'+orderID+'/'+quantity;
                 xhttp.open("GET",url);
                 xhttp.send();
-
                 xhttp.onload=function(){
                     let price = this.responseText;
                     document.querySelector('.provisional-price').innerText=price+ ' Đ';
@@ -207,23 +205,30 @@
                     document.querySelector('.total-price').innerText = (parseInt(feePrice)+ parseInt(price))+' Đ';
         
                 }
-
-
             }
-
-
             function decreasingProduct(e,goodID,orderID){
                 let parentQuantity=e.target.parentNode.parentNode;
                 let quantityNode = parentQuantity.querySelector('.Product-Cart-item-quanity')
                 if(parseInt(quantityNode.innerText)>1){
                     quantityNode.innerText=parseInt(quantityNode.innerText)-1;
                     const quantity=quantityNode.innerText;
-
+                    let nameProduct = parentQuantity.parentNode.querySelector('.Product-Cart-item-name').innerText;
+                    let nodet =document.querySelectorAll('.header__cart-item');
+                    for (let i = 0; i < nodet.length; i++) {
+                        const element = nodet[i];
+                        let namenode = element.querySelector('.header__cart-item-name');
+                        // console.log(namenode.innerText);
+                        if(nameProduct.trim()==namenode.innerText.trim()){
+                            // console.log(element);
+                            element.querySelector('.header__cart-item-qnt').innerText=quantity+' ';
+                            break;
+                        }
+                        
+                    }
                     let xhttp = new XMLHttpRequest();
                     url ='/decreasingProduct/'+goodID+'/'+orderID+'/'+quantity;
                     xhttp.open("GET",url);
                     xhttp.send();
-
                     xhttp.onload=function(){
                         let price=this.responseText;
                         document.querySelector('.provisional-price').innerText=price+ ' Đ';
@@ -231,28 +236,25 @@
                         let feePrice = feePriceNode.split(' ')[0];
                         document.querySelector('.total-price').innerText = (parseInt(feePrice)+ parseInt(price))+' Đ';
                     }
-
-
                 }
-
             }
-
             function changestatusOrder(orderID){
                 
                 let xhttp = new XMLHttpRequest();
                 url='/changestatusOrder/'+orderID;
                 xhttp.open("GET",url);
                 xhttp.send();
-
                 xhttp.onload=function(){
                     // alert(this.responseText);
                     alert('đơn của bạn đã đặt thành công');
                     location.reload();
                 }
             }
-
-
         </script>
+
+        <script src="/phat/js/insert_delete_product.js"></script>
+
+        
 
     </body>
 </html>

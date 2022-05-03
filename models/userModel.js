@@ -86,6 +86,21 @@ User.getUserIdByUsername = function (userName){
     return promise;
 }
 
+User.getUserNameById = function(userid){
+    return new Promise((res,rej)=>{
+        const sql=`
+        SELECT u.name
+        FROM user u 
+        WHERE u.id = ?
+        `;
+        db.query(sql,userid,(err,data)=>{
+            if(err) rej(err)
+            else res(data)
+        })
+    })
+}
+
+
 User.getUserById = (id)=>{
     const promise = new Promise((resolve, reject)=>{
         const sql = 'SELECT * FROM user WHERE id = ?';

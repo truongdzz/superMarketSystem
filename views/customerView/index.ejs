@@ -40,9 +40,9 @@
                             <div class="grid__column-10">
                                 <div class="home-filter">
                                     <span class="home-filter__label">Sắp xếp theo</span>
-                                    <button class="home-filter__btn btn">Phổ biến</button>
+                                    <!-- <button class="home-filter__btn btn">Phổ biến</button>
                                     <button class="home-filter__btn btn btn--primary">mới nhất</button>
-                                    <button class="home-filter__btn btn">Bán chạy</button>
+                                    <button class="home-filter__btn btn">Bán chạy</button> -->
 
                                     <div class="select-input">
                                         <span class="select-input__label">Giá</span>
@@ -50,16 +50,16 @@
 
                                         <!-- list option -->
                                         <ul class="select-input__list">
-                                            <li class="select-input__item">
-                                                <a href="" class="select-input__link">Giá: Thấp đến cao</a>
+                                            <li class="select-input__item" onclick="sortincreaseALL()">
+                                                <a href="#" class="select-input__link">Giá: Thấp đến cao</a>
                                             </li>
-                                            <li class="select-input__item">
-                                                <a href="" class="select-input__link">Giá: Cao đến Thấp</a>
+                                            <li class="select-input__item" onclick="sortdecreaseALL()">
+                                                <a href="#" class="select-input__link">Giá: Cao đến Thấp</a>
                                             </li>
                                         </ul>
                                     </div>
 
-                                    <div class="home-filter__page">
+                                    <!-- <div class="home-filter__page">
                                         <span class="home-filter__page-num">
                                             <span class="home-filter__page-current">1</span>/ 14
                                         </span>
@@ -71,7 +71,8 @@
                                                 <i class="home-filter__page-icon fa-solid fa-caret-right"></i>                                           
                                             </a>
                                         </div>
-                                    </div>
+                                    </div> -->
+
                                 </div>
 
                                 <div class="home-product">
@@ -93,7 +94,7 @@
                                                                 <span class="home-product-item__price-current"><%=dataItem.sellPrice%> VNĐ</span>
                                                             <%} %> 
                                                         </div>
-                                                        <div class="home-product-item__action">
+                                                        <!-- <div class="home-product-item__action">
                                                             <span class="home-product-item__like home-product-item__like--liked">
                                                                 <i class="home-product-item__like-icon-empty fa-regular fa-heart"></i>
                                                                 <i class="home-product-item__like-icon-fill fa-solid fa-heart"></i>
@@ -107,17 +108,17 @@
                                                                 <i class="fa-solid fa-star"></i>
                                                             </div>
                                                             <span class="home-product-item__sold">88 Đã bán</span>
-                                                        </div>
+                                                        </div> -->
                                                         <div class="home-product-item__buy-btn" onclick="insertProducttocart('<%=dataItem.id%>')">
                                                             <span class="home-product-item__buy-btn-title">Thêm vào giỏ</span>
                                                             <span class="home-product-item__buy-btn-icon">
                                                                 <i class="fa-solid fa-cart-plus"></i>
                                                             </span>
                                                         </div>
-                                                        <div class="home-product-item__origin">
+                                                        <!-- <div class="home-product-item__origin">
                                                             <span class="home-product-item__brand">Whoa</span>
                                                             <span class="home-product-item__origin-name">Nhật bản</span>
-                                                        </div>
+                                                        </div> -->
                                                         <%if(dataItem.amount>50){%>
                                                             <div class="home-product-item__favourite">
                                                                 <i class="fa-solid fa-check"></i>
@@ -183,7 +184,16 @@
             
         </div>
 
+
         <script>
+            // try {
+            //     async function sortincreasingALL() {
+            //         await sortincreaseALL();
+            //         moneyseperate();
+            //     }                
+            // } catch (error) {
+            //     console.log(error);
+            // }
             // change color of ative link
                 // let categorylist=document.querySelectorAll('.category-list .category-item a');
                 // // console.log(categorylist);
@@ -199,53 +209,61 @@
                 // }   
                 
                 //============================ them dau chi tien=====================================
-                let listDisPrice=Array.from(document.getElementsByClassName("home-product-item__price-current"))
-                listDisPrice=listDisPrice.concat(Array.from(document.getElementsByClassName("home-product-item__price-old")))
-                listDisPrice=listDisPrice.concat(Array.from(document.getElementsByClassName("header__cart-item-price")))
-                for (let i = 0; i < listDisPrice.length; i++) {
-                    let element = listDisPrice[i];
-                    // console.log(listDisPrice)
-                    let inputstr=element.textContent;
-                    let arrstring=element.textContent.split(" ");
-                    element.textContent=arrstring[0].toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')+' '+arrstring[1];
-                    
+                function moneyseperate(){
+                    let listDisPrice=Array.from(document.getElementsByClassName("home-product-item__price-current"))
+                    listDisPrice=listDisPrice.concat(Array.from(document.getElementsByClassName("home-product-item__price-old")))
+                    listDisPrice=listDisPrice.concat(Array.from(document.getElementsByClassName("header__cart-item-price")))
+                    for (let i = 0; i < listDisPrice.length; i++) {
+                        let element = listDisPrice[i];
+                        // console.log(listDisPrice)
+                        let inputstr=element.textContent;
+                        let arrstring=element.textContent.split(" ");
+                        element.textContent=arrstring[0].toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')+' '+arrstring[1];
+                        
+                    }
                 }
+                moneyseperate();
                 // ================== ajax xoa gio hang=======================================================
-                function deleteProductoutofcart(idProduct,idOrder){
-                    let xhttp=new XMLHttpRequest();
-                    // alert(idOrder,idProduct);
-                    url='/delProductOutCart/'+idProduct+'/'+idOrder;
-                    xhttp.open("GET",url);
-                    xhttp.send();
-                    xhttp.onload=function(){
-                        // alert(this.responseText);
-                        location.reload();
-                    }
-                }
-                function insertProducttocart(idProduct){
-                    // alert(idProduct);
-                    let xhttp = new XMLHttpRequest();
-                    url='/insertProductToCart/'+idProduct;
-                    xhttp.open("GET",url);
-                    xhttp.send();
-                    // xhttp.onload=function(){
-                    //     alert(this.responseText);
-                    // }
-                    // xhttp.onload=function(){
-                    //     alert('ok');
-                    // }
-                    xhttp.onload=function(){
-                        if(this.status==400){
-                            alert(this.responseText);
-                        }
-                        else if(this.status==200){
-                            alert(this.responseText+this.status);
-                            location.reload();
-                        }
-                    }
-                }
+                // function deleteProductoutofcart(idProduct,idOrder){
+                //     let xhttp=new XMLHttpRequest();
+                //     // alert(idOrder,idProduct);
+                //     url='/delProductOutCart/'+idProduct+'/'+idOrder;
+                //     xhttp.open("GET",url);
+                //     xhttp.send();
+                //     xhttp.onload=function(){
+                //         // alert(this.responseText);
+                //         location.reload();
+                //     }
+                // }
+                // function insertProducttocart(idProduct){
+                //     // alert(idProduct);
+                //     let xhttp = new XMLHttpRequest();
+                //     url='/insertProductToCart/'+idProduct;
+                //     xhttp.open("GET",url);
+                //     xhttp.send();
+                //     // xhttp.onload=function(){
+                //     //     alert(this.responseText);
+                //     // }
+                //     // xhttp.onload=function(){
+                //     //     alert('ok');
+                //     // }
+                //     xhttp.onload=function(){
+                //         if(this.status==400){
+                //             alert(this.responseText);
+                //         }
+                //         else if(this.status==200){
+                //             alert(this.responseText+this.status);
+                //             location.reload();
+                //         }
+                //     }
+                // }
                 
         </script>
+
+        <script src="/phat/js/insert_delete_product.js"></script>
+        <script src="/phat/js/sortProduct.js"></script>
+        <script src="/phat/js/search_buying.js"></script>
+
 
     </body>
 </html>

@@ -58,7 +58,6 @@ Product.addproduct = (img, name, amount, position, price, category) => {
     db.query(sql, [name, price, amount, position, img, category], (err, data) => {
         if(err) throw err;
     })
-
 }
 
 Product.importproduct = (imid, imamount, imamount1, staff_id) => {
@@ -66,16 +65,13 @@ Product.importproduct = (imid, imamount, imamount1, staff_id) => {
     db.query(sql, [imid, imamount, staff_id], (err, data) => {})
     const sql1 = "UPDATE goods SET amount = ? WHERE id = ? ";
     db.query(sql1, [imamount1, imid], (err, data) => {})
-
-
-
 }
 
 Product.deleteproduct = (pid) => {
     const sql = "DELETE FROM goods WHERE id = ?  ";
-    db.query(sql, [pid], (err, data) => {
-        if(err) throw err;
-    })
+    db.query(sql, [pid], (err, data) => {})
+
+
 }
 
 Product.searchproduct = (search) => {
@@ -92,10 +88,10 @@ Product.searchproduct = (search) => {
 
 }
 
-Product.updatePrice = (id, price)=>{
-    const promise = new Promise((resolve, reject)=>{
+Product.updatePrice = (id, price) => {
+    const promise = new Promise((resolve, reject) => {
         const sql = 'UPDATE goods SET `sellPrice` = ? WHERE `id` = ?';
-        db.query(sql, [price, id], (err, data)=>{
+        db.query(sql, [price, id], (err, data) => {
             if (err) reject(err);
             else resolve(data);
         })
@@ -103,26 +99,25 @@ Product.updatePrice = (id, price)=>{
     return promise;
 }
 
-Product.updateDiscount = (id, value)=>{
-    const promise = new Promise((resolve, reject)=>{
+Product.updateDiscount = (id, value) => {
+    const promise = new Promise((resolve, reject) => {
         const sql = 'UPDATE goods SET `discount` = ? WHERE `id` = ?';
-        db.query(sql, [value, id], (err, data)=>{
-            if(err) reject(err);
+        db.query(sql, [value, id], (err, data) => {
+            if (err) reject(err);
             else resolve(data);
         })
     })
     return promise;
 }
 
-Product.updateBuyPrice = (id, value)=>{
-    const promise = new Promise((resolve, reject)=>{
+Product.updateBuyPrice = (id, value) => {
+    const promise = new Promise((resolve, reject) => {
         const sql = 'UPDATE goods SET buyPrice = ? WHERE `id` = ?';
-        db.query(sql, [value, id], (err, data)=>{
-            if(err) reject(err);
+        db.query(sql, [value, id], (err, data) => {
+            if (err) reject(err);
             else resolve(data);
         })
     })
     return promise;
 }
-
 module.exports = Product;

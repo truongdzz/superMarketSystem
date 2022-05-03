@@ -11,22 +11,34 @@ const UserBanner=async(req,res)=>{
         let login=false;
         let productInCart;
         let username=req.username;
+        let userbanner ='';
         if(username){
             login=true;
             productInCart=await CartProduct.getOnlineOrderByUserId(req.userId);
+            // console.log('no-'+req.userId);
+            let nameOfUser = await UserMode.getUserNameById(req.userId);
+            nameOfUser = Object.values(JSON.parse(JSON.stringify(nameOfUser)))[0].name
             if(productInCart.length<=0){
                 productInCart=false;
+            }
+
+            userbanner = {
+                isLogin:login,
+                productInCart:productInCart,
+                nameOfUser:nameOfUser,
             }
         }
         else{
             login=false;
             productInCart=false;
+            userbanner = {
+                isLogin:login,
+                productInCart:productInCart,
+            }
         }
 
-        return {
-            isLogin:login,
-            productInCart:productInCart
-        }
+        console.log(userbanner);
+        return userbanner;
 
 
     } catch (error) {
@@ -63,7 +75,6 @@ const buying=async (req,res)=>{
             data:goodList,
             categories:categorylist,
         }
-        console.log(temp1)
         res.render('customerView/index.ejs',{
             ...temp1,
             ...temp2
@@ -84,20 +95,7 @@ const buying=async (req,res)=>{
 const buyCategory=async (req,res)=>{
     try {
 
-        // let login=false;
-        // let productInCart;
-        // if(req.username){
-        //     login=true;
-        //     productInCart=await CartProduct.getOnlineOrderByUserId(req.userId);
-        //     if(productInCart.length<=0){
-        //         productInCart=false;
-        //     }
-        // }
-        // else{
-        //     login=false;
-        //     productInCart=false;
-        // }
-
+        
         const cate_id=getIDfrompath(req.path);
         const goodList=await Goods.getGoodsForCategory(cate_id);
         const categorylist=await Category.getAllCategory();
@@ -105,6 +103,7 @@ const buyCategory=async (req,res)=>{
         const temp2={
             data:goodList,
             categories:categorylist,
+            categoryId:cate_id,
         }
 
         res.render('customerView/buyForCategory.ejs',{
@@ -112,14 +111,7 @@ const buyCategory=async (req,res)=>{
            ...temp2
         })
 
-        // res.render('customerView/buyForCategory.ejs',{
-        //     data:goodList,
-        //     categories:categorylist,
-        //     isLogin:login,
-        //     productInCart:productInCart,
-        //     // pathNow:'/'+req.path
-        // })
-
+       
     } catch (error) {
         console.log(error);
     }
@@ -129,8 +121,13 @@ const buyCategory=async (req,res)=>{
 const deleteProductOutCart= async function(req,res){
     const gooddelete=req.params.goodid;
     const orderid=req.params.orderid;
+    // console.log(orderid);
+    const quantity=req.params.quantity;
+    // console.log(quantity)
     try {
-        const deleteResult=await CartProduct.deleteProductOutCart(gooddelete,orderid);        
+        const deleteResult=await CartProduct.deleteProductOutCart(gooddelete,orderid);   
+        // them vao nha
+        Goods.increasingProductByNum(gooddelete,quantity)   ;
 
         // get product in cart after delete
         let num = await CartProduct.numberProductInCart(orderid);
@@ -139,7 +136,10 @@ const deleteProductOutCart= async function(req,res){
 
         if(num==0){
             // console.log(orderid);
-           let temp= await CartProduct.deleteOrderById(orderid);
+            await CartProduct.deleteOrderById(orderid);
+            res.status(200).redirect('/');
+            return;
+
         }
 
         res.status(200).send('xoa thành cong')
@@ -170,7 +170,7 @@ const insertProductToCart= async function(req,res){
                 // tao bang
                 let userId= await UserMode.getUserIdByUsername(req.username);
                 userId= Object.values(JSON.parse(JSON.stringify(userId)))[0].id;
-                console.log(userId);
+                // console.log(userId);
                 const generateOrder= await CartProduct.createPendingOrder(userId);
                 // // them vao bang
 
@@ -196,6 +196,7 @@ const insertProductToCart= async function(req,res){
                 //    console.log(priceOfGood);
                    // them hang vao bang
                    await CartProduct.insertProductToCart(orderPendingId,goodid,priceOfGood);
+                   await Goods.decreasingProductByOne(goodid); // them moi nha
                 //    price=await CartProduct.getPriceOfOrder(userid);
                 //     price=Object.values(JSON.parse(JSON.stringify(price)))[0].price;
                 //     CartProduct.updatePriceInOrder(orderid,price);
@@ -209,11 +210,7 @@ const insertProductToCart= async function(req,res){
             // return ;
         }
         else{ // chua dang nhap
-            // console.log('shiba wtf cache');
-            // res.status(400).send("SOS");
-            // return ;
-            // console.log(req.username+'fdsa');
-            res.status(400).send("đăng nhập đi bạn êi");
+            res.status(400).send("Bạn cần phải đăng nhập để tiếp tục mua hàng"); // them moi nha
         }
     } catch (error) {
         console.log(error);
@@ -302,6 +299,7 @@ const increasingProductTocart=async function (req,res){
     let orderid=req.params.orderid;
     let quantity=req.params.quantity;
     const updatecart =await CartProduct.updateQuantityInOrder(goodid,orderid,quantity);
+    Goods.decreasingProductByOne(goodid);
 
     let username=req.username;
     let userid =await UserMode.getUserIdByUsername(username);
@@ -320,6 +318,7 @@ const decreasingProductTocart=async function(req,res){
     let orderid=req.params.orderid;
     let quantity=req.params.quantity;
     const updatecart =await CartProduct.updateQuantityInOrder(goodid,orderid,quantity);
+    Goods.increasingProductByOne(goodid);
 
     let username=req.username;
     let userid =await UserMode.getUserIdByUsername(username);
@@ -340,6 +339,29 @@ const changestatusOrder = async function(req,res){
     }
 }
 
+const sortProductdecreasingALL =async function(req,res){
+    const goodList=await Goods.sortProductByPrice(-1);
+    res.status(200).send(goodList);
+}
+const sortProductincreasingALL =async function(req,res){
+    const goodList=await Goods.sortProductByPrice(1);
+    res.status(200).send(goodList);
+}
+
+const sortProductincreasingBycategory=async function(req,res){
+    const categoryId= req.params.catergoryId;
+    // console.log(categoryId);
+    const goodList=await Goods.sortProductByPrice(1,categoryId);
+    // console.log(goodList);
+    res.status(200).send(goodList);
+}
+const sortProductdecreasingBycategory=async function(req,res){
+    const categoryId= req.params.catergoryId;
+    const goodList=await Goods.sortProductByPrice(-1,categoryId);
+    res.status(200).send(goodList);
+}
+
+
 module.exports={
     buying,
     buyCategory,
@@ -349,4 +371,9 @@ module.exports={
     increasingProductTocart,
     decreasingProductTocart,
     changestatusOrder,
+    sortProductdecreasingALL,
+    sortProductincreasingALL,
+    sortProductincreasingBycategory,
+    sortProductdecreasingBycategory,
+
 }

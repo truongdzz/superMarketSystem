@@ -48,4 +48,89 @@ Good.getSellPriceFromGoodId = function(goodId){
     });
 }
 
+Good.decreasingProductByOne=function(goodId){   // them moi
+    return new Promise((res,rej)=>{
+        const sql =`
+        UPDATE goods set amount=amount-1 WHERE id =?;
+        `;
+        database.query(sql,goodId,(err,data)=>{
+            if(err) rej(err);
+            else res(data);
+        });
+    })
+}
+
+Good.increasingProductByOne=function(goodId){   // them moi
+    return new Promise((res,rej)=>{
+        const sql =`
+        UPDATE goods set amount=amount+1 WHERE id =?;
+        `;
+        database.query(sql,goodId,(err,data)=>{
+            if(err) rej(err);
+            else res(data);
+        });
+    })
+}
+
+Good.increasingProductByNum=function(goodId,num){
+    return new Promise((res,rej)=>{
+        const sql=`
+        UPDATE goods set amount=amount+${num} WHERE id =?;
+        `;
+        database.query(sql,goodId,(err,data)=>{
+            if(err) rej(err);
+            else res(data);
+        });
+    })
+}
+
+Good.sortProductByPrice = function(directChange,category){
+    let sql='';
+    directChange=parseInt(directChange);
+    if(category==undefined){    // sort for all
+        if(directChange>=0){
+            sql=`
+            SELECT * 
+            FROM goods
+            ORDER BY sellPrice*(1-discount*0.01) ASC
+            `;
+        }
+        else{
+            sql=`
+            SELECT * 
+            FROM goods
+            ORDER BY sellPrice*(1-discount*0.01) DESC
+            `;
+        }
+    }
+    else{ //sort for category
+        // console.log('hahah-'+category)
+        if(directChange>=0){
+            sql=`
+            SELECT * 
+            FROM goods
+            WHERE category = ${category}
+            ORDER BY sellPrice*(1-discount*0.01) ASC
+            `;
+        }
+        else{
+            sql=`
+            SELECT * 
+            FROM goods
+            WHERE category = ${category}
+            ORDER BY sellPrice*(1-discount*0.01) DESC
+            `;
+        }
+    }
+
+    console.log(sql);
+
+    return new Promise((res,rej)=>{
+        database.query(sql,(err,data)=>{
+            if(err) rej(err)
+            else res(data);
+        })
+    })
+}
+
 module.exports=Good

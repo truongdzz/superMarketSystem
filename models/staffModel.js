@@ -111,4 +111,75 @@ Staff.setPassword = (password, id)=>{
     return promise;
 }
 
+Staff.pullnoti = (staffid) => {
+    const promise = new Promise((resolve, reject) => {
+        const sql = "SELECT * FROM notification WHERE `notification`.`receiver` = 0 OR `notification`.`receiver` = ? ORDER BY id DESC LIMIT 10 ;";
+        db.query(sql, staffid, (err, data) => {
+            if (err) reject(err);
+            resolve(data);
+        })
+    })
+    return promise;
+}
+
+Staff.getnoti = (notiid) => {
+    const promise = new Promise((resolve, reject) => {
+        const sql = "SELECT * FROM notification WHERE id = ?";
+        db.query(sql, [notiid], (err, data) => {
+            if (err) reject(err);
+            resolve(data);
+        })
+    })
+    return promise;
+}
+
+Staff.pullStaffID = (staffID) => {
+    const promise = new Promise((resolve, reject) => {
+        const sql = "SELECT * FROM staff WHERE id = ?";
+        db.query(sql, staffID, (err, data) => {
+            if (err) reject(err);
+            resolve(data);
+        })
+    })
+    return promise;
+}
+
+Staff.updateStaff = (staffid, name, phone, type, salarybase) => {
+    console.log(staffid, name, phone, type, salarybase);
+    const sql = "UPDATE staff SET name = ?, phone = ?, role = ?, salaryBase = ? WHERE id = ?";
+    db.query(sql, [name, phone, type, salarybase, staffid], (err, data) => {})
+}
+
+Staff.deleteStaff = (staffid) => {
+    const sql = "DELETE FROM staff WHERE id = ?";
+    db.query(sql, staffid, (err, data) => {})
+}
+
+
+Staff.searchStaff = (search) => {
+
+    const promise = new Promise((resolve, reject) => {
+        var str = "%".concat(search, "%")
+        const sql = "SELECT * FROM `staff` WHERE name LIKE ? OR id LIKE ?"
+        db.query(sql, [str, str], (err, data) => {
+            if (err) reject(err);
+            else resolve(data);
+        })
+    })
+    return promise;
+
+}
+
+Staff.sendNoti = (sender, staffid, title, subtitle, content) => {
+        const promise = new Promise((resolve, reject) => {
+            const sql = "INSERT INTO `notification` (`sender`, `receiver`, `title`, `subtitle`, `content`, `time`) VALUES (? ,?, ? , ? , ? , current_timestamp());"
+            db.query(sql, [sender, staffid, title, subtitle, content], (err, data) => {
+                if (err) reject(err);
+                else resolve(data);
+            })
+        })
+        return promise;
+
+    }
+
 module.exports = Staff;

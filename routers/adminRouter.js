@@ -23,6 +23,13 @@ route.put('/updateSellPrice/:id/:value', adminController.updateProductPrice);
 route.get('/detailProduct/:id', adminController.loadDetailProduct);
 route.get('/detailOrder/:id', adminController.loadDetailOrder);
 route.get('/leadCategory', adminController.getLeadCategory);
+route.get('/editstaff/:staffid', adminController.editStaff); ///////////
+route.get('/updatestaff/:staffid', adminController.updateStaff);
+route.get('/deletestaff/:staffid', adminController.deleteStaff);
+route.get('/searchstaff/', adminController.searchStaff);
+route.post('/sendnoti/', adminController.sendNoti);
+route.get('/sendnoti/', adminController.viewNoti);
+route.get('/getnoti/:notiid', adminController.getNoti); /////////////
 route.get('/leadProduct', adminController.getLeadProduct);
 route.get('/businessStatistic', adminController.getBuyAndSaleDataByTime);
 route.get('/statistic', adminController.loadStatisticPage);
