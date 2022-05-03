@@ -10,7 +10,7 @@ let ShiftInfo = function(shift) {
 
 ShiftInfo.pullData = () => {
     const promise = new Promise((resolve, reject) => {
-        const sql = "SELECT * FROM shift";
+        const sql = "SELECT * FROM shift ORDER BY number ASC";
         db.query(sql, (err, data) => {
             if (err) reject(err);
             resolve(data);

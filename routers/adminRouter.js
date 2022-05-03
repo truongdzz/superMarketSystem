@@ -22,8 +22,15 @@ route.get('/leadProduct', adminController.getLeadProduct);
 route.get('/businessStatistic', adminController.getBuyAndSaleDataByTime);
 route.get('/statistic', adminController.loadStatisticPage);
 route.get('/staffmanager', adminController.getStaffManager);
+route.get('/editstaff/:staffid', adminController.editStaff); ///////////
+route.get('/updatestaff/:staffid', adminController.updateStaff);
+route.get('/deletestaff/:staffid', adminController.deleteStaff);
+route.get('/searchstaff/', adminController.searchStaff);
+route.post('/sendnoti/', adminController.sendNoti);
+route.get('/sendnoti/', adminController.viewNoti);
+route.get('/getnoti/:notiid', adminController.getNoti); /////////////
 route.get('/shiftmanager', adminController.getShiftManager);
 route.get('/hourstatistic', adminController.getHourStatistic);
-route.get('/',adminController.loadDashboard);
+route.get('/', adminController.loadDashboard);
 
 module.exports = route

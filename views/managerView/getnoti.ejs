@@ -102,48 +102,31 @@
                 <!-- order list -->
 
                 <div class="recentOrders form-staff">
-                    <form action="/admin/updatestaff/<%= data.staffinfo.id %>" method="GET">
-                        <img src="https://image.thanhnien.vn/w2048/Uploaded/2022/wsxrxqeiod/2020_04_05/v-bts_oxyf.jpg" alt="" class="avatar">
+                    <h1 style="text-align:center; color: #287bff;">Notification</h1>
+                    <br>
+                    <div style="align-items: center; text-align: center; position: relative; display:flex;">
+                        <p style=" width: 100%; color: gray;">
+                            Send from admin:
+                            <%=data.noti.sender%>
+                        </p>
+                    </div>
 
-                        <label for="staffid">Staff ID: <%= data.staffinfo.id %></label>
-                        <input type="text" id="staffid" name="staffid" value="<%= data.staffinfo.id %>" hidden>
-                        <br>
-                        <br>
-                        <br>
-                        <label for="name">Staff Name</label>
-                        <input type="text" id="name" name="name" value="<%= data.staffinfo.name %>" required>
+                    <h1>
+                        <%=data.noti.title%>
+                    </h1>
 
-                        <label for="phone">Phone number</label>
-                        <input type="text" id="phone" name="phone" value="<%= data.staffinfo.phone %>" required>
-
-                        <label for="type">Role:</label>
-                        <select id="type" name="type">
-                            <option value="<%= data.staffinfo.role %>" selected="selected" hidden><%= data.staffinfo.role %></option>
-                            <option value="admin">Admin</option>
-                            <option value="ware">Warehouse Staff</option>
-                            <option value="cashier">Cashier Staff</option>
-                        </select>
-
-                        <label for="username">Username</label>
-                        <input type="text" id="username" name="username" value="<%= data.staffinfo.username %>" disabled>
-
-                        <label for="password">Password</label>
-                        <input type="text" id="password" name="password" value="HIDDEN PASSWORD!" disabled>
-
-                        <label for="salarybase">Salary Base</label>
-                        <input type="number" id="salarybase" name="salarybase" value="<%= data.staffinfo.salaryBase %>" required>
-
-
-
-                        <input type="submit" value="Submit">
-
-                        <a href="/admin/deletestaff/<%= data.staffinfo.id %>" class="btn">
-                            <ion-icon name="trash-outline"></ion-icon>
-                        </a>
-                        <br>
-                        <br>
-                        <br>
-                    </form>
+                    <br>
+                    <h2>
+                        <%=data.noti.subtitle%>
+                    </h2>
+                    <br>
+                    <p style="position: relative; display:inline-block; width: 100%">
+                        <%=data.noti.content%>
+                    </p>
+                    <br>
+                    <p style="position: absolute; display:flex; width: 100%; color: gray; bottom: 20px;">
+                        <%=data.noti.time%>
+                    </p>
                 </div>
 
             </div>

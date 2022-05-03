@@ -1,33 +1,33 @@
 const db = require('./configDB');
 
 //construc product Object
-let Product = function(product){
+let Product = function(product) {
     this.name = product.name;
     this.description = product.description;
     this.buyPrice = product.buyPrice;
     this.sellPrice = product.sellPrice;
     this.discount = product.discount;
     this.amount = product.amount;
-    this.category =  product.category;
+    this.category = product.category;
     this.position = product.position;
 }
 
 Product.getProductById = (id) => {
-    const promise = new Promise((resolve, reject)=>{
+    const promise = new Promise((resolve, reject) => {
         const sql = "SELECT * FROM goods WHERE id = ?";
-        db.query(sql, id, (err, data)=>{
-            if(err) reject(err);
+        db.query(sql, id, (err, data) => {
+            if (err) reject(err);
             else resolve(data);
         })
     })
     return promise;
 }
 
-Product.getAllProduct = ()=>{
-    const promise = new Promise((resolve, reject)=>{
+Product.getAllProduct = () => {
+    const promise = new Promise((resolve, reject) => {
         const sql = "SELECT * FROM goods";
-        db.query(sql, (err,data)=>{
-            if(err) reject(err);
+        db.query(sql, (err, data) => {
+            if (err) reject(err);
             else resolve(data);
         })
     })
@@ -45,17 +45,17 @@ Product.getProductByCateGory = (cat) => {
     return promise;
 }
 
-Product.upadteAmount = (product, result)=>{
+Product.upadteAmount = (product, result) => {
     const sql = "UPDATE goods SET amount = amount - ? WHERE id = ? ";
-    db.query(sql, [product.amount, product.id], (err, data)=>{
-        if(err) result(err, null); 
+    db.query(sql, [product.amount, product.id], (err, data) => {
+        if (err) result(err, null);
         else result(null, data);
     })
 }
 
-Product.addproduct = (img, name, amount, position, price) => {
-    const sql = "INSERT INTO `goods` (`name`, `sellPrice`, `amount`,  `position`, `good_img`) VALUES (? , ? , ? , ?, ?); ";
-    db.query(sql, [name, price, amount, position, img], (err, data) => {})
+Product.addproduct = (img, name, amount, position, cat, price) => {
+    const sql = "INSERT INTO `goods` (`name`, `sellPrice`, `amount`,  `position`, `category`, `good_img`) VALUES (? , ? , ? , ?,  ?, ?); ";
+    db.query(sql, [name, price, amount, position, cat, img], (err, data) => {})
 
 }
 
@@ -90,10 +90,10 @@ Product.searchproduct = (search) => {
 
 }
 
-Product.updatePrice = (id, price)=>{
-    const promise = new Promise((resolve, reject)=>{
+Product.updatePrice = (id, price) => {
+    const promise = new Promise((resolve, reject) => {
         const sql = 'UPDATE goods SET `sellPrice` = ? WHERE `id` = ?';
-        db.query(sql, [price, id], (err, data)=>{
+        db.query(sql, [price, id], (err, data) => {
             if (err) reject(err);
             else resolve(data);
         })
@@ -101,22 +101,22 @@ Product.updatePrice = (id, price)=>{
     return promise;
 }
 
-Product.updateDiscount = (id, value)=>{
-    const promise = new Promise((resolve, reject)=>{
+Product.updateDiscount = (id, value) => {
+    const promise = new Promise((resolve, reject) => {
         const sql = 'UPDATE goods SET `discount` = ? WHERE `id` = ?';
-        db.query(sql, [value, id], (err, data)=>{
-            if(err) reject(err);
+        db.query(sql, [value, id], (err, data) => {
+            if (err) reject(err);
             else resolve(data);
         })
     })
     return promise;
 }
 
-Product.updateBuyPrice = (id, value)=>{
-    const promise = new Promise((resolve, reject)=>{
+Product.updateBuyPrice = (id, value) => {
+    const promise = new Promise((resolve, reject) => {
         const sql = 'UPDATE goods SET buyPrice = ? WHERE `id` = ?';
-        db.query(sql, [value, id], (err, data)=>{
-            if(err) reject(err);
+        db.query(sql, [value, id], (err, data) => {
+            if (err) reject(err);
             else resolve(data);
         })
     })

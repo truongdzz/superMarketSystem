@@ -1,14 +1,14 @@
-const Goods=require('../models/goodsModel');
-const Category=require('../models/categoryModel');
+const Goods = require('../models/goodsModel');
+const Category = require('../models/categoryModel');
 
-const buying=async (req,res)=>{
+const buying = async(req, res) => {
     try {
-        const goodList=await Goods.getALLgoods();
-        const categorylist=await Category.getAllCategory();
-        
-        res.render('customerView/index.ejs',{
-            data:goodList,
-            categories:categorylist
+        const goodList = await Goods.getALLgoods();
+        const categorylist = await Category.getAllCategory();
+
+        res.render('customerView/index.ejs', {
+            data: goodList,
+            categories: categorylist
         });
     } catch (error) {
         console.log(error.message);
@@ -16,6 +16,6 @@ const buying=async (req,res)=>{
 
 }
 
-module.exports={
+module.exports = {
     buying
 }

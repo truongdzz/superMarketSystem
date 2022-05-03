@@ -79,28 +79,28 @@ const postPage = async(req, res) => {
 
 const updateproduct = async(req, res) => {
 
-    try {
-        const { productid, tensp, amount, position, price } = req.query;
-        Product.updateproduct(productid, tensp, amount, position, price)
-        res.redirect('/ware')
-    } catch (error) {
-        res.status(500).json({ message: error.message });
+        try {
+            const { productid, tensp, amount, position, price } = req.query;
+            Product.updateproduct(productid, tensp, amount, position, price)
+            res.redirect('/ware')
+        } catch (error) {
+            res.status(500).json({ message: error.message });
+        }
+
     }
-
-}
-
+    ////update
 const addproduct = async(req, res) => {
 
-    try {
-        const { image, addname, addamount, addposition, addprice } = req.query;
-        Product.addproduct(image, addname, addamount, addposition, addprice)
-        res.redirect('/ware')
-    } catch (error) {
-        res.status(500).json({ message: error.message });
+        try {
+            const { image, addname, addamount, addpos, addcat, addprice } = req.query;
+            Product.addproduct(image, addname, addamount, addpos, addcat, addprice)
+            res.redirect('/ware')
+        } catch (error) {
+            res.status(500).json({ message: error.message });
+        }
+
     }
-
-}
-
+    /////////////
 const importproduct = async(req, res) => {
 
     try {
