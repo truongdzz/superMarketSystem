@@ -170,6 +170,13 @@ a {
     padding: 0px 10px;
 }
 
+#selectcat{
+    height: 30px;
+    background: var(--white);
+    border: 1px solid var(--black2);
+    border-radius: 10px;
+}
+
 .toggle {
     position: relative;
     top: 0px;
@@ -268,10 +275,14 @@ a {
 .details {
     position: relative;
     padding: 20px;
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    grid-column-gap: 20px;
     margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.details .catname{
+    margin-bottom: 20px;
 }
 
 .details .control {
@@ -280,10 +291,10 @@ a {
     position: fixed;
     width: 20%;
     right: 20px;
-    top: 70px;
+    top: 90px;
     height: 100vh;
     overflow-y: scroll;
-    padding-bottom: 50px;
+    padding-bottom: 80px;
 }
 
 .details .control .active {
@@ -307,16 +318,20 @@ a {
 }
 
 .details .products-container {
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    width: 75%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    /*grid-template-columns: repeat(7, 1fr);*/
     grid-gap: 10px;
 }
 
 .main .products-container .product {
     text-align: center;
-    width: 300px;
-    display: grid;
+    width: 24%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     padding: 0 2rem;
     padding-top: 2rem;
     background: #fff;
@@ -332,6 +347,7 @@ a {
 
 .main .products-container .product img {
     width: 100%;
+    height: 40%;
 }
 
 .main .products-container .product:hover img {
@@ -421,20 +437,24 @@ a {
 
 .buttons {
     display: flex;
-    gap: 1.5rem;
+    gap: 10px;
     margin-top: 10px;
     margin-bottom: 10px;
     align-items: center;
+    justify-content: space-between;
     text-align: center;
+    width: 100%;
 }
 
 .buttons a {
-    width: 48%;
+    width: 40%;
     color: #444;
-    padding: 0.5rem;
+    padding: 0.5rem 10px;
+    font-size: 10px;
 }
 
 .buttons a.delete {
+    width: 100%;
     background: white;
     color: red;
     border: 1px solid red;
@@ -472,10 +492,10 @@ a {
     padding-top: 15px;
 }
 
-.catname {
+/*.catname {
     position: absolute;
     margin: 0 30px;
-}
+}*/
 
 .searchBar {
     position: relative;

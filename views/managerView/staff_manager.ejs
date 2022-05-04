@@ -1,103 +1,141 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin panel</title>
-    <link rel="stylesheet" href="/nguyen/staff_manager.css">
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-</head>
-
-<body>
-    <div class="container">
-
-        <!-- navigation -->
-        <div class="navigation">
-            <ul>
-                <li>
-                    <a href="">
-                        <span class="icon"><ion-icon name="logo-apple"></ion-icon></span>
-                        <span class="title">Brand name</span>
-                    </a>
-                </li>
-                <li class="">
-                    <a href="/admin">
-                        <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
-                        <span class="title">Dashboard</span>
-                    </a>
-                </li>
-                <li class="active">
-                    <a href="/admin/staffmanager">
-                        <span class="icon"><ion-icon name="person-outline"></ion-icon></span>
-                        <span class="title">HR Management</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="/admin/statistic">
-                        <span class="icon">
-              <ion-icon name="trending-up-outline"></ion-icon>
-            </span>
-                        <span class="title">Statistic</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="/admin/shiftmanager">
-                        <span class="icon">
-                            <ion-icon name="checkmark-done-outline"></ion-icon>
-            </span>
-                        <span class="title">Shift Manager</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="/admin/hourstatistic">
-                        <span class="icon">
-                            <ion-icon name="time-outline"></ion-icon>
-                </span>
-                        <span class="title">Hour Statistic</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="">
-                        <span class="icon"><ion-icon name="chatbubble-outline"></ion-icon></span>
-                        <span class="title">Message</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="">
-                        <span class="icon"><ion-icon name="settings-outline"></ion-icon></span>
-                        <span class="title">Settings</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="/logout/staff">
-                        <span class="icon"><ion-icon name="log-out-outline"></ion-icon></span>
-                        <span class="title">Sign out</span>
-                    </a>
-                </li>
-            </ul>
-        </div>
-        <!-- main -->
-        <div class="main">
-            <!-- topbar -->
-            <div class="topbar">
-                <div class="toggle">
-                    <ion-icon name="menu-outline"></ion-icon>
-                </div>
-                <!-- search -->
-                <div class="notifi">
-                    <div class="icon" onclick="toggleNotifi()">
-                        <img src="/nguyen/img/bell.png" alt="">
+    <head>
+        <meta charset="utf-8">
+            <meta content="IE=edge" http-equiv="X-UA-Compatible">
+                <meta content="width=device-width, initial-scale=1.0" name="viewport">
+                    <title>
+                        Admin panel
+                    </title>
+                    <link href="/nguyen/staff_manager.css" rel="stylesheet">
+                    <script crossorigin="anonymous" src="https://kit.fontawesome.com/a076d05399.js">
+                    </script>
+                    <link rel="stylesheet" type="text/css" href="/nguyen/noti.css">
+                </meta>
+            </meta>
+        </meta>
+    </head>
+    <body>
+        <div class="container">
+            <!-- navigation -->
+            <div class="navigation">
+                <ul>
+                    <li>
+                        <a href="">
+                            <span class="icon">
+                                <ion-icon name="logo-apple">
+                                </ion-icon>
+                            </span>
+                            <span class="title">
+                                Brand name
+                            </span>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="/admin">
+                            <span class="icon">
+                                <ion-icon name="home-outline">
+                                </ion-icon>
+                            </span>
+                            <span class="title">
+                                Dashboard
+                            </span>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a href="/admin/staffmanager">
+                            <span class="icon">
+                                <ion-icon name="person-outline">
+                                </ion-icon>
+                            </span>
+                            <span class="title">
+                                HR Management
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/admin/statistic">
+                            <span class="icon">
+                                <ion-icon name="trending-up-outline">
+                                </ion-icon>
+                            </span>
+                            <span class="title">
+                                Statistic
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/admin/shiftmanager">
+                            <span class="icon">
+                                <ion-icon name="checkmark-done-outline">
+                                </ion-icon>
+                            </span>
+                            <span class="title">
+                                Shift Manager
+                            </span>
+                        </a>
+                    </li>
+                    
+                    <li>
+                        <a href="/admin/sendnoti">
+                            <span class="icon">
+                                <ion-icon name="chatbubble-outline">
+                                </ion-icon>
+                            </span>
+                            <span class="title">
+                                Message
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <span class="icon">
+                                <ion-icon name="settings-outline">
+                                </ion-icon>
+                            </span>
+                            <span class="title">
+                                Settings
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/logout/staff">
+                            <span class="icon">
+                                <ion-icon name="log-out-outline">
+                                </ion-icon>
+                            </span>
+                            <span class="title">
+                                Sign out
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <!-- main -->
+            <div class="main">
+                <!-- topbar -->
+                <div class="topbar">
+                    <div class="toggle">
+                        <ion-icon name="menu-outline">
+                        </ion-icon>
                     </div>
-                    <div class="notifi-box" id="box">
-                        <h2>Notifications <span><%= data.notifications.length %></span></h2>
-
-                        <% data.notifications.forEach(function(noti){ %>
-
+                    <!-- search -->
+                    <div class="notifi">
+                        <div class="icon" onclick="toggleNotifi()">
+                            <img alt="" src="/nguyen/img/bell.png">
+                            </img>
+                            <span><%= data.notifications.length %></span>
+                        </div>
+                        <div class="notifi-box" id="box">
+                            <h2>
+                                Notifications
+                                <span>
+                                    <%= data.notifications.length %>
+                                </span>
+                            </h2>
+                            <% data.notifications.forEach(function(noti){ %>
                             <div class="notifi-item">
-
-                                <a href="/admin/getnoti/<%= noti.id %>" class="text">
+                                <a class="text" href="/admin/getnoti/<%= noti.id %>">
                                     <h4>
                                         <%= noti.title%>
                                     </h4>
@@ -107,102 +145,130 @@
                                 </a>
                             </div>
                             <%}) %>
-
+                        </div>
                     </div>
-                </div>
-                <!-- user image -->
-                <div class="user">
+                    <!-- user image -->
+                    <!-- <div class="user">
                     <img src="../../public/truong/img/user.jpg" alt="User">
-
+                </div> -->
                 </div>
-            </div>
-            <br>
-            <br>
-            <br>
-            <br>
-
-            <!-- detail -->
-            <div class="details">
-                <!-- order list -->
-                <div class="recentOrders">
-                    <div class="cardHeader">
-                        <h2>Staff Manager</h2>
-                        <div class="search searchBar">
-                            <form action="">
-                                <label>
-                                    <input type="text" placeholder="Search staff id or staff name" id="searchBar" name="search">
-                                    <ion-icon name="search-outline"></ion-icon>
-                                    <div class="result hide">
-                                        <table class="search-container">
+                <br>
+                    <br>
+                        <br>
+                            <br>
+                                <!-- detail -->
+                                <div class="details">
+                                    <!-- order list -->
+                                    <div class="recentOrders">
+                                        <div class="cardHeader">
+                                            <h2>
+                                                Staff Manager
+                                            </h2>
+                                            <div class="search searchBar">
+                                                <form action="">
+                                                    <label>
+                                                        <input id="searchBar" name="search" placeholder="Search staff id or staff name" type="text">
+                                                            <ion-icon name="search-outline">
+                                                            </ion-icon>
+                                                            <div class="result hide">
+                                                                <table class="search-container">
+                                                                </table>
+                                                            </div>
+                                                        </input>
+                                                    </label>
+                                                </form>
+                                            </div>
+                                            <a class="btn" href="/register/staff">
+                                                Add staff
+                                                <span>
+                                                    <ion-icon name="add-outline">
+                                                    </ion-icon>
+                                                </span>
+                                            </a>
+                                        </div>
+                                        <table>
+                                            <thead>
+                                                <tr>
+                                                    <td>
+                                                        ID
+                                                    </td>
+                                                    <td>
+                                                        Full Name
+                                                    </td>
+                                                    <td>
+                                                        Position
+                                                    </td>
+                                                    <td>
+                                                        Edit
+                                                    </td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <% data.staffinfo.forEach(function(staff){ %>
+                                                <tr>
+                                                    <td>
+                                                        <%= staff.id %>
+                                                    </td>
+                                                    <td>
+                                                        <%= staff.name %>
+                                                    </td>
+                                                    <td>
+                                                        <%= staff.role %>
+                                                    </td>
+                                                    <td>
+                                                        <a class="status delivered" href="/admin/editstaff/<%= staff.id %>">
+                                                            Edit
+                                                            <ion-icon name="create-outline">
+                                                            </ion-icon>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                <%}) %>
+                                            </tbody>
                                         </table>
                                     </div>
-                                </label>
-                            </form>
-
-                        </div>
-                        <a href="/register/staff" class="btn">Add staff  <span><ion-icon name="add-outline"></ion-icon></span></a>
-                    </div>
-                    <table>
-                        <thead>
-                            <tr>
-                                <td>ID</td>
-                                <td>Full Name</td>
-                                <td>Position</td>
-                                <td>Edit</td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <% data.staffinfo.forEach(function(staff){ %>
-                                <tr>
-                                    <td>
-                                        <%= staff.id %>
-                                    </td>
-                                    <td>
-                                        <%= staff.name %>
-                                    </td>
-                                    <td>
-                                        <%= staff.role %>
-                                    </td>
-                                    <td>
-                                        <a href="/admin/editstaff/<%= staff.id %>" class="status delivered">Edit<ion-icon name="create-outline"></ion-icon></a>
-                                    </td>
-                                </tr>
-                                <%}) %>
-
-
-                        </tbody>
-                    </table>
-                </div>
-
-                <!-- New customer -->
-                <div class="recentCustomers">
-                    <div class="cardHeader">
-                        <h2>New Staff</h2>
-                    </div>
-                    <table>
-                        <% data.recentstaff.forEach(function(staff){ %>
-                            <tr>
-                                <td width="60px">
-                                    <div class="imgBox"><img src="https://image.thanhnien.vn/w2048/Uploaded/2022/wsxrxqeiod/2020_04_05/v-bts_oxyf.jpg" alt=""></div>
-                                </td>
-                                <td>
-                                    <h4>
-                                        <%= staff.name %><br><span><%= staff.role %></span></h4>
-                                </td>
-                            </tr>
-                            <%}) %>
-
-                    </table>
-                </div>
+                                    <!-- New customer -->
+                                    <div class="recentCustomers">
+                                        <div class="cardHeader">
+                                            <h2>
+                                                New Staff
+                                            </h2>
+                                        </div>
+                                        <table>
+                                            <% data.recentstaff.forEach(function(staff){ %>
+                                            <tr>
+                                                <td width="60px">
+                                                    <div class="imgBox">
+                                                        <img alt="" src="https://image.thanhnien.vn/w2048/Uploaded/2022/wsxrxqeiod/2020_04_05/v-bts_oxyf.jpg"/>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <h4>
+                                                        <%= staff.name %>
+                                                        <br>
+                                                            <span>
+                                                                <%= staff.role %>
+                                                            </span>
+                                                        </br>
+                                                    </h4>
+                                                </td>
+                                            </tr>
+                                            <%}) %>
+                                        </table>
+                                    </div>
+                                </div>
+                            </br>
+                        </br>
+                    </br>
+                </br>
             </div>
         </div>
-    </div>
-
-    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-
-    <script>
-        //menu toggle
+        <script src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js" type="module">
+        </script>
+        <script nomodule="" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js">
+        </script>
+        <script>
+            //menu toggle
         let toggle = document.querySelector('.toggle');
         let main = document.querySelector('.main');
         let navigation = document.querySelector('.navigation');
@@ -286,7 +352,6 @@
                 down = true;
             }
         }
-    </script>
-</body>
-
+        </script>
+    </body>
 </html>

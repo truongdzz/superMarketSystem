@@ -548,19 +548,28 @@ a {
 }
 
 .notifi {
-    position: absolute;
+    position: relative;
     display: flex;
-    right: 70px;
+    /*right: 70px;*/
     background: var(--blue);
-    width: 60px;
-    height: 60px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
 }
 
 .notifi .icon {
+    position: relative;
     align-items: center;
     text-align: center;
     margin-top: 15px;
+}
+
+.notifi .icon img{
+    position: absolute;
+    top: -5px;
+    left: 9px;
+    width: 20px;
+    height: 20px;
 }
 
 .icon {

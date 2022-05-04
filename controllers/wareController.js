@@ -18,8 +18,12 @@ const getPage = async(req, res) => {
             let Data = function() {
                 this.products = null;
                 this.cate = "all";
+                this.notifications = null;
             };
             data = new Data;
+
+            const notifications = await StaffInfo.pullnoti(req.staffid);
+            data.notifications = notifications;
 
             result = []
             const products = await Product.searchproduct(search);
@@ -31,11 +35,15 @@ const getPage = async(req, res) => {
 
     } else {
         try {
-            let Data = function() {
+            let Data = function() { 
                 this.products = null;
                 this.cate = "all";
+                this.notifications = null;
             };
             data = new Data;
+
+            const notifications = await StaffInfo.pullnoti(req.staffid);
+            data.notifications = notifications;
 
             result = []
             const products = await Product.getAllProduct();

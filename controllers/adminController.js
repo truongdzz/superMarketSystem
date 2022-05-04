@@ -44,9 +44,14 @@ const loadDashboard = async (req, res) => {
             this.totalIncomes = 0;
             this.newOrders = 0;
             this.ordersInfo = null;
-            this.analytic = null;
+            this.analytic = null; 
+            this.notifications = null;
         };
         const data = new Data;
+
+        const notifications = await StaffInfo.pullnoti(req.staffid);
+        data.notifications = notifications;
+
         const ordersIn24h = await Order.pullDataByTime(24);
         data.newOrders = ordersIn24h.length;
         data.ordersInfo = ordersIn24h.reverse();
@@ -267,16 +272,6 @@ const getStaffManager = async(req, res) => {
             data.staffinfo = staffinfo;
             data.recentstaff = recentstaff;
             data.notifications = notifications;
-
-            // for (let index = 0; index < staffinfo.length; index++) {
-            //     data.id = staffinfo[index].id;
-            //     data.staffname = staffinfo[index].name;
-            //     data.position = staffinfo[index].role;
-            //     result = [...result, data];
-            // }
-
-            // res.send(JSON.stringify(data));
-
 
             res.render('managerView/staff_manager', { data: data });
         } catch (error) {
@@ -677,9 +672,15 @@ const getSchedule = async (req, res)=>{
 
 const changeOrderStatus = async (req, res)=>{
     try{
-        const {value, id} = req.query;
+        const {value, id, user} = req.query;
 
         await Order.changeOrderStatus(value, id);
+
+        const content = value == "delivering" ? `Your order (id: ${id}) are being delivered`
+            : value == "delivered" ? `Your order (id: ${id}) has been dilivered`
+                : `Your order (id: ${id}) has been returned`; 
+        await User.sendNoti(user, content);
+
         res.status(200).json({
             message: "Updated success"
         })
@@ -691,10 +692,29 @@ const changeOrderStatus = async (req, res)=>{
     }
 }
 
-const addSchedule = async (req, res)=>{
+const addSchedule = async (req, res)=>{ 
     try{
         const {staffid, shift, status} = req.query;
         await Schedule.addSchedule(staffid, shift, status);
+
+        if(status == "Pending"){
+            const shiftinfo = await ShiftInfo.getShiftByNumber(shift);
+            day = shiftinfo[0].day;
+            time = shiftinfo[0].time;
+
+            const dayy = day == "mon" ? "Monday"
+                : day == "tue" ? "Tuesday"
+                    : day == "wed" ? "WednesDay"
+                        : day == "thu" ? "Thursday"
+                            : day == "fri" ? "Friday" 
+                                :day == "sat" ? "Saturday"
+                                    : "Sunday"
+            const timee = (time == "sang") ? "Morning" 
+                : time == "chieu" ? "Afternoon" : "Night"
+            const content = `You have a request to work on ${dayy} ${timee}`
+            await StaffInfo.sendNoti(0, staffid, "Request schedule", content, content);
+        }
+
         res.status(200).json({
             message: "Schedule added",
             action: true,
@@ -712,6 +732,26 @@ const changeSchedule = async (req, res)=>{
     try{
         const {staffid, shift, status} = req.query;
         await Schedule.setStatus(staffid, shift, status);
+
+        const shiftinfo = await ShiftInfo.getShiftByNumber(shift);
+        day = shiftinfo[0].day;
+        time = shiftinfo[0].time;
+
+        const dayy = day == "mon" ? "Monday"
+            : day == "tue" ? "Tuesday"
+                : day == "wed" ? "WednesDay"
+                    : day == "thu" ? "Thursday"
+                        : day == "fri" ? "Friday" 
+                            :day == "sat" ? "Saturday"
+                                : "Sunday"
+        const timee = (time == "sang") ? "Morning" 
+            : time == "chieu" ? "Afternoon" : "Night"
+
+
+        const content = `Your application on working on ${dayy} ${timee} has been approved.`;
+
+        await StaffInfo.sendNoti(0, staffid, "Schedule approved", content, content); 
+
         res.status(200).json({
             message: "Schedule approved",
             action: true,
@@ -729,6 +769,23 @@ const deleteSchedule = async (req, res)=>{
     try{
         const {staffid, shift} = req.query;
         await Schedule.deleteSchedule(staffid, shift);
+
+        const shiftinfo = await ShiftInfo.getShiftByNumber(shift);
+        day = shiftinfo[0].day;
+        time = shiftinfo[0].time;
+
+        const dayy = day == "mon" ? "Monday"
+            : day == "tue" ? "Tuesday"
+                : day == "wed" ? "WednesDay"
+                    : day == "thu" ? "Thursday"
+                        : day == "fri" ? "Friday" 
+                            :day == "sat" ? "Saturday"
+                                : "Sunday"
+        const timee = (time == "sang") ? "Morning" 
+            : time == "chieu" ? "Afternoon" : "Night"        
+        const content = `Your schedule on ${dayy} ${timee} has been removed.`;
+        await StaffInfo.sendNoti(0, staffid, "Schedule removed", content, content)
+
         res.status(200).json({
             message: "Schedule deleted",
             action: true,
@@ -783,15 +840,19 @@ const viewNoti = async(req, res) => {
 }
 const getNoti = async(req, res) => {
     const { notiid } = req.params;
+    const id = req.staffid;
     try {
+        const staff = await StaffInfo.getStaffById(id);
         let Data = function() {
             this.noti = null;
+            
         };
         data = new Data;
         const noti = await StaffInfo.getnoti(notiid);
         data.noti = noti[0];
+
         // res.send(JSON.stringify(data))
-        res.render('managerView/getnoti.ejs', { data: data });
+        res.render('managerView/getnoti.ejs', { data: data, staff: staff[0] });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }

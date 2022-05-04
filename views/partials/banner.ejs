@@ -43,35 +43,18 @@
                             <h3>Thông báo mới nhận</h3>
                         </header>
                         <ul class="header__notify-list">
-                            <li class="header__notify-item header__notify-item--viewed">
-                                <a href="" class="header__notify-link">
-                                    <img src="https://abphotos.link/photos/resized/1024x/73-1574413855-myohui.png" alt="" class="header__notify-img">
-                                    <div class="header__notify-info">
-                                        <span class="header__notify-name">Xác thực chính hãng nguồn gốc của các sản phẩm Ohui</span>
-                                        <span class="header__notify-description">Hidden tag là giải pháp xác thực hàng chính hãng bằng công nghệ tiên tiến nhất hiện nay</span>
-                                    </div>
-                                </a>
-                            </li>
-
+                        <%for( let i = 0; i < noti.length; i++){%>
+                            <%const item = noti[i]%>
                             <li class="header__notify-item">
                                 <a href="" class="header__notify-link">
-                                    <img src="https://www.skinceuticalsvn.com/site/pages/showImageResized.aspx?EncMediaId=R1IzakFiTElKdmJEU0pBNnFRemtZdz09&ImageFormatAppCode=IMAGEFORMAT_ORIGINAL&v=220223104632" alt="" class="header__notify-img">
                                     <div class="header__notify-info">
-                                        <span class="header__notify-name">Sale Sốc bộ dưỡng Ohui The First Tái tạo trẻ hóa da SALE OFF 70%</span>
-                                        <span class="header__notify-description">Giá chỉ còn 375.000 (giá gốc: 1.250.000 vnd).</span>
+                                        <span class="header__notify-name"><%=item.content%></span>
+                                         
                                     </div>
                                 </a>
                             </li>
+                        <%}%>
 
-                            <li class="header__notify-item">
-                                <a href="" class="header__notify-link">
-                                    <img src="https://abphotos.link/photos/resized/1000x/83-1574738403-myphamohui-lgvina.png" alt="" class="header__notify-img">
-                                    <div class="header__notify-info">
-                                        <span class="header__notify-name">Ohui chính thức ra mắt dòng son lì mới THE FIRST GENITURE LIPSTICK</span>
-                                        <span class="header__notify-description">Một làn môi căng mềm, quyến rũ với sắc màu nổi bật luôn là điều mà các quý cô ao ước. </span>
-                                    </div>
-                                </a>
-                            </li>
                         </ul>
 
                         <footer class="header__notify-footer">

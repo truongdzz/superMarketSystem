@@ -15,7 +15,7 @@ const UserBanner=async(req,res)=>{
         if(username){
             login=true;
             productInCart=await CartProduct.getOnlineOrderByUserId(req.userId);
-            // console.log('no-'+req.userId);
+             ('no-'+req.userId);
             let nameOfUser = await UserMode.getUserNameById(req.userId);
             nameOfUser = Object.values(JSON.parse(JSON.stringify(nameOfUser)))[0].name
             if(productInCart.length<=0){
@@ -37,7 +37,7 @@ const UserBanner=async(req,res)=>{
             }
         }
 
-        console.log(userbanner);
+         (userbanner);
         return userbanner;
 
 
@@ -48,28 +48,10 @@ const UserBanner=async(req,res)=>{
 
 const buying=async (req,res)=>{
     try {
-        // let login=false;
-        // let productInCart;
-        // let username=req.username;
-        // if(username){
-        //     login=true;
-        //     // console.log(req.userId)
-        //     // console.log(res.userId in res);
-        //     productInCart=await CartProduct.getOnlineOrderByUserId(req.userId);
-        //     if(productInCart.length<=0){
-        //         productInCart=false;
-        //     }
-        // }
-        // else{
-        //     login=false;
-        //     productInCart=false;
-        // }
-        // console.log(username);
-        // console.log(login);
-        // console.log(productInCart.length);
-        // console.log(productInCart);
+        
         const goodList=await Goods.getALLgoods();
         const categorylist=await Category.getAllCategory();
+        const usernoti = await UserMode.getNoti(req.userId);
         const temp1= await UserBanner(req,res);
         const temp2={
             data:goodList,
@@ -77,15 +59,10 @@ const buying=async (req,res)=>{
         }
         res.render('customerView/index.ejs',{
             ...temp1,
-            ...temp2
+            ...temp2,
+            noti: usernoti
         })
 
-        // res.render('customerView/index.ejs',{
-        //     data:goodList,
-        //     categories:categorylist,
-        //     isLogin:login,
-        //     productInCart:productInCart,
-        // });
     } catch (error) {
         console.log(error)
     }
@@ -105,10 +82,12 @@ const buyCategory=async (req,res)=>{
             categories:categorylist,
             categoryId:cate_id,
         }
+        const usernoti = await UserMode.getNoti(req.userId);
 
         res.render('customerView/buyForCategory.ejs',{
            ...temp1,
-           ...temp2
+           ...temp2,
+           noti: usernoti
         })
 
        
@@ -121,9 +100,9 @@ const buyCategory=async (req,res)=>{
 const deleteProductOutCart= async function(req,res){
     const gooddelete=req.params.goodid;
     const orderid=req.params.orderid;
-    // console.log(orderid);
+     (orderid);
     const quantity=req.params.quantity;
-    // console.log(quantity)
+     (quantity)
     try {
         const deleteResult=await CartProduct.deleteProductOutCart(gooddelete,orderid);   
         // them vao nha
@@ -132,10 +111,10 @@ const deleteProductOutCart= async function(req,res){
         // get product in cart after delete
         let num = await CartProduct.numberProductInCart(orderid);
         num = Object.values(JSON.parse(JSON.stringify(num)))[0].num
-        // console.log(num);
+         (num);
 
         if(num==0){
-            // console.log(orderid);
+             (orderid);
             await CartProduct.deleteOrderById(orderid);
             res.status(200).redirect('/');
             return;
@@ -159,9 +138,9 @@ const insertProductToCart= async function(req,res){
         let userName=req.username;
         // check login
         let login =false ; // inital
-        // console.log(goodid);
+         (goodid);
         if(userName){ //logined
-            // console.log(userName)
+             (userName)
             // res.send(userName);
             const queryResult= await CartProduct.getNumPendingCart(userName);
             const numCart= Object.values(JSON.parse(JSON.stringify(queryResult)))[0]
@@ -170,7 +149,7 @@ const insertProductToCart= async function(req,res){
                 // tao bang
                 let userId= await UserMode.getUserIdByUsername(req.username);
                 userId= Object.values(JSON.parse(JSON.stringify(userId)))[0].id;
-                // console.log(userId);
+                 (userId);
                 const generateOrder= await CartProduct.createPendingOrder(userId);
                 // // them vao bang
 
@@ -193,14 +172,14 @@ const insertProductToCart= async function(req,res){
                else{
                    let priceOfGood= await Goods.getSellPriceFromGoodId(goodid);
                    priceOfGood=Object.values(JSON.parse(JSON.stringify(priceOfGood)))[0].sellPrice;
-                //    console.log(priceOfGood);
+                
                    // them hang vao bang
                    await CartProduct.insertProductToCart(orderPendingId,goodid,priceOfGood);
                    await Goods.decreasingProductByOne(goodid); // them moi nha
                 //    price=await CartProduct.getPriceOfOrder(userid);
                 //     price=Object.values(JSON.parse(JSON.stringify(price)))[0].price;
                 //     CartProduct.updatePriceInOrder(orderid,price);
-                // console.log(goodid,orderPendingId,)
+                 
                    res.status(200).send('Sản phẩm đã được thêm');
                    return ;
                }
@@ -284,10 +263,12 @@ const cartpage=async (req,res)=>{
             totalprice,
             check:true,
         }
+        const usernoti = await UserMode.getNoti(req.userId);
         res.render('customerView/usercart.ejs',{
             ...temp1,
             ...temp2,
-            ...temp3
+            ...temp3,
+            noti: usernoti
         });
     } catch (error) {
         console.log(error)
@@ -350,9 +331,9 @@ const sortProductincreasingALL =async function(req,res){
 
 const sortProductincreasingBycategory=async function(req,res){
     const categoryId= req.params.catergoryId;
-    // console.log(categoryId);
+     (categoryId);
     const goodList=await Goods.sortProductByPrice(1,categoryId);
-    // console.log(goodList);
+     (goodList);
     res.status(200).send(goodList);
 }
 const sortProductdecreasingBycategory=async function(req,res){

@@ -12,5 +12,6 @@ route.post('/registSchedule', staffController.registSchedule);
 route.get('/editProfile', staffController.loadEditProfile);
 route.post('/updateProfile', staffController.updateProfile);
 route.post('/updatePassword', staffController.updatePassword);
+route.get('/getnoti/:notiid', staffController.getNoti);
 
 module.exports = route;

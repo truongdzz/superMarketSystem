@@ -385,6 +385,15 @@ body{
     font-weight: 500;
 }
 
+.status.delivering{
+    padding: 2px 4px;
+    background: green;
+    color: var(--white);
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;   
+}
+
 .status.pending{
     padding: 2px 4px;
     background: #f9ca3f;

@@ -73,7 +73,7 @@
                     </li>
                     
                     <li>
-                        <a href="">
+                        <a href="/admin/sendnoti">
                             <span class="icon">
                                 <ion-icon name="chatbubble-outline">
                                 </ion-icon>
@@ -116,19 +116,19 @@
                         </ion-icon>
                     </div>
                     <!-- search -->
-                    <div class="search">
+                    <!-- <div class="search">
                         <label>
                             <input placeholder="Search here" type="text">
                                 <ion-icon name="search-outline">
                                 </ion-icon>
                             </input>
                         </label>
-                    </div>
+                    </div> -->
                     <!-- user image -->
-                    <div class="user">
+                    <!-- <div class="user">
                         <img alt="User" src="truong/img/user.jpg">
                         </img>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="content">
                     <div class="customerInfo">
@@ -175,9 +175,10 @@
                         		<div class="cell"><%=item.price%></div>
                         		<div class="cell"><%=item.type%></div>
                         		<div class="cell">
-                                    <select onchange="changeStatus(this.value, <%=item.id%>)">
+                                    <select onchange="changeStatus(this.value, <%=item.id%>, <%= userInfo.id %>)">
                                         <option value="<%=item.status%>"><%=item.status%></option>
                                         <option value="return">Returned</option>
+                                        <option value="delivering">Delevering</option>
                                         <option value="delivered">Delivered</option>
                                     </select>      
                                 </div>

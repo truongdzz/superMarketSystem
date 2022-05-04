@@ -15,58 +15,66 @@
     <div class="container">
 
         <!-- navigation -->
-        <div class="navigation">
-            <ul>
-                <li>
-                    <a href="">
-                        <span class="icon"><ion-icon name="logo-apple"></ion-icon></span>
-                        <span class="title">Brand name</span>
-                    </a>
-                </li>
-                <li class="active">
-                    <a href="">
-                        <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
-                        <span class="title">Dashboard</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="">
-                        <span class="icon"><ion-icon name="person-outline"></ion-icon></span>
-                        <span class="title">Customer</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="">
-                        <span class="icon"><ion-icon name="chatbubble-outline"></ion-icon></span>
-                        <span class="title">Message</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="">
-                        <span class="icon"><ion-icon name="help-outline"></ion-icon></span>
-                        <span class="title">Help</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="">
-                        <span class="icon"><ion-icon name="settings-outline"></ion-icon></span>
-                        <span class="title">Settings</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="">
-                        <span class="icon"><ion-icon name="lock-closed-outline"></ion-icon></span>
-                        <span class="title">Password</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="">
-                        <span class="icon"><ion-icon name="log-out-outline"></ion-icon></span>
-                        <span class="title">Sign out</span>
-                    </a>
-                </li>
-            </ul>
-        </div>
+<div class="container">
+
+    <!-- navigation -->
+    <div class="navigation">
+      <ul>
+          <li>
+              <a href="">
+                  <span class="icon"><ion-icon name="logo-apple"></ion-icon></span>
+                  <span class="title">Brand name</span>
+              </a>
+          </li>
+          <li class="">
+              <a href="/admin">
+                  <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
+                  <span class="title">Dashboard</span>
+              </a>
+          </li>
+          <li>
+              <a href="/admin/staffmanager">
+                  <span class="icon"><ion-icon name="person-outline"></ion-icon></span>
+                  <span class="title">HR Management</span>
+              </a>
+          </li>
+          <li>
+              <a href="/admin/statistic">
+                  <span class="icon">
+        <ion-icon name="trending-up-outline"></ion-icon>
+      </span>
+                  <span class="title">Statistic</span>
+              </a>
+          </li>
+          <li>
+              <a href="/admin/shiftmanager">
+                  <span class="icon">
+                      <ion-icon name="checkmark-done-outline"></ion-icon>
+                  </span>
+                  <span class="title">Shift Manager</span>
+              </a>
+          </li>
+          
+          <li class="active">
+              <a href="/admin/sendnoti">
+                  <span class="icon"><ion-icon name="chatbubble-outline"></ion-icon></span>
+                  <span class="title">Message</span>
+              </a>
+          </li>
+          <li>
+              <a href="/staff/editProfile">
+                  <span class="icon"><ion-icon name="settings-outline"></ion-icon></span>
+                  <span class="title">Settings</span>
+              </a>
+          </li>
+          <li>
+              <a href="/logout/staff">
+                  <span class="icon"><ion-icon name="log-out-outline"></ion-icon></span>
+                  <span class="title">Sign out</span>
+              </a>
+          </li>
+      </ul>
+  </div>
 
         <!-- main -->
         <div class="main">
@@ -78,7 +86,7 @@
                 <!-- search -->
                 <!-- user image -->
                 <div class="user">
-                    <img src="../../public/truong/img/user.jpg" alt="User">
+                    <!-- <img src="../../public/truong/img/user.jpg" alt="User"> -->
 
                 </div>
             </div>
@@ -94,7 +102,10 @@
                 <div class="recentOrders form-staff">
                     <form action="/admin/sendnoti" method="POST">
                         <h1 style="text-align:center; color: #287bff;"> Send Notification</h1>
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMBGolLKZGwBAaElRILIo8xJc7LsItAp0kUA&usqp=CAU" alt="" class="avatar">
+                        <div style="display: flex; justify-content: center;">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMBGolLKZGwBAaElRILIo8xJc7LsItAp0kUA&usqp=CAU" alt="" class="avatar">    
+                        </div>
+                        
 
                         <label for="forwho">Choose type:</label>
                         <select name="forwho" id="forwho">

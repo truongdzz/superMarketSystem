@@ -112,4 +112,26 @@ User.getUserById = (id)=>{
     return promise;
 }
 
+User.sendNoti = (userid, content)=>{
+    const promise = new Promise((resolve, reject)=>{
+        const sql = 'INSERT INTO `usernoti` (`userid`, `content`) VALUES (?, ?)';
+        db.query(sql, [userid, content], (err, data)=>{
+            if(err) reject(err);
+            else resolve(data);
+        })
+    })
+    return promise;   
+}
+
+User.getNoti = (userid) =>{
+    const promise = new Promise((resolve, reject)=>{
+        const sql = 'SELECT * FROM `usernoti` WHERE `userid` = ?';
+        db.query(sql, [userid], (err, data)=>{
+            if(err) reject(err);
+            else resolve(data);
+        })
+    })
+    return promise;      
+}
+
 module.exports = User;

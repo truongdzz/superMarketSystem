@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin panel</title>
     <link rel="stylesheet" href="/nguyen/ware.css">
+    <link rel="stylesheet" type="text/css" href="/nguyen/noti.css">
 
 </head>
 
@@ -30,13 +31,6 @@
                 </li>
 
                 <li>
-                    <a href="">
-                        <span class="icon"><ion-icon name="chatbubble-outline"></ion-icon></span>
-                        <span class="title">Message</span>
-                    </a>
-                </li>
-
-                <li>
                     <a href="/staff/editProfile">
                         <span class="icon"><ion-icon name="settings-outline"></ion-icon></span>
                         <span class="title">Settings</span>
@@ -54,6 +48,7 @@
 
         <!-- main -->
         <div class="main">
+
             <!-- topbar -->
             <div class="topbar">
                 <div class="toggle">
@@ -97,15 +92,46 @@
                     <a href="/ware">Reset</a>
                 </div>
 
+                <div class="notifi">
+                        <div class="icon" onclick="toggleNotifi()">
+                            <img alt="" src="/nguyen/img/bell.png">
+                            </img>
+                            <span><%= data.notifications.length %></span>
+                        </div>
+                        <div class="notifi-box" id="box">
+                            <h2>
+                                Notifications
+                                <span>
+                                    <%= data.notifications.length %>
+                                </span>
+                            </h2>
+                            <% data.notifications.forEach(function(noti){ %>
+                            <div class="notifi-item">
+                                <a class="text" href="/staff/getnoti/<%= noti.id %>">
+                                    <h4>
+                                        <%= noti.title%>
+                                    </h4>
+                                    <p>
+                                        <%= noti.subtitle%>
+                                    </p>
+                                </a>
+                            </div>
+                            <%}) %>
+                        </div>
+                    </div>
+
                 <!-- user image -->
-                <div class="user">
+                <!-- <div class="user">
                     <img src="/truong/img/user.jpg" alt="User">
 
-                </div>
+                </div> -->
             </div>
+
+
             <div class="details">
+
                 <div class="catname">
-                    <h3>recent category:
+                    <h3>Category:
                         <%=data.cate%>
                     </h3>
                 </div>
@@ -136,14 +162,20 @@
                                 <div class="buttons">
                                     <a href="#p-<%=i%>" class="edit" onclick="updateproduct(<%=product.id%>)">edit</a>
                                     <a href="#p-<%=i%>" class="import" onclick="importproduct(<%=product.id%>)">import</a>
-                                    <a href="/ware/deleteproduct/<%=product.id%>" class="delete">delete</a>
-
+                                    
                                 </div>
+                                <!-- <div class="buttons">
+                                    <a href="/ware/deleteproduct/<%=product.id%>" class="delete">delete</a>
+                                </div> -->
                             </div>
                             <% i = i +1; %>
                                 <%}) %>
                 </div>
+
+
                 <div class="control">
+
+                    <!-- edit san pham -->
                     <div class="recentCustomers">
                         <div class="cardHeader">
                             <h2>Cập nhật sản phẩm </h2>
@@ -169,6 +201,27 @@
                         </div>
                     </div>
 
+
+                    <!-- Nhap hang -->
+                    <div class="recentCustomers nhaphang">
+                        <div class="cardHeader">
+                            <h2 style="color: #287bff;">Nhập hàng </h2>
+                        </div>
+                        <!-- <img src="https://upload.wikimedia.org/wikipedia/commons/8/88/Bright_red_tomato_and_cross_section02.jpg" alt=""> -->
+                        <div class="form-product">
+                            <form action="/ware/importproduct" method="GET">
+                                <input type="number" id="imamount1" name="imamount1" hidden>
+                                <label for="imid">ID SP </label>
+                                <input type="text" id="imid" name="imid" placeholder="Product ID" readonly>
+
+                                <label for="imamount">Số lượng</label>
+                                <input type="number" id="imamount" name="imamount" placeholder="Product amount">
+                                <input type="submit" value="Submit">
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Them san pham moi -->
                     <div class="recentCustomers">
                         <div class="cardHeader">
                             <h2 style="color: green;">Thêm sản phẩm mới </h2>
@@ -207,23 +260,6 @@
                             </form>
                         </div>
                     </div>
-                    <div class="recentCustomers nhaphang">
-                        <div class="cardHeader">
-                            <h2 style="color: #287bff;">Nhập hàng </h2>
-                        </div>
-                        <!-- <img src="https://upload.wikimedia.org/wikipedia/commons/8/88/Bright_red_tomato_and_cross_section02.jpg" alt=""> -->
-                        <div class="form-product">
-                            <form action="/ware/importproduct" method="GET">
-                                <input type="number" id="imamount1" name="imamount1" hidden>
-                                <label for="imid">ID SP </label>
-                                <input type="text" id="imid" name="imid" placeholder="Product ID" readonly>
-
-                                <label for="imamount">Số lượng</label>
-                                <input type="number" id="imamount" name="imamount" placeholder="Product amount">
-                                <input type="submit" value="Submit">
-                            </form>
-                        </div>
-                    </div>
                 </div>
 
             </div>
@@ -233,8 +269,7 @@
 
 
 
-    </div>
-    </div>
+    
 
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
@@ -350,6 +385,23 @@
             result.classList.remove("hide");
 
         }
+
+        var box = document.getElementById('box');
+        var down = false;
+
+
+        function toggleNotifi() {
+            if (down) {
+                box.style.height = '0px';
+                box.style.opacity = 0;
+                down = false;
+            } else {
+                box.style.height = '510px';
+                box.style.opacity = 1;
+                down = true;
+            }
+        }
+
     </script>
 
 

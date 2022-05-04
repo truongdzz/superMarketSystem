@@ -14,14 +14,14 @@ function searchproductItem(e){
         const element = listProduct[i].parentNode;
         let elename = element.querySelector('.home-product-item__name').innerText;
         let elenameFormat = formatStringTosearch(elename);
-        console.log(elenameFormat.includes(searchstr));
+        
         if(elenameFormat.includes(searchstr)){
             element.classList.remove('nonedisplay');
-            console.log(element);
+            
         }
         else{
             element.classList.add('nonedisplay');
-            console.log(element)
+            
         }
         
     }

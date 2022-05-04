@@ -3,9 +3,33 @@ const Product = require('../models/productsModel');
 const Order = require('../models/orderModel');
 const GoodsInOrder = require('../models/goodsInOrderModel');
 const bcrypt = require('bcrypt');
+const StaffInfo = require('../models/staffModel')
 
-const loadCashierPage = (req, res) => {
-    res.render('cashierView/index.ejs');
+const loadCashierPage = async (req, res) => {
+    try {
+            let Data = function() {
+                // this.staffinfo = null;
+                // this.recentstaff = null;
+                this.notifications = null;
+            };
+            data = new Data;
+
+            // const staffinfo = await StaffInfo.pullData();
+            // const recentstaff = await StaffInfo.recentStaff();
+            const notifications = await StaffInfo.pullnoti(req.staffid);
+
+            // data.staffinfo = staffinfo;
+            // data.recentstaff = recentstaff;
+            data.notifications = notifications;
+
+            res.render('cashierView/index.ejs', {
+                data: data
+            });
+
+        } catch (error) {
+            res.status(500).json({ message: error.message });
+        }
+    
 }
 
 const getAllProduct = async (req, res) => {
@@ -46,7 +70,7 @@ const checkout = async (req, res) => {
             status: "delivered",
             price: price
         };
-        console.log(order);
+        
         let insertedOrderId;
         const data = await Order.createNewOrder(order);
         insertedOrderId = data.insertId;
