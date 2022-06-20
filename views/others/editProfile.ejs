@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+            <meta content="IE=edge" http-equiv="X-UA-Compatible">
+                <title>
+                    Edit profile
+                </title>
+                <link href="/truong/editProfile.css" rel="stylesheet">
+                </link>
+            </meta>
+        </meta>
+    </head>
+    <body>
+        <!-- info -->
+        <div id="id" style="display: none;"><%=staff.id%></div>
+        <!-- modals -->
+        <div class="hide modals" id="modals">
+            <div class="inside card">
+                <div class="cardHeader">
+                    Shift registration
+                </div>
+                <div class="label">Select day</div>
+                <select id="day">
+                    <option value="">Select day</option>
+                    <option value="sun">Sunday</option>
+                    <option value="mon">Monday</option>
+                    <option value="tue">Tuesday</option>
+                    <option value="wed">Wednesday</option>
+                    <option value="thu">Thursday</option>
+                    <option value="fri">Friday</option>
+                    <option value="sat">Saturday</option>
+                </select>
+                <div class="label">Select time</div>
+                <select id="time">
+                    <option value="">Select time</option>
+                    <option value="sang">Morning</option>
+                    <option value="chieu">Afternoon</option>
+                    <option value="toi">Night</option>
+                </select>
+                <div class="buttonGroup">
+                    <button id="submit">Submit</button>
+                    <button id="cancel">Cancel</button>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="container">
+
+            <!-- navigation -->
+            <% if (staff.role == 'admin') { %>
+              
+            
+            <div class="container">
+
+                <!-- navigation -->
+                <div class="navigation">
+                  <ul>
+                      <li>
+                          <a href="">
+                              <span class="icon"><ion-icon name="logo-apple"></ion-icon></span>
+                              <span class="title">Brand name</span>
+                          </a>
+                      </li>
+                      <li class="">
+                          <a href="/admin">
+                              <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
+                              <span class="title">Dashboard</span>
+                          </a>
+                      </li>
+                      <li>
+                          <a href="/admin/staffmanager">
+                              <span class="icon"><ion-icon name="person-outline"></ion-icon></span>
+                              <span class="title">HR Management</span>
+                          </a>
+                      </li>
+                      <li>
+                          <a href="/admin/statistic">
+                              <span class="icon">
+                    <ion-icon name="trending-up-outline"></ion-icon>
+                  </span>
+                              <span class="title">Statistic</span>
+                          </a>
+                      </li>
+                      <li>
+                          <a href="/admin/shiftmanager">
+                              <span class="icon">
+                                  <ion-icon name="checkmark-done-outline"></ion-icon>
+                              </span>
+                              <span class="title">Shift Manager</span>
+                          </a>
+                      </li>
+                      
+                      <li>
+                          <a href="/admin/sendnoti">
+                              <span class="icon"><ion-icon name="chatbubble-outline"></ion-icon></span>
+                              <span class="title">Message</span>
+                          </a>
+                      </li>
+                      <li class="active">
+                          <a href="/staff/editProfile">
+                              <span class="icon"><ion-icon name="settings-outline"></ion-icon></span>
+                              <span class="title">Settings</span>
+                          </a>
+                      </li>
+                      <li>
+                          <a href="/logout/staff">
+                              <span class="icon"><ion-icon name="log-out-outline"></ion-icon></span>
+                              <span class="title">Sign out</span>
+                          </a>
+                      </li>
+                  </ul>
+              </div>
+
+            <% } %>
+
+            <% if (staff.role == 'cashier') { %>
+
+            <div class="navigation">
+                <ul>
+                    <li>
+                        <a href="">
+                            <span class="icon">
+                                <ion-icon name="logo-apple">
+                                </ion-icon>
+                            </span>
+                            <span class="title">
+                                Brand name
+                            </span>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="/cashier">
+                            <span class="icon">
+                                <ion-icon name="home-outline">
+                                </ion-icon>
+                            </span>
+                            <span class="title">
+                                Dashboard
+                            </span>
+                        </a>
+                    </li>
+                    
+                    <li class="active">
+                        <a href="/staff/editProfile">
+                            <span class="icon">
+                                <ion-icon name="settings-outline">
+                                </ion-icon>
+                            </span>
+                            <span class="title">
+                                Settings
+                            </span>
+                        </a>
+                    </li>
+                    
+                    <li>
+                        <a href="/logout/staff">
+                            <span class="icon">
+                                <ion-icon name="log-out-outline">
+                                </ion-icon>
+                            </span>
+                            <span class="title">
+                                Sign out
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <% } %>
+
+            <% if (staff.role == 'Ware') { %>
+
+            <div class="navigation">
+                <ul>
+                    <li>
+                        <a href="">
+                            <span class="icon"><ion-icon name="logo-apple"></ion-icon></span>
+                            <span class="title">Brand name</span>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="/ware">
+                            <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
+                            <span class="title">Dashboard</span>
+                        </a>
+                    </li>
+
+                    
+
+                    <li class="active">
+                        <a href="/staff/editProfile">
+                            <span class="icon"><ion-icon name="settings-outline"></ion-icon></span>
+                            <span class="title">Settings</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="/logout/staff">
+                            <span class="icon"><ion-icon name="log-out-outline"></ion-icon></span>
+                            <span class="title">Sign out</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <% } %>
+            <!-- main -->
+            <div class="main">
+                <!-- topbar -->
+                <div class="topbar">
+                    <div class="toggle">
+                        <ion-icon name="menu-outline">
+                        </ion-icon>
+                    </div>
+                    <!-- search -->
+                    <!-- <div class="search">
+                        <label>
+                            <input id="searchBar" placeholder="Search here" type="text">
+                                <ion-icon name="search-outline">
+                                </ion-icon>
+                                <div class="table hide" id="result">
+                                </div>
+                            </input>
+                        </label>
+                    </div> -->
+                    <!-- user image -->
+                    <div class="user">
+                        <!-- <img alt="User" src="/truong/img/user.jpg"> -->
+                        </img>
+                    </div>
+                </div>
+                <div class="content">
+                	<div class="form card">
+                		<div class="cardHeader">My profile</div>
+                        <div class="helu">
+                            <div class="col">
+                                <label>Role:</label>
+                                <input type="text" name="role" value="<%=staff.role%>" disabled="">
+                            </div>
+                            <div class="col">
+                                <label>Salary base (VND):</label>
+                                <input type="number" name="" value="<%=staff.salaryBase%>" disabled="">
+                            </div>
+                        </div>
+                        <div class="helu">
+                            <div class="col">
+                                
+                                <label class="label">Full name:</label>
+                                <input type="text" name="name" value="<%=staff.name%>" id="name">
+                                <label>Phone number:</label>
+                                <input type="number" name="phone" value="<%=staff.phone%>" id="phone">
+                                      
+                            </div>
+                            <div class="col">
+                                
+                                <label>New password:</label>
+                                <input type="password" name="password" id="password">
+                                <label>Confirm password:</label>
+                                <input type="password" name="confirm" id="confirm">
+                            </div>
+                        </div>
+                        <div class="helu">
+                            <div class="col">
+                                <button onclick="changeInfo()">Change</button>    
+                            </div>
+                            <div class="col">
+                                <button onclick="changePassword()">Change password</button>    
+                            </div>
+                            
+                        </div>
+                	</div>
+                    <div class="schedule card">
+                        <div class="cardHeader">My schedule</div>
+                        <div class="table">
+                            <div class="row">
+                                <div class="cell">Day</div>
+                                <div class="cell">Time</div>
+                                <div class="cell">Status</div>
+                                <div class="cell">
+                                    
+                                </div>
+                            </div>
+                            <%for(let i = 0; i<schedule.length; i++){%>
+                                <%const item = schedule[i];%>
+                                <div class="row">
+                                    <div class="cell"><%=item.day%></div>
+                                    <div class="cell"><%=item.time%></div>
+                                    <div class="cell"><%=item.status%></div>
+                                    <div class="cell">
+                                        <button onclick="deleteSchedule(<%=item.staff%>, <%=item.shift%>)">Delete</button>
+                                        <%if(item.status == "Pending"){%>
+                                        <button onclick="acceptSchedule(<%=item.staff%>, <%=item.shift%>)">Accept</button>
+                                        <%}%>
+                                    </div>
+                                </div>
+                            <%}%>
+                            <div class="add">
+                                <button id="add">Add schedule</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  		<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+        <script type="text/javascript">
+
+             //menu toggle
+            let toggle = document.querySelector('.toggle');
+            let main = document.querySelector('.main');
+            let navigation = document.querySelector('.navigation');
+
+            toggle.onclick = function(){
+              navigation.classList.toggle('active');
+              main.classList.toggle('active');
+            }
+
+            //add hovered class for selected list item
+            let list = document.querySelectorAll('.navigation li');
+            function hoveredLink(){
+              this.classList.add('hovered');
+            }
+            function unhoveredLink(){
+              this.classList.remove('hovered')
+            }
+            list.forEach((item)=>{
+              item.addEventListener('mouseover', hoveredLink);
+              item.addEventListener('mouseleave', unhoveredLink);
+            });
+
+
+
+            
+            const xhttp = new XMLHttpRequest();
+            xhttp.onload = function(){
+                if(this.status == 500){
+                    alert(JSON.parse(this.responseText).message);
+                    return;
+                }
+                if(this.status == 401){
+                    alert('You cant perfom this action');
+                    return;
+                }
+                if(this.status == 403){
+                    alert('Phiên của bạn đã hết hạn. Xin hãy đăng nhập lại.');
+                    location.href = "/admin/editProfile";
+                    return;
+                }
+                if(this.status == 200){
+                    const data = JSON.parse(this.responseText);
+                    alert(data.message);
+                    if(data.logout){
+                        location.href = "/logout/staff";
+                    }
+                    if(data.reload){
+                        location.reload();
+                    }
+                    return;
+                } else {
+                    alert(JSON.parse(this.responseText).message);
+                }
+            }
+
+            function changeInfo(){
+                const name = document.getElementById('name');
+                const phone = document.getElementById('phone');
+                if(name.value == "" || phone.values == ""){
+                    alert("Hay nhap day du cac thong tin.");
+                    return;
+                }
+                if(!confirm('Bạn có chắc muốn thay đổi những thông tin trên?')) return;
+                const data = "name=" + name.value + "&phone=" + phone.value;
+                const url = "/staff/updateProfile"
+                xhttp.open('POST', url);
+                xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                xhttp.send(data);
+            }
+
+            function changePassword(){
+                const password  = document.getElementById('password');
+                const confirmPassword = document.getElementById('confirm')
+                if(password.value == "" || confirmPassword.value == ""){
+                    alert("Xin hãy nhập đầy đủ thông tin.");
+                    return;
+                }
+                
+                if(confirmPassword.value != password.value){
+                    alert("Mật khẩu không trùng khớp.");
+                    return;
+                }
+                if(!confirm("Bạn có chắc muốn đổi mật khẩu?")){
+                    return;
+                }
+
+                const data = "password=" + password.value;
+                const url = "/staff/updatePassword";
+                xhttp.open('POST', url);
+                xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                xhttp.send(data);   
+            }
+
+            
+            //---------------------
+            //add schedule
+            const addButton = document.getElementById('add');
+            const modals = document.getElementById('modals');
+            
+            //show modals
+            addButton.addEventListener('click', function(){
+                modals.classList.remove('hide');
+            })
+
+            //close modals
+            const submitButton = document.getElementById('submit');
+            submitButton.addEventListener('click', function(){
+                modals.classList.add('hide');
+                registSchedule();
+            })
+            const cancelButton = document.getElementById('cancel');
+            cancelButton.addEventListener('click', function(){
+                modals.classList.add('hide');
+            })
+            //regist schedule
+            function registSchedule(){
+                const id = document.getElementById('id');
+                const day = document.getElementById('day');
+                const time = document.getElementById('time');
+                if(day.value == "" || time.value == ""){
+                    alert('Please select both day and time to regist.');
+                    return;
+                }
+                const url = '/staff/registSchedule';
+                const data = 'day=' + day.value + '&time=' + time.value + '&id=' + id.innerText;
+                xhttp.open('POST', url);
+                xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                xhttp.send(data);
+            }
+            
+            //------------------------
+            //delete schedule
+            function deleteSchedule(staff, shift){
+                const url = '/staff/deleteSchedule';
+                const data = 'id=' + staff + '&shift=' + shift;
+                xhttp.open('DELETE', url);
+                xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                xhttp.send(data);
+            }
+            //===========================
+            //accept schedule
+            function acceptSchedule(staffid, shift){
+                const url = '/staff/acceptSchedule?staffid=' + staffid + "&shift=" + shift;
+                xhttp.open("GET", url);
+                xhttp.send();
+            }
+        </script>
+
+    </body>
+</html>

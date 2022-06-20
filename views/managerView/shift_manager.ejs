@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin panel</title>
+    <link rel="stylesheet" href="/nguyen/shift_manager.css">
+</head>
+
+<body>
+    <!-- modals -->
+    <!-- <div class="card modals hide " id="modals">
+        <div class="inside">
+            <div class="table" id="tableContent">
+            </div>
+            <div class="">
+                <button onclick="closee()">Close</button>
+            </div>
+        </div>    
+    </div> -->
+
+    <!-- end modals -->
+
+    <div class="container">
+
+        <!-- navigation -->
+        <div class="navigation">
+            <ul>
+                <li>
+                    <a href="">
+                        <span class="icon">
+                            <ion-icon name="logo-apple"></ion-icon>
+                        </span>
+                        <span class="title">Brand name</span>
+                    </a>
+                </li>
+                <li class="">
+                    <a href="/admin">
+                        <span class="icon">
+                            <ion-icon name="home-outline"></ion-icon>
+                        </span>
+                        <span class="title">Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/admin/staffmanager">
+                        <span class="icon">
+                            <ion-icon name="person-outline"></ion-icon>
+                        </span>
+                        <span class="title">HR Management</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/admin/statistic">
+                        <span class="icon">
+                            <ion-icon name="trending-up-outline"></ion-icon>
+                        </span>
+                        <span class="title">Statistic</span>
+                    </a>
+                </li>
+                <li class="active">
+                    <a href="/admin/shiftmanager">
+                        <span class="icon">
+                            <ion-icon name="checkmark-done-outline"></ion-icon>
+                        </span>
+                        <span class="title">Shift Manager</span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="/admin/sendnoti">
+                        <span class="icon">
+                            <ion-icon name="chatbubble-outline"></ion-icon>
+                        </span>
+                        <span class="title">Message</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/staff/editProfile">
+                        <span class="icon">
+                            <ion-icon name="settings-outline"></ion-icon>
+                        </span>
+                        <span class="title">Settings</span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="/logout/staff">
+                        <span class="icon">
+                            <ion-icon name="log-out-outline"></ion-icon>
+                        </span>
+                        <span class="title">Sign out</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- main -->
+        <div class="main">
+            <!-- topbar -->
+            <div class="topbar">
+                <div class="toggle">
+                    <ion-icon name="menu-outline"></ion-icon>
+                </div>
+                <!-- search -->
+                <!-- <div class="search">
+                    <label>
+                        <input type="text" placeholder="Search here">
+                        <ion-icon name="search-outline"></ion-icon>
+                    </label>
+                </div> -->
+                <!-- user image -->
+                <div class="user">
+                    <!-- <img src="../../public/truong/img/user.jpg" alt="User"> -->
+
+                </div>
+            </div>
+        
+            <!-- detail -->
+            <div class="details">
+                <!-- order list -->
+                <div class="recentOrders">
+                    <div class="cardHeader">
+                        <h2>Shift</h2>
+                        <div class="search">
+                            <!-- <label>
+                                <input type="text" placeholder="Search name or phonenumber">
+                                <ion-icon name="search-outline"></ion-icon>
+                            </label> -->
+                        </div>
+                        <a href="" class="btn">View All</a>
+                    </div>
+                    <div class="table">
+                        <div class="row">
+                            <div class="cell">
+                                
+                            </div>
+                            <div class="cell">Morning</div>
+                            <div class="cell">Afternoon</div>
+                            <div class="cell">Night</div>
+                        </div>
+                        <div class="row">
+                            <div class="cell">Monday</div>
+                            <%for(let i = 0; i<3; i++){%>
+                                <div class="cell" id="<%=1+i%>">
+                                        <div id="nameList"></div>
+                                        <button onclick="choose(<%=1+i%>)">Choose</button>    
+                                </div>
+                            <%}%>
+                        </div>
+                        <div class="row">
+                            <div class="cell">Tuesday</div>
+                            <%for(let i = 0; i<3; i++){%>
+                                <div class="cell" id="<%=4+i%>">
+                                    <div id="nameList"></div>
+                                    <button onclick="choose(<%=4+i%>)">Choose</button>    
+                                </div>
+                            <%}%>
+                        </div>
+                        <div class="row">
+                            <div class="cell">Wednesday</div>
+                            <%for(let i = 0; i<3; i++){%>
+                                <div class="cell" id="<%=7+i%>">
+                                    <div id="nameList"></div>
+                                    <button onclick="choose(<%=7+i%>)">Choose</button>    
+                                </div>
+                            <%}%>
+                        </div>
+                        <div class="row">
+                            <div class="cell">Thursday</div>
+                            <%for(let i = 0; i<3; i++){%>
+                                <div class="cell" id="<%=10+i%>">
+                                    <div id="nameList"></div>
+                                    <button onclick="choose(<%=10+i%>)">Choose</button>    
+                                </div>
+                            <%}%>
+                        </div>
+                        <div class="row">
+                            <div class="cell">Friday</div>
+                            <%for(let i = 0; i<3; i++){%>
+                                <div class="cell" id="<%=13+i%>">
+                                    <div id="nameList"></div>
+                                    <button onclick="choose(<%=13+i%>)">Choose</button>    
+                                </div>
+                            <%}%>
+                        </div>
+                        <div class="row">
+                            <div class="cell">Saturday</div>
+                            <%for(let i = 0; i<3; i++){%>
+                                <div class="cell" id="<%=16+i%>">
+                                    <div id="nameList"></div>
+                                    <button onclick="choose(<%=16+i%>)">Choose</button>    
+                                </div>
+                            <%}%>
+                        </div>
+                        <div class="row">
+                            <div class="cell">Sunday</div>
+                            <%for(let i = 0; i<3; i++){%>
+                                <div class="cell" id="<%=19+i%>">
+                                    <div id="nameList"></div>
+                                    <button onclick="choose(<%=19+i%>)">Choose</button>    
+                                </div>
+                            <%}%>
+                        </div>
+                    </div>
+                </div>
+                <!-- staff list -->
+                <div class="staffList card">
+                    <div class="cardHeader">
+                        <p>Staff</p>
+                        <select name="" id="status" onchange="filter(this.value)">
+                            <option value="Waiting">Registration</option>
+                            <option value="Pending">Pending</option>
+                            <option value="Accepted">Accepted</option>
+                            <option value="Onleave">Onleave</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="table" id="tableContent">
+                        
+                    </div>
+                </div>
+            </div>
+
+            
+        </div>
+    </div>
+
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+    <script>
+        //menu toggle
+        let toggle = document.querySelector('.toggle');
+        let main = document.querySelector('.main');
+        let navigation = document.querySelector('.navigation');
+
+        toggle.onclick = function () {
+            navigation.classList.toggle('active');
+            main.classList.toggle('active');
+        }
+
+        //add hovered class for selected list item
+        let list = document.querySelectorAll('.navigation li');
+
+        function hoveredLink() {
+            this.classList.add('hovered');
+        }
+
+        function unhoveredLink() {
+            this.classList.remove('hovered')
+        }
+        list.forEach((item) => {
+            item.addEventListener('mouseover', hoveredLink);
+            item.addEventListener('mouseleave', unhoveredLink);
+        });
+
+
+        // ---------------------------
+        // get data
+        let Schedule;
+        let Staff;
+        const xhttp = new XMLHttpRequest();
+        xhttp.onload = function (){
+            const data = JSON.parse(this.responseText);
+            try{
+                if(!data.action){
+                    Schedule = JSON.parse(this.responseText).schedules;
+                    Staff = JSON.parse(this.responseText).staffs
+                    
+                    //get accepted staff of every shift
+                    for (var i = 1; i <= 21; i++) {
+                        const item = document.getElementById(String(i));
+                        const schedule = Schedule.filter(item => item.status == "Accepted" && item.shift == i);
+                        const staffid = schedule.map(item => item.staff);
+                        const staff = Staff.filter(person => staffid.includes(person.id));
+                        let text = ""
+                        for (var o = 0; o < staff.length; o++) {
+                            text += `
+                            <div class="name inprogress status">${staff[o].name}</div>
+                            `
+                        }
+                        text += `<button onclick="choose(${i})">Choose</button>`
+                        item.innerHTML = text;
+                    }
+
+                    for (var i = 1; i <= 21; i++) {
+                        const item = document.getElementById(String(i));
+                        const schedule = Schedule.filter(item => item.status == "Pending" && item.shift == i);
+                        const staffid = schedule.map(item => item.staff);
+                        const staff = Staff.filter(person => staffid.includes(person.id));
+                        let text = ""
+                        for (var o = 0; o < staff.length; o++) {
+                            text += `
+                            <div class="name pending status">${staff[o].name}</div>
+                            `
+                        }
+                        item.innerHTML = text + item.innerHTML;
+                    }
+                    for (var i = 1; i <= 21; i++) {
+                        const item = document.getElementById(String(i));
+                        const schedule = Schedule.filter(item => item.status == "Onleave" && item.shift == i);
+                        const staffid = schedule.map(item => item.staff);
+                        const staff = Staff.filter(person => staffid.includes(person.id));
+                        let text = ""
+                        for (var o = 0; o < staff.length; o++) {
+                            text += `
+                            <div class="name return status">${staff[o].name}</div>
+                            `
+                        }
+                        item.innerHTML = text + item.innerHTML;
+                    }
+                } else {
+                    alert(data.message);
+                    if(data.reload) location.reload();
+                }
+
+                    
+
+            } catch(error){
+                console.log(error.message);
+                alert("Error to load data");
+            }
+        }
+        xhttp.open('GET', '/admin/getSchedule');
+        xhttp.send();
+        //--------------------------------    
+
+        //select a shift
+        let currentShift;
+        function choose(shift){
+            currentShift = shift;
+            const schedule = Schedule.filter(item => item.status == "Waiting" && item.shift == shift);
+            const staffid = schedule.map(item => item.staff);
+            const staff = Staff.filter(person => staffid.includes(person.id));
+            const table = document.getElementById('tableContent');
+            let text = "";
+            for (var i = 0; i < staff.length; i++) {
+                const item = staff[i];
+                text = text +  `
+                <div class="row">
+                    <div class="cell">${item.name}</div>
+                    <div class="cell"><button onclick="doAction(${item.id}, ${currentShift})">Choose</button></div>
+                </div>
+                `
+            }
+            table.innerHTML = text;
+            const sele = document.getElementById('status');
+            sele.value = "Waiting";
+            for (var j = 1; j <= 21; j++) {
+                const cell = document.getElementById(String(j));
+                cell.classList.remove('hightLighted');    
+            }
+            const cell = document.getElementById(String(shift));
+            cell.classList.add('hightLighted');    
+        }
+
+        function filter(status){
+            const schedule = Schedule.filter(item => (item.status == status && item.shift == currentShift));
+            const staffid = schedule.map(item => item.staff);
+            let staff;
+            if(status == "Other"){
+                const otherSchedule = Schedule.filter(item => item.shift == currentShift)
+                const idArr = otherSchedule.map(item => item.staff)
+                staff = Staff.filter(person => idArr.includes(person.id) == false);
+            } else staff = Staff.filter(person => staffid.includes(person.id));
+            const table = document.getElementById('tableContent');
+            let text = "";
+            let action = status == "Onleave" ? "Accept" 
+                : status == "Pending" ? "Cancel"
+                    : status == "Waiting" ? "Choose"
+                        :  status == "Accepted" ? "Remove" : "Request";
+            for (let i = 0; i < staff.length; i++) {
+                const item = staff[i];
+                text = text +  `
+                <div class="row">
+                    <div class="cell">${item.name}</div>
+                    <div class="cell"><button onclick="doAction(${item.id}, ${currentShift})">${action}</button></div>
+                </div>
+                `
+            }
+            table.innerHTML = text;    
+        }
+ 
+        function doAction(staffid, shift){
+            // find conflict schedule
+            const foundSchedule = Schedule.find(item => item.staff == staffid && item.shift == shift);
+
+            if(!foundSchedule){
+                //send a request for that shift
+                // turn to pending
+                const url = '/admin/addSchedule?staffid=' + staffid + "&shift=" + shift + "&status=Pending";
+                xhttp.open("GET", url);
+                xhttp.send();
+            } else{
+                //check status
+                if(foundSchedule.status == "Waiting"){
+                    // apply that shift (change from waiting to Accepted)
+                    const url = '/admin/changeSchedule?staffid=' + staffid + "&shift=" + shift + "&status=Accepted";
+                    xhttp.open("GET", url);
+                    xhttp.send();
+                } else if(foundSchedule.status == "Onleave"){
+                    // remove that shift for that staff
+                    const url = '/admin/deleteSchedule?staffid=' + staffid + "&shift=" + shift;
+                    xhttp.open("GET", url);
+                    xhttp.send();
+                } else if(foundSchedule.status == "Pending"){
+                    //cancel request (remove from schedule)
+                    const url = '/admin/deleteSchedule?staffid=' + staffid + "&shift=" + shift;
+                    xhttp.open("GET", url);
+                    xhttp.send();
+                } else if(foundSchedule.status == "Accepted"){
+                    // remove schedule of that staff
+                    const url = '/admin/deleteSchedule?staffid=' + staffid + "&shift=" + shift;
+                    xhttp.open("GET", url);
+                    xhttp.send();
+                }
+            }
+        }
+
+    </script>
+</body>
+
+</html>

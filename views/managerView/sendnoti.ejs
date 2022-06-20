@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin panel</title>
+
+    <link rel="stylesheet" href="/nguyen/staff_edit.css">
+
+</head>
+
+<body>
+    <div class="container">
+
+        <!-- navigation -->
+<div class="container">
+
+    <!-- navigation -->
+    <div class="navigation">
+      <ul>
+          <li>
+              <a href="">
+                  <span class="icon"><ion-icon name="logo-apple"></ion-icon></span>
+                  <span class="title">Brand name</span>
+              </a>
+          </li>
+          <li class="">
+              <a href="/admin">
+                  <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
+                  <span class="title">Dashboard</span>
+              </a>
+          </li>
+          <li>
+              <a href="/admin/staffmanager">
+                  <span class="icon"><ion-icon name="person-outline"></ion-icon></span>
+                  <span class="title">HR Management</span>
+              </a>
+          </li>
+          <li>
+              <a href="/admin/statistic">
+                  <span class="icon">
+        <ion-icon name="trending-up-outline"></ion-icon>
+      </span>
+                  <span class="title">Statistic</span>
+              </a>
+          </li>
+          <li>
+              <a href="/admin/shiftmanager">
+                  <span class="icon">
+                      <ion-icon name="checkmark-done-outline"></ion-icon>
+                  </span>
+                  <span class="title">Shift Manager</span>
+              </a>
+          </li>
+          
+          <li class="active">
+              <a href="/admin/sendnoti">
+                  <span class="icon"><ion-icon name="chatbubble-outline"></ion-icon></span>
+                  <span class="title">Message</span>
+              </a>
+          </li>
+          <li>
+              <a href="/staff/editProfile">
+                  <span class="icon"><ion-icon name="settings-outline"></ion-icon></span>
+                  <span class="title">Settings</span>
+              </a>
+          </li>
+          <li>
+              <a href="/logout/staff">
+                  <span class="icon"><ion-icon name="log-out-outline"></ion-icon></span>
+                  <span class="title">Sign out</span>
+              </a>
+          </li>
+      </ul>
+  </div>
+
+        <!-- main -->
+        <div class="main">
+            <!-- topbar -->
+            <div class="topbar">
+                <div class="toggle">
+                    <ion-icon name="menu-outline"></ion-icon>
+                </div>
+                <!-- search -->
+                <!-- user image -->
+                <div class="user">
+                    <!-- <img src="../../public/truong/img/user.jpg" alt="User"> -->
+
+                </div>
+            </div>
+            <br>
+            <br>
+            <br>
+            <br>
+
+            <!-- detail -->
+            <div class="details">
+                <!-- order list -->
+
+                <div class="recentOrders form-staff">
+                    <form action="/admin/sendnoti" method="POST">
+                        <h1 style="text-align:center; color: #287bff;"> Send Notification</h1>
+                        <div style="display: flex; justify-content: center;">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMBGolLKZGwBAaElRILIo8xJc7LsItAp0kUA&usqp=CAU" alt="" class="avatar">    
+                        </div>
+                        
+
+                        <label for="forwho">Choose type:</label>
+                        <select name="forwho" id="forwho">
+                            <option value="forall">For all</option>
+                            <option value="forone">For One</option>
+                        </select>
+
+                        <div id="forone" hidden>
+
+                            <div style="display: grid; grid-template-columns: 5fr 1fr; grid-gap: 10px; align-items:center;">
+                                <div>
+                                    <div class="search searchBar">
+                                        
+                                            <label>
+                                                <input type="text" placeholder="Search staff id or staff name" id="searchBar" name="search">
+                                                <ion-icon name="search-outline"></ion-icon>
+                                                <div class="result hide">
+                                                    <table class="search-container">
+                                                        <tr>
+                                                            <th>ID</th>
+                                                            <th>name</th>
+                                                        </tr>
+                                            
+                                                    </table>
+                                                </div>
+                                            </label>
+                                        
+                                    </div>
+                                </div>
+                                <div>
+                                    <label for="staffid">Staff ID</label>
+                                    <input type="text" id="staffid" name="staffid" value="" placeholder="Ex: 1">
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <label for="title">Title</label>
+                        <input type="text" id="title" name="title" value="" placeholder="Add a title" required>
+
+                        <label for="subtitle">Subtitle</label>
+                        <input type="text" id="subtitle" name="subtitle" value="" placeholder="Add a subtitle" required>
+
+                        <label for="content">Notification content</label>
+                        <textarea id="content" name="content" rows="10" cols="50" placeholder="Write content here"></textarea>
+
+                        <br>
+                        <br>
+                        <input type="submit" value="submit" id="submitnoti">
+                        <br>
+                        <br>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.0/socket.io.js" integrity="sha512-/xb5+PNOA079FJkngKI2jvID5lyiqdHXaUUcfmzE0X0BdpkgzIWHC59LOG90a2jDcOyRsd1luOr24UCCAG8NNw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        //menu toggle
+        let toggle = document.querySelector('.toggle');
+        let main = document.querySelector('.main');
+        let navigation = document.querySelector('.navigation');
+
+        toggle.onclick = function() {
+            navigation.classList.toggle('active');
+            main.classList.toggle('active');
+        }
+
+        //add hovered class for selected list item
+        let list = document.querySelectorAll('.navigation li');
+
+        function hoveredLink() {
+            this.classList.add('hovered');
+        }
+
+        function unhoveredLink() {
+            this.classList.remove('hovered')
+        }
+        list.forEach((item) => {
+            item.addEventListener('mouseover', hoveredLink);
+            item.addEventListener('mouseleave', unhoveredLink);
+        });
+
+        let forwho = document.getElementById("forwho");
+        forwho.onclick = () => {
+            let value = forwho.options[forwho.selectedIndex].text;
+            if (value == "For One") {
+                document.getElementById("forone").hidden = false;
+            }
+            if (value == "For all") {
+                document.getElementById("forone").hidden = true;
+            }
+        };
+
+
+        const searchBar = document.getElementById("searchBar");
+        searchBar.addEventListener("keyup", find);
+
+
+        const result = document.getElementsByClassName("result")[0];
+        const container = document.getElementsByClassName("search-container")[0];
+
+        let allStaff;
+
+        function find() {
+            if (!searchBar.value) {
+                result.classList.add("hide");
+                return;
+            }
+
+            var xhttp = new XMLHttpRequest();
+            let url = "/admin/searchstaff?search=".concat(searchBar.value);
+            xhttp.onload = function() {
+                allStaff = JSON.parse(this.responseText)
+            }
+            xhttp.open("GET", url, true);
+            xhttp.send();
+
+
+            container.innerHTML = "<tr>                <th>ID</th>                <th>name</th>            </tr>";
+            for (let index = 0; index < allStaff.length; index++) {
+                const staff = allStaff[index];
+                container.innerHTML +=
+                    `<tr onclick="selectstaff(${staff.id})">
+                    <td>
+                        ${staff.id}
+                    </td>
+                    <td class="res-content">
+                        ${staff.name}
+                    </td>
+                </tr>`;
+            }
+            result.classList.remove("hide");
+
+        }
+
+        function selectstaff(staffid, staffname) {
+            document.getElementById("staffid").value = staffid;
+            result.classList.add("hide");
+        }
+    </script>
+
+</body>
+
+</html>

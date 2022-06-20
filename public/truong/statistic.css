@@ -1,0 +1,76 @@
+:root
+{
+    --blue: #287bff;
+    --white: #fff;
+    --grey: #f5f5f5;
+    --black1: #222;
+    --black2: #999;
+    --cardBackground: #F7F7F7;
+}
+
+
+.main{
+    padding: 20px;
+}
+
+.main .mainCard{
+    margin-top: 60px;
+    position: relative;
+    width: 100%;
+    padding: 20px;
+    background: #F7F7F7;
+    border-radius: 20px;
+    box-shadow: 0px 0px 25px rgba(0,0,0,0.3);
+}
+
+.main .mainCard .cardHeader{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--black2)
+}
+
+.main .mainCard .cardHeader div{
+    border: 1px solid var(--black2);
+    padding: 5px 20px;
+    margin-left: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.main .mainCard .cardHeader div select,
+.main .mainCard .cardHeader div input{
+    border: none;
+    margin-left: 10px;
+    outline: none;
+    font-size: 15px;
+    background-color: var(--cardBackground);
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+
+.main .mainCard .chartCard{
+    padding-top: 20px;
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    grid-column-gap: 10px;
+}
+
+.main .mainCard .chartCard div:first-child{
+    border: 1px solid var(--black2);
+    background-color: var(--white);
+}
+
+.main .mainCard .chartCard div:nth-child(2) div{
+    border: 1px solid var(--black2);
+    background-color: var(--white);
+}
+
+.main .mainCard .chartCard .sideChart{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}

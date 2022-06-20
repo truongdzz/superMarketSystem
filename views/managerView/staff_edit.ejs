@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin panel</title>
+
+    <link rel="stylesheet" href="/nguyen/staff_edit.css">
+
+</head>
+
+<body>
+    <div class="container">
+
+        <!-- navigation -->
+        <div class="navigation">
+      <ul>
+          <li>
+              <a href="">
+                  <span class="icon"><ion-icon name="logo-apple"></ion-icon></span>
+                  <span class="title">Brand name</span>
+              </a>
+          </li>
+          <li class="">
+              <a href="/admin">
+                  <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
+                  <span class="title">Dashboard</span>
+              </a>
+          </li>
+          <li>
+              <a href="/admin/staffmanager">
+                  <span class="icon"><ion-icon name="person-outline"></ion-icon></span>
+                  <span class="title">HR Management</span>
+              </a>
+          </li>
+          <li>
+              <a href="/admin/statistic">
+                  <span class="icon">
+        <ion-icon name="trending-up-outline"></ion-icon>
+      </span>
+                  <span class="title">Statistic</span>
+              </a>
+          </li>
+          <li>
+              <a href="/admin/shiftmanager">
+                  <span class="icon">
+                      <ion-icon name="checkmark-done-outline"></ion-icon>
+                  </span>
+                  <span class="title">Shift Manager</span>
+              </a>
+          </li>
+          
+          <li>
+              <a href="/admin/sendnoti">
+                  <span class="icon"><ion-icon name="chatbubble-outline"></ion-icon></span>
+                  <span class="title">Message</span>
+              </a>
+          </li>
+          <li>
+              <a href="/staff/editProfile">
+                  <span class="icon"><ion-icon name="settings-outline"></ion-icon></span>
+                  <span class="title">Settings</span>
+              </a>
+          </li>
+          <li>
+              <a href="/logout/staff">
+                  <span class="icon"><ion-icon name="log-out-outline"></ion-icon></span>
+                  <span class="title">Sign out</span>
+              </a>
+          </li>
+      </ul>
+  </div>
+
+        <!-- main -->
+        <div class="main">
+            <!-- topbar -->
+            <div class="topbar">
+                <div class="toggle">
+                    <ion-icon name="menu-outline"></ion-icon>
+                </div>
+                <!-- search -->
+                <!-- <div class="search">
+                    <label>
+                        <input type="text" placeholder="Search here" id="searchBar" name="search">
+                        <ion-icon name="search-outline"></ion-icon>
+                        <div class="result hide">
+                            <table class="search-container">
+                            </table>
+                        </div>
+                    </label>
+                </div> -->
+                <!-- user image -->
+                <div class="user">
+                    <!-- <img src="../../public/truong/img/user.jpg" alt="User"> -->
+
+                </div>
+            </div>
+            <br>
+            <br>
+            <br>
+            <br>
+
+            <!-- detail -->
+            <div class="details">
+                <!-- order list -->
+
+                <div class="recentOrders form-staff">
+                    <form action="/admin/updatestaff/<%= data.staffinfo.id %>" method="GET">
+                        <img src="https://image.thanhnien.vn/w2048/Uploaded/2022/wsxrxqeiod/2020_04_05/v-bts_oxyf.jpg" alt="" class="avatar">
+
+                        <label for="staffid">Staff ID: <%= data.staffinfo.id %></label>
+                        <input type="text" id="staffid" name="staffid" value="<%= data.staffinfo.id %>" hidden>
+                        <br>
+                        <br>
+                        <br>
+                        <label for="name">Staff Name</label>
+                        <input type="text" id="name" name="name" value="<%= data.staffinfo.name %>" required>
+
+                        <label for="phone">Phone number</label>
+                        <input type="text" id="phone" name="phone" value="<%= data.staffinfo.phone %>" required>
+
+                        <label for="type">Role:</label>
+                        <select id="type" name="type">
+                            <option value="<%= data.staffinfo.role %>" selected="selected" hidden><%= data.staffinfo.role %></option>
+                            <option value="admin">Admin</option>
+                            <option value="ware">Warehouse Staff</option>
+                            <option value="cashier">Cashier Staff</option>
+                        </select>
+
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username" value="<%= data.staffinfo.username %>" disabled>
+
+                        <label for="password">Password</label>
+                        <input type="text" id="password" name="password" value="HIDDEN PASSWORD!" disabled>
+
+                        <label for="salarybase">Salary Base</label>
+                        <input type="number" id="salarybase" name="salarybase" value="<%= data.staffinfo.salaryBase %>" required>
+
+
+
+                        <input type="submit" value="Submit">
+
+                        <a href="/admin/deletestaff/<%= data.staffinfo.id %>" class="btn">
+                            <ion-icon name="trash-outline"></ion-icon>
+                        </a>
+                        <br>
+                        <br>
+                        <br>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+    <script>
+        //menu toggle
+        let toggle = document.querySelector('.toggle');
+        let main = document.querySelector('.main');
+        let navigation = document.querySelector('.navigation');
+
+        toggle.onclick = function() {
+            navigation.classList.toggle('active');
+            main.classList.toggle('active');
+        }
+
+        //add hovered class for selected list item
+        let list = document.querySelectorAll('.navigation li');
+
+        function hoveredLink() {
+            this.classList.add('hovered');
+        }
+
+        function unhoveredLink() {
+            this.classList.remove('hovered')
+        }
+        list.forEach((item) => {
+            item.addEventListener('mouseover', hoveredLink);
+            item.addEventListener('mouseleave', unhoveredLink);
+        });
+    </script>
+</body>
+
+</html>

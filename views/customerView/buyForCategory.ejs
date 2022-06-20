@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Home page</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+        <link rel="stylesheet" href="/phat/css/base.css">
+        <link rel="stylesheet" href="/phat/css/main.css">
+        <link rel="stylesheet" href="/phat/fonts/fontawesome-free-6.1.1/css/all.min.css">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    </head>
+
+    <body>
+        <!-- <h1>Home page</h1>
+        <p>customer view</p>
+        <a href="/login/user" class="btn">login for customer</a>
+        <br>
+        <a href="/login/staff">login for staff</a>
+        <br>
+        <a href="/register/user">Register for user</a>
+        <br>
+        <a href="/register/staff">Register for staff</a> -->
+
+        <div class="app">
+
+            <!-- header -->
+            <%-include('../partials/banner.ejs') %> 
+            <!--  -->
+
+            <div class="app__container">
+                
+                <div class="grid">
+                    <div class="grid__row app__content">
+                        <div class="grid__column-2">
+                            <%-include('../partials/menu.ejs')  %> 
+                        </div>
+                        
+                        <div class="grid__column-10">
+                            <div class="home-filter">
+                                <span class="home-filter__label">Sắp xếp theo</span>
+                                <!-- <button class="home-filter__btn btn">Phổ biến</button>
+                                <button class="home-filter__btn btn btn--primary">mới nhất</button>
+                                <button class="home-filter__btn btn">Bán chạy</button> -->
+
+                                <div class="select-input">
+                                    <span class="select-input__label">Giá</span>
+                                    <i class="select-input__icon fa-solid fa-sort-down"></i>
+
+                                    <!-- list option -->
+                                    <ul class="select-input__list">
+                                        <li class="select-input__item" onclick="sortincreaseByCategory('<%=categoryId%>')">
+                                            <a href="#" class="select-input__link">Giá: Thấp đến cao</a>
+                                        </li>
+                                        <li class="select-input__item" onclick="sortdecreaseByCategory('<%=categoryId%>')">
+                                            <a href="#" class="select-input__link">Giá: Cao đến Thấp</a>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="home-filter__page">
+                                    <span class="home-filter__page-num">
+                                        <span class="home-filter__page-current">1</span>/ 14
+                                    </span>
+                                    <div class="home-filter__page-control">
+                                        <a href="" class="home-filter__page-btn home-filter__page-btn--disabled">
+                                            <i class="home-filter__page-icon fa-solid fa-caret-left"></i>                                          
+                                        </a>
+                                        <a href="" class="home-filter__page-btn">
+                                            <i class="home-filter__page-icon fa-solid fa-caret-right"></i>                                           
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="home-product">
+                                <div class="grid__row">
+
+                                    <!-- product items -->
+                                    <% data.forEach(function(dataItem){%>
+                                        <%if(dataItem.amount>0){%>
+                                            <div class="grid__column-2-4">
+                                                <div class="home-product-item" href="#">
+                                                    <div class="home-product-item__img" style="background-image: url('<%=dataItem.good_img%>');"></div>
+                                                    <h4 class="home-product-item__name"><%= dataItem.name %> </h4>
+                                                    <div class="home-product-item__price">
+                                                        <% if(dataItem.discount>0){%>
+                                                            <span class="home-product-item__price-old"><%=dataItem.sellPrice%> VND</span>
+                                                            <span class="home-product-item__price-current"><%=dataItem.sellPrice*(1-dataItem.discount*0.01)%> VND</span>
+                                                        <%}else{%>
+                                                            <span class="home-product-item__price-current"><%=dataItem.sellPrice%> VND</span>
+                                                        <%} %> 
+
+                                                    </div>
+        
+                                                    <div class="home-product-item__action">
+                                                        <span class="home-product-item__like home-product-item__like--liked">
+                                                            <i class="home-product-item__like-icon-empty fa-regular fa-heart"></i>
+                                                            <i class="home-product-item__like-icon-fill fa-solid fa-heart"></i>
+                                                            
+                                                        </span>
+                                                        <div class="home-product-item__rating">
+                                                            <i class="home-product-item__star--gold fa-solid fa-star"></i>
+                                                            <i class="home-product-item__star--gold fa-solid fa-star"></i>
+                                                            <i class="home-product-item__star--gold fa-solid fa-star"></i>
+                                                            <i class="home-product-item__star--gold fa-solid fa-star"></i>
+                                                            <i class="fa-solid fa-star"></i>
+                                                        </div>
+                                                        <span class="home-product-item__sold">88 Đã bán</span>
+                                                    </div>
+
+                                                    <div class="home-product-item__buy-btn" onclick="insertProducttocart('<%=dataItem.id%>')">
+                                                        <span class="home-product-item__buy-btn-title">Thêm vào giỏ</span>
+                                                        <span class="home-product-item__buy-btn-icon">
+                                                            <i class="fa-solid fa-cart-plus"></i>
+                                                        </span>
+                                                    </div>
+        
+                                                    <!-- <div class="home-product-item__origin">
+                                                        <span class="home-product-item__brand">Whoa</span>
+                                                        <span class="home-product-item__origin-name">Nhật bản</span>
+                                                    </div> -->
+        
+                                                    <%if(dataItem.amount>50){%>
+                                                        <div class="home-product-item__favourite">
+                                                            <i class="fa-solid fa-check"></i>
+                                                            <span>Yêu Thích</span>
+                                                        </div>
+                                                    <%}%>
+
+
+                                                    <% if(dataItem.discount>0){%>
+                                                        <div class="home-product-item__sale-off">
+                                                            <span class="home-product-item__sale-off-percent"><%= dataItem.discount %>%</span>
+                                                            <span class="home-product-item__sale-off-label">Giảm</span>
+                                                        </div>
+                                                    <%} %> 
+
+
+                                                </div>
+                                            </div>
+                                        <%}%>
+
+                                    <%}); %> 
+
+
+
+                                </div>
+                            </div>
+
+                            <!-- <ul class="pagination home-product__pagination">
+                                <li class="pagination-item">
+                                    <a href="" class="pagination-item__link">
+                                        <i class="pagination-item__icon fa-solid fa-caret-left"></i>
+                                    </a>
+                                </li>
+
+                                <li class="pagination-item pagination-item--active">
+                                    <a href="" class="pagination-item__link">1</a>
+                                </li>
+                                <li class="pagination-item">
+                                    <a href="" class="pagination-item__link">2</a>
+                                </li>
+                                <li class="pagination-item">
+                                    <a href="" class="pagination-item__link">3</a>
+                                </li>
+                                <li class="pagination-item">
+                                    <a href="" class="pagination-item__link">...</a>
+                                </li>
+                                <li class="pagination-item">
+                                    <a href="" class="pagination-item__link">31</a>
+                                </li>                                
+                                <li class="pagination-item">
+                                    <a href="" class="pagination-item__link">
+                                        <i class="pagination-item__icon fa-solid fa-caret-right"></i>
+                                    </a>
+                                </li>
+                            </ul> -->
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!-- footer -->
+            <%-include('../partials/buyingFooter.ejs') %> 
+            <!--  -->
+
+        </div>
+
+        <script>
+
+                let listDisPrice=Array.from(document.getElementsByClassName("home-product-item__price-current"))
+                listDisPrice=listDisPrice.concat(Array.from(document.getElementsByClassName("home-product-item__price-old")))
+                for (let i = 0; i < listDisPrice.length; i++) {
+                    let element = listDisPrice[i];
+                    // console.log(listDisPrice)
+                    let inputstr=element.textContent;
+                    let arrstring=element.textContent.split(" ");
+                    element.textContent=arrstring[0].toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')+' '+arrstring[1];
+                    
+                }
+
+            // change color of ative link
+                let categorylist=document.querySelectorAll('.category-list .category-item a');
+                let currentative=document.querySelector('.category-list .category-item--active');
+
+                // console.log(window.location.href);
+                // console.log(categorylist);
+
+
+
+
+                window.onload=function(){
+                        if(currentative){
+                            currentative.classList.remove('category-item--active'); // remove old active
+                        }
+                        for (let i = 0; i < categorylist.length; i++) {
+                            // console.log([categorylist[i].href]);
+                            tempURL=tachURL(categorylist[i].href);
+                            tagertURL=tachURL(window.location.href);
+                            if(tempURL==tagertURL){
+                                categorylist[i].parentNode.classList.add('category-item--active');
+                            }
+                            
+                        }
+
+                };
+                
+
+                function tachURL(path){
+                    path=''+path;
+                    let num=path.lastIndexOf('/category-');
+                    return path.slice(num);
+                }
+
+
+
+
+                // ================== ajax xoa gio hang=======================================================
+
+
+                // function deleteProductoutofcart(idProduct,idOrder){
+                //     let xhttp=new XMLHttpRequest();
+                //     // alert(idOrder,idProduct);
+
+
+                //     url='/delProductOutCart/'+idProduct+'/'+idOrder;
+                //     xhttp.open("GET",url);
+                //     xhttp.send();
+
+                //     xhttp.onload=function(){
+                //         // alert(this.responseText);
+                //         location.reload();
+                //     }
+
+                // }
+
+                // function insertProducttocart(idProduct){
+                //     // alert(idProduct);
+                //     let xhttp = new XMLHttpRequest();
+                //     url='/insertProductToCart/'+idProduct;
+                //     xhttp.open("GET",url);
+                //     xhttp.send();
+
+                //     // xhttp.onload=function(){
+                //     //     alert(this.responseText);
+                //     // }
+
+                //     // xhttp.onload=function(){
+                //     //     alert('ok');
+                //     // }
+
+                //     xhttp.onload=function(){
+                //         if(this.status==400){
+                //             alert(this.responseText);
+                //         }
+                //         else if(this.status==200){
+                //             alert(this.responseText+this.status);
+                //             location.reload();
+                //         }
+                //     }
+
+                // }
+
+
+        </script>
+
+        <script src="/phat/js/insert_delete_product.js"></script>
+        <script src="/phat/js/sortProduct.js"></script>
+        <script src="/phat/js/search_buying.js"></script>
+
+
+
+
+    </body>
+</html>

@@ -1,0 +1,96 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    font-family: 'Ubuntu', sans-serif;
+}
+
+:root
+{
+    --blue: #287bff;
+    --white: #fff;
+    --grey: #f5f5f5;
+    --black1: #222;
+    --black2: #999;
+}
+
+body{
+    position: relative;
+    background: var(--grey);
+}
+
+.loginForm{
+    z-index: 100;
+    position: absolute;
+    width: 500px;
+    
+    left: calc(50vw - 250px);
+    top: calc(50vh - 200px);
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    background: var(--white);
+    display: flex;
+    padding: 30px;
+}
+
+.loginForm form{
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.loginForm form .formHeader{
+    width: 100%;
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.loginForm form label{
+    margin-bottom: 10px;
+}
+
+.loginForm form select,
+.loginForm form input{
+    margin-bottom: 20px;
+    height: 30px;
+    outline: none;
+    border: 1px solid var(--black2);
+    border-radius: 10px;
+    padding: 5px 10px;
+    font-size: 15px;
+}
+
+.loginForm form .inline{
+    display: flex;
+    align-items: center;
+}
+
+.loginForm form .inline select,
+.loginForm form .inline input,
+.loginForm form .inline label{
+    margin: 0px;
+    padding: 0px 4px;
+}
+
+.loginForm form button{
+    width: 100px;
+    height: 25px;
+    background: var(--blue);
+    border: none;
+    border-radius: 5px;
+    align-self: center;
+    cursor: pointer;
+}
+
+.loginForm form a{
+    position: absolute;
+    bottom: 0px;
+    text-decoration: none;
+}
+
+body .hide{
+    display: none;
+}

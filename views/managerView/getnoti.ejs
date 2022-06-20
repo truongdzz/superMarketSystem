@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin panel</title>
+
+    <link rel="stylesheet" href="/nguyen/staff_edit.css">
+
+</head>
+
+<body>
+    <div class="container">
+
+        <!-- navigation -->
+            <% if (staff.role == 'admin') { %>
+              
+            
+            <div class="container">
+
+                <!-- navigation -->
+                <div class="navigation">
+                  <ul>
+                      <li>
+                          <a href="">
+                              <span class="icon"><ion-icon name="logo-apple"></ion-icon></span>
+                              <span class="title">Brand name</span>
+                          </a>
+                      </li>
+                      <li class="">
+                          <a href="/admin">
+                              <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
+                              <span class="title">Dashboard</span>
+                          </a>
+                      </li>
+                      <li>
+                          <a href="/admin/staffmanager">
+                              <span class="icon"><ion-icon name="person-outline"></ion-icon></span>
+                              <span class="title">HR Management</span>
+                          </a>
+                      </li>
+                      <li>
+                          <a href="/admin/statistic">
+                              <span class="icon">
+                    <ion-icon name="trending-up-outline"></ion-icon>
+                  </span>
+                              <span class="title">Statistic</span>
+                          </a>
+                      </li>
+                      <li>
+                          <a href="/admin/shiftmanager">
+                              <span class="icon">
+                                  <ion-icon name="checkmark-done-outline"></ion-icon>
+                              </span>
+                              <span class="title">Shift Manager</span>
+                          </a>
+                      </li>
+                      
+                      <li>
+                          <a href="/admin/sendnoti">
+                              <span class="icon"><ion-icon name="chatbubble-outline"></ion-icon></span>
+                              <span class="title">Message</span>
+                          </a>
+                      </li>
+                      <li class="">
+                          <a href="/staff/editProfile">
+                              <span class="icon"><ion-icon name="settings-outline"></ion-icon></span>
+                              <span class="title">Settings</span>
+                          </a>
+                      </li>
+                      <li>
+                          <a href="/logout/staff">
+                              <span class="icon"><ion-icon name="log-out-outline"></ion-icon></span>
+                              <span class="title">Sign out</span>
+                          </a>
+                      </li>
+                  </ul>
+              </div>
+
+            <% } %>
+
+            <% if (staff.role == 'cashier') { %>
+
+            <div class="navigation">
+                <ul>
+                    <li>
+                        <a href="">
+                            <span class="icon">
+                                <ion-icon name="logo-apple">
+                                </ion-icon>
+                            </span>
+                            <span class="title">
+                                Brand name
+                            </span>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="/cashier">
+                            <span class="icon">
+                                <ion-icon name="home-outline">
+                                </ion-icon>
+                            </span>
+                            <span class="title">
+                                Dashboard
+                            </span>
+                        </a>
+                    </li>
+                    
+                    <li class="">
+                        <a href="/staff/editProfile">
+                            <span class="icon">
+                                <ion-icon name="settings-outline">
+                                </ion-icon>
+                            </span>
+                            <span class="title">
+                                Settings
+                            </span>
+                        </a>
+                    </li>
+                    
+                    <li>
+                        <a href="/logout/staff">
+                            <span class="icon">
+                                <ion-icon name="log-out-outline">
+                                </ion-icon>
+                            </span>
+                            <span class="title">
+                                Sign out
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <% } %>
+
+            <% if (staff.role == 'Ware') { %>
+
+            <div class="navigation">
+                <ul>
+                    <li>
+                        <a href="">
+                            <span class="icon"><ion-icon name="logo-apple"></ion-icon></span>
+                            <span class="title">Brand name</span>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="/ware">
+                            <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
+                            <span class="title">Dashboard</span>
+                        </a>
+                    </li>
+
+                    
+
+                    <li class="">
+                        <a href="/staff/editProfile">
+                            <span class="icon"><ion-icon name="settings-outline"></ion-icon></span>
+                            <span class="title">Settings</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="/logout/staff">
+                            <span class="icon"><ion-icon name="log-out-outline"></ion-icon></span>
+                            <span class="title">Sign out</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <% } %>
+
+        <!-- main -->
+        <div class="main">
+            <!-- topbar -->
+            <div class="topbar">
+                <div class="toggle">
+                    <ion-icon name="menu-outline"></ion-icon>
+                </div>
+                <!-- search -->
+                <!-- <div class="search">
+                    <label>
+                        <input type="text" placeholder="Search here" id="searchBar" name="search">
+                        <ion-icon name="search-outline"></ion-icon>
+                        <div class="result hide">
+                            <table class="search-container">
+                            </table>
+                        </div>
+                    </label>
+                </div> -->
+                <!-- user image -->
+                <div class="user">
+                    <!-- <img src="../../public/truong/img/user.jpg" alt="User"> -->
+
+                </div>
+            </div>
+            <br>
+            <br>
+            <br>
+            <br>
+
+            <!-- detail -->
+            <div class="details">
+                <!-- order list -->
+
+                <div class="recentOrders form-staff">
+                    <h1 style="text-align:center; color: #287bff;">Notification</h1>
+                    <br>
+                    <div style="align-items: center; text-align: center; position: relative; display:flex;">
+                        <p style=" width: 100%; color: gray;">
+                            <%if (data.noti.sender == 0){%>
+                                Send from system
+                            <%} else {%>
+                                Send from admin    
+                            <%}%>
+                        </p>
+                    </div>
+
+                    <h1>
+                        <%=data.noti.title%>
+                    </h1>
+
+                    <br>
+                    <h4>
+                        <%=data.noti.subtitle%>
+                    </h4>
+                    <br>
+                    <p style="position: relative; display:inline-block; width: 100%">
+                        <%=data.noti.content%>
+                    </p>
+                    <br>
+                    <p style="position: absolute; display:flex; width: 100%; color: gray; bottom: 20px;">
+                        <%=data.noti.time%>
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+    <script>
+        //menu toggle
+        let toggle = document.querySelector('.toggle');
+        let main = document.querySelector('.main');
+        let navigation = document.querySelector('.navigation');
+
+        toggle.onclick = function() {
+            navigation.classList.toggle('active');
+            main.classList.toggle('active');
+        }
+
+        //add hovered class for selected list item
+        let list = document.querySelectorAll('.navigation li');
+
+        function hoveredLink() {
+            this.classList.add('hovered');
+        }
+
+        function unhoveredLink() {
+            this.classList.remove('hovered')
+        }
+        list.forEach((item) => {
+            item.addEventListener('mouseover', hoveredLink);
+            item.addEventListener('mouseleave', unhoveredLink);
+        });
+    </script>
+</body>
+
+</html>

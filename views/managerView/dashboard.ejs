@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+            <meta content="IE=edge" http-equiv="X-UA-Compatible">
+                <meta content="width=device-width, initial-scale=1.0" name="viewport">
+                    <title>
+                        Dashboard
+                    </title>
+                    <link href="truong/adminpanel.css" rel="stylesheet">
+                    <link href="/truong/getAllProduct.css" rel="stylesheet" type="text/css">
+                        
+                    <link rel="stylesheet" type="text/css" href="/nguyen/noti.css">
+                </meta>
+            </meta>
+        </meta>
+    </head>
+    <body>
+        <div class="container">
+            <!-- navigation -->
+            <div class="navigation">
+                <ul>
+                    <li>
+                        <a href="">
+                            <span class="icon">
+                                <ion-icon name="logo-apple">
+                                </ion-icon>
+                            </span>
+                            <span class="title">
+                                Brand name
+                            </span>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a href="/admin">
+                            <span class="icon">
+                                <ion-icon name="home-outline">
+                                </ion-icon>
+                            </span>
+                            <span class="title">
+                                Dashboard
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/admin/staffmanager">
+                            <span class="icon">
+                                <ion-icon name="person-outline">
+                                </ion-icon>
+                            </span>
+                            <span class="title">
+                                HR Management
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/admin/statistic">
+                            <span class="icon">
+                                <ion-icon name="trending-up-outline">
+                                </ion-icon>
+                            </span>
+                            <span class="title">
+                                Statistic
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/admin/shiftmanager">
+                            <span class="icon">
+                                <ion-icon name="checkmark-done-outline">
+                                </ion-icon>
+                            </span>
+                            <span class="title">
+                                Shift Manager
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/admin/sendnoti">
+                            <span class="icon">
+                                <ion-icon name="chatbubble-outline">
+                                </ion-icon>
+                            </span>
+                            <span class="title">
+                                Message
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/staff/editProfile">
+                            <span class="icon">
+                                <ion-icon name="settings-outline">
+                                </ion-icon>
+                            </span>
+                            <span class="title">
+                                Settings
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/logout/staff">
+                            <span class="icon">
+                                <ion-icon name="log-out-outline">
+                                </ion-icon>
+                            </span>
+                            <span class="title">
+                                Sign out
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <!-- main -->
+            <div class="main">
+                <!-- topbar -->
+                <div class="topbar">
+                    <div class="toggle">
+                        <ion-icon name="menu-outline">
+                        </ion-icon>
+                    </div>
+                    <!-- search -->
+                    <div class="search">
+                        <label>
+                            <input id="searchBar" placeholder="Search here" type="text">
+                                <ion-icon name="search-outline">
+                                </ion-icon>
+                                <div class="table card hide" id="result">
+                                </div>
+                            </input>
+                        </label>
+                    </div>
+                    <!-- user image -->
+                    <div class="notifi">
+                        <div class="icon" onclick="toggleNotifi()">
+                            <img alt="" src="/nguyen/img/bell.png">
+                            </img>
+                            <span><%= data.notifications.length %></span>
+                        </div>
+                        <div class="notifi-box" id="box">
+                            <h2>
+                                Notifications
+                                <span>
+                                    <%= data.notifications.length %>
+                                </span>
+                            </h2>
+                            <% data.notifications.forEach(function(noti){ %>
+                            <div class="notifi-item">
+                                <a class="text" href="/admin/getnoti/<%= noti.id %>">
+                                    <h4>
+                                        <%= noti.title%>
+                                    </h4>
+                                    <p>
+                                        <%= noti.subtitle%>
+                                    </p>
+                                </a>
+                            </div>
+                            <%}) %>
+                        </div>
+                    </div>
+                    <!-- <div class="user"> -->
+                        <!-- <img src="truong/img/user.jpg" alt="User"> -->
+                    <!-- </div> -->
+                </div>
+                <!-- card -->
+                <div class="cardBox">
+                    <div class="card">
+                        <div>
+                            <div class="number">
+                                <%= data.totalSales %> Đ
+                            </div>
+                            <div class="cardName">
+                                Total Sales
+                            </div>
+                        </div>
+                        <div class="iconBox">
+                            <ion-icon name="cart-outline">
+                            </ion-icon>
+                            <small>
+                                Last 24h
+                            </small>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div>
+                            <div class="number">
+                                <%= data.totalExpenses%> Đ
+                            </div>
+                            <div class="cardName">
+                                Total Expenses
+                            </div>
+                        </div>
+                        <div class="iconBox">
+                            <ion-icon name="bar-chart-outline">
+                            </ion-icon>
+                            <small>
+                                Last 24h
+                            </small>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div>
+                            <div class="number">
+                                <%= data.totalIncomes %> Đ
+                            </div>
+                            <div class="cardName">
+                                Total Incomes
+                            </div>
+                        </div>
+                        <div class="iconBox">
+                            <ion-icon name="cash-outline">
+                            </ion-icon>
+                            <small>
+                                Last 24h
+                            </small>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div>
+                            <div class="number">
+                                <%= data.newOrders %>
+                            </div>
+                            <div class="cardName">
+                                New orders
+                            </div>
+                        </div>
+                        <div class="iconBox">
+                            <ion-icon name="newspaper-outline">
+                            </ion-icon>
+                            <small>
+                                Last 24h
+                            </small>
+                        </div>
+                    </div>
+                </div>
+                <!-- detail -->
+                <div class="details">
+                    <!-- order list -->
+                    <div class="recentOrders">
+                        <div class="cardHeader">
+                            <h2>
+                                Recent Orders
+                            </h2>
+                            <a class="btn" href="">
+                                View All
+                            </a>
+                        </div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <td>
+                                        ID
+                                    </td>
+                                    <td>
+                                        Price
+                                    </td>
+                                    <td>
+                                        Type
+                                    </td>
+                                    <td>
+                                        Status
+                                    </td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% data.ordersInfo.forEach(function(order){ %>
+                                <tr onclick="detailOrder(<%=order.id%>)">
+                                    <td>
+                                        <%= order.id %>
+                                    </td>
+                                    <td>
+                                        <%= order.price %>
+                                    </td>
+                                    <td>
+                                        <%= order.type %>
+                                    </td>
+                                    <td>
+                                        <span class="status <%= order.status %>">
+                                            <%= order.status %>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <%}) %>
+                                <tr>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- salesAnalytic -->
+                    <div class="salesAnalytic">
+                        <div class="cardHeader">
+                            <h2>
+                                Sales Analytic
+                            </h2>
+                        </div>
+                        <table>
+                            <tr>
+                                <td>
+                                    <div>
+                                        <ion-icon name="cart">
+                                        </ion-icon>
+                                        <div>
+                                            <p>
+                                                Online orders
+                                            </p>
+                                            <small>
+                                                Last 24h
+                                            </small>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td id="onlinePercent">
+                                    <span id="onl">
+                                    </span>
+                                    <%= data.analytic.onlinePercent %>%
+                                </td>
+                                <td>
+                                    <%= data.analytic.online24 %>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div>
+                                        <ion-icon name="bag-handle">
+                                        </ion-icon>
+                                        <div>
+                                            <p>
+                                                Offline orders
+                                            </p>
+                                            <small>
+                                                Last 24h
+                                            </small>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="" id="offlinePercent">
+                                    <span id="off">
+                                    </span>
+                                    <%= data.analytic.offlinePercent %>%
+                                </td>
+                                <td>
+                                    <%= data.analytic.offline24 %>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div>
+                                        <ion-icon name="people">
+                                        </ion-icon>
+                                        <div>
+                                            <p>
+                                                New customers
+                                            </p>
+                                            <small>
+                                                Last 24h
+                                            </small>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td id="userPercent">
+                                    <span id="user">
+                                    </span>
+                                    <%= data.analytic.userPercent %>%
+                                </td>
+                                <td>
+                                    <%= data.analytic.user24 %>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js" type="module">
+        </script>
+        <script nomodule="" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js">
+        </script>
+        <script>
+            //menu toggle
+          let toggle = document.querySelector('.toggle');
+          let main = document.querySelector('.main');
+          let navigation = document.querySelector('.navigation');
+
+          toggle.onclick = function(){
+            navigation.classList.toggle('active');
+            main.classList.toggle('active');
+          }
+
+          //add hovered class for selected list item
+          let list = document.querySelectorAll('.navigation li');
+          function hoveredLink(){
+            this.classList.add('hovered');
+          }
+          function unhoveredLink(){
+            this.classList.remove('hovered')
+          }
+          list.forEach((item)=>{
+            item.addEventListener('mouseover', hoveredLink);
+            item.addEventListener('mouseleave', unhoveredLink);
+          });
+
+          const onlinePercent = document.getElementById("onlinePercent");
+          const onlineSpan = document.getElementById("onl");
+          const onlPercent = Number(onlinePercent.innerText.replace("%", ""));
+          if(onlPercent >= 0){
+            onlineSpan.innerText = "+";
+          }
+          if(onlPercent >= 0 && onlPercent < 20){
+            onlinePercent.classList.add("ok");
+          } else if(onlPercent >= 20){
+            onlinePercent.classList.add("good");
+          } else {
+            onlinePercent.classList.add("bad")
+          }
+
+          const offLinePercent = document.getElementById("offlinePercent");
+          const offlineSpan = document.getElementById("off");
+          const offPercent = Number(offlinePercent.innerText.replace("%", ""));
+          if (offPercent >= 0) {
+            offlineSpan.innerText = "+";
+          }
+          if(offPercent >=0 && offPercent < 20){
+            offlinePercent.classList.add("ok");
+          } else if(offPercent >= 20 ){
+            offlinePercent.classList.add("good");
+          } else{
+            offlinePercent.classList.add("bad");
+          }
+
+          const userPercent = document.getElementById("userPercent");
+          const userSpan = document.getElementById("user");
+          const percent = Number(userPercent.innerText.replace("%", ""));
+          if(percent >= 0){
+            userSpan.innerText = "+";
+          }
+          if(percent > 0 && percent < 20){
+            userPercent.classList.add("ok");
+          } else if(percent >= 20){
+            userPercent.classList.add("good");
+          } else {
+            userPercent.classList.add("bad");
+          }
+
+
+
+          function detailOrder(id){
+            location.href = "/admin/detailOrder/" + id;
+          }
+
+          var box = document.getElementById('box');
+          var down = false;
+
+
+          function toggleNotifi() {
+              if (down) {
+                  box.style.height = '0px';
+                  box.style.opacity = 0;
+                  down = false;
+              } else {
+                  box.style.height = '510px';
+                  box.style.opacity = 1;
+                  down = true;
+              }
+          }
+        </script>
+        <script src="/truong/getAllProduct.js" type="text/javascript">
+        </script>
+    </body>
+</html>
